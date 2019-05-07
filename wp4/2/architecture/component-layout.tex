@@ -25,16 +25,16 @@ The layout components responsibilities in more detail include the following:
 
 \Cref{fig:esdm layout logical view} illustrates the embedding of the layout component into the larger ESDM architecture.
 To find a mapping an important factor is the performance of the individual backends, which requires to know which backends are available.
-\Cref{sec:layout/logical/init} describes the initialization process that loads the site configuration.
+\Cref{sec:layout/logical/init} describes the initialisation process that loads the site configuration.
 Storage backends feature wildly different performance characteristics, which is why the ESDM features an abstract performance model that queries the individual ESDM backends to provide performance estimates which may also depend on the data structure of the request.
 \Cref{sec: layout/logical/decision} describes the performance model and decision process in more detail.
 
-\subsubsection{Initialization of the Layout/Performance Model}
+\subsubsection{Initialisation of the Layout/Performance Model}
 \label{sec:layout/logical/init}
 
 The layout decision requires knowledge of the available backends.
 The ESDM assumes a machine-friendly site configuration to be available.
-The site configuration includes a list of available backends for which the ESDM on initialization loads.
+The site configuration includes a list of available backends for which the ESDM on initialisation loads.
 \Cref{fig:esdm layout initialisation} shows a UML sequence diagram of the ESDM initialisation process.
 
 \begin{enumerate}
@@ -45,7 +45,7 @@ The site configuration includes a list of available backends for which the ESDM 
 		\item discovers and loads available backends + plugins + backend performance model
 		\item available backends are announced to the ESDM performance model for consideration
 	\end{enumerate}
-	\item After successful initialization control is returned to the calling application/library.
+	\item After successful initialisation control is returned to the calling application/library.
 \end{enumerate}
 
 \begin{figure}
@@ -61,7 +61,7 @@ The site configuration includes a list of available backends for which the ESDM 
 \label{sec: layout/logical/decision}
 
 One approach to find the best backend/backends is to query every backend for a performance estimate and choose the most affordable.
-\Cref{fig:esdm layout choose backend} shows in a simplified example how the decision process for a data center with three storage systems may look like.
+\Cref{fig:esdm layout choose backend} shows in a simplified example how the decision process for a data centre with three storage systems may look like.
 The decision would gather estimates by calling the performance model (PM) of every backend.
 Performance metrics may include:
 

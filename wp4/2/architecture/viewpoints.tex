@@ -24,7 +24,7 @@ For more detailed descriptions in particular for the backends refer to \Cref{cha
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \paragraph {Problem Summary}
 The ESD middleware has been designed to deal with the fact that existing  data
-libraries for standardized data description and optimized I/O such as NetCDF,
+libraries for standardised data description and optimised I/O such as NetCDF,
 HDF5 and GRIB do not have suitable performance portable optimisations which
 reflect current data intensive system architectures and deliver cost-effective,
 acceptable data access bandwidth, latency and data durability.
@@ -35,17 +35,17 @@ To address these issues of performance portability, and exploiting exiting share
 \begin{enumerate}
 	\item understands application data structures and scientific metadata, which lets us expose the same data via different APIs;
 	\item maps data structures to storage backends with different performance characteristics based on site specific configuration informed by a performance model;
-	\item yields best write performance via optimized data layout schemes that utilize elements from log-structured file systems;
+	\item yields best write performance via optimised data layout schemes that utilise elements from log-structured file systems;
 	\item provides relaxed access semantics, tailored to scientific data generation for independent writes, and;
 	\item includes a FUSE module which will provide backwards compatibility through existing file formats with a configurable namespace based on scientific metadata.
 \end{enumerate}
 
-Together these allow storing small and frequently accessed data on node-local storage, while serializing multi-dimensional data onto multiple storage backends -- providing fault-tolerance and performance benefits for various access patterns at the same time.
-Compact-on-read instead of garbage collection will additionally optimize and replicate the data layout during reads via a background service.
+Together these allow storing small and frequently accessed data on node-local storage, while serialising multi-dimensional data onto multiple storage backends -- providing fault-tolerance and performance benefits for various access patterns at the same time.
+Compact-on-read instead of garbage collection will additionally optimise and replicate the data layout during reads via a background service.
 Additional tools allow data import/export for exchange between sites and external archives.
 
-The ESDM aids the interests of stakeholders: developers have less burden to provide system specific optimizations and can access their data in various ways.
-Data centers can utilize storage of different characteristics.
+The ESDM aids the interests of stakeholders: developers have less burden to provide system specific optimisations and can access their data in various ways.
+Data centres can utilise storage of different characteristics.
 
 \bigskip
 
@@ -94,9 +94,9 @@ The API is independent of the specific I/O backend used to store the data and su
 The API is able to support the complex workflows of future applications.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Datatypes}
-The datatype component provides native datatypes that can be used by users or other libraries to describe data points inside variables.
-We follow the approach pursued by the MPI and HDF5 libraries, that is, we provide a set of native datatypes and a basic set of datatype constructors that can be used to build custom derived datatypes.
+\paragraph{Data Types}
+The datatype component provides native data types that can be used by users or other libraries to describe data points inside variables.
+We follow the approach pursued by the MPI and HDF5 libraries, that is, we provide a set of native data types and a basic set of datatype constructors that can be used to build custom derived datatypes.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \paragraph{Layout}
@@ -138,11 +138,11 @@ It also serves as blue-print to embed its capabilities into higher-level tools s
 \label{sec: viewpoints/logical/data model}
 
 
-While datatypes introduced by computer architectures and software libraries are important for the data model, they are discussed separately in \Cref{sec: viewpoints/logical/datatypes}.
+While data types introduced by computer architectures and software libraries are important for the data model, they are discussed separately in \Cref{sec: viewpoints/logical/datatypes}.
 
 
 
-The data model of a system organizes elements of data, standardizes how they represent data entities and how users can interact with the data.
+The data model of a system organises elements of data, standardises how they represent data entities and how users can interact with the data.
 The model can be split into three layers:
 \begin{enumerate}
 	\item The \textbf{conceptual data model} describes the entities and the semantics of the domain that are represented by the data model and the typical operations to manipulate the data.
@@ -157,7 +157,7 @@ The model can be split into three layers:
 \subsection{Conceptual Data Model}
 \label{subsec: conceptual data model}
 
-Our conceptual data model is aligned with the needs of domain scientists from climate and weather. It reuses and extends from concepts introduced in a data model proposed for the Climate and Forecasting conventions for NetCDF data\footnote {\url{"A CF Data Model and Implementation", Hassel et al, 2017, GMD submitted}}.
+Our conceptual data model is aligned with the needs of domain scientists from climate and weather. It reuses and extends from concepts introduced in a data model proposed for the Climate and Forecasting conventions for NetCDF data\footnote {\url{``A CF Data Model and Implementation'', Hassel et al, 2017, GMD submitted}}.
 
 \paragraph{Motivation from climate}
 
@@ -198,7 +198,7 @@ explicitly defined by indexing into a coordinate variable, or implicitly defined
 N-dimensional shapes can be implicitly defined in which case the Cartesian product of all dimensional coordinates forms the data "cube" of the cell, but they can also be explicitly defined, either by providing bounds on the coordinate variables (via metadata) or by introducing a new variable which explicitly defines the functional boundaries of the cell (as might happen in a finite element unstructured grid).
 
 
-\paragraph{Dataset:} Variables can be aggregated into datasets. A dataset contains multiple variables that logically belong together, and should be associated with metadata describing the reason for the aggregation.  Variables must have unique names within a dataset.
+\paragraph{Data set:} Variables can be aggregated into data sets. A data set contains multiple variables that logically belong together, and should be associated with metadata describing the reason for the aggregation.  Variables must have unique names within a data set.
 
 
 
@@ -272,7 +272,7 @@ This allows, for example, the ESDM to split a variable into fragments some of wh
 \end{itemize}
 %\todo{Resolve question on slack: \url{https://esiwace.slack.com/archives/C2T7KDRGC/p1496396797771552}}
 
-\paragraph{Container:} A container is a virtual entity providing views on collections of variables, allowing multiple different datasets (as defined in the conceptual model) to be realised over the variables visible to the ESDM.  Each container provides a hierarchical namespace holding references to one or multiple variables together with metadata.Variables cannot be deleted while they are referenced by a container.  The use of these dynamic containers provides support for much more flexible organisation of data than provided by a regular file system semantics --- and efficiently support high level applications such as the Data Reference Syntax\footnote{Taylor et al (2012): CMIP5 Data Reference Syntax (DRS) and
+\paragraph{Container:} A container is a virtual entity providing views on collections of variables, allowing multiple different data sets (as defined in the conceptual model) to be realised over the variables visible to the ESDM.  Each container provides a hierarchical namespace holding references to one or multiple variables together with metadata.Variables cannot be deleted while they are referenced by a container.  The use of these dynamic containers provides support for much more flexible organisation of data than provided by a regular file system semantics --- and efficiently support high level applications such as the Data Reference Syntax\footnote{Taylor et al (2012): CMIP5 Data Reference Syntax (DRS) and
 Controlled Vocabularies.}.
 
 A container provides the ESDM storage abstraction which is analogous to an external file. Because many scientific metadata conventions are based on semantic structures which span variables within a file in ways that may be opaque to the ESDM without the use of a plugin, the use of a container can indicate to the ESDM that these variables are linked even though the ESDM does not understand why, and so they cannot be independently deleted.
@@ -300,7 +300,7 @@ The implementation may embed (simple) metadata into fragments of original data (
 	A future version of the ESDM may support user scientific metadata for fragments.
 	\item Container level metadata is generally not directly associated with variables, but may be retrieved via following
 	references from variables to containers.
-	\item Queries allow to search for arbitrary metadata, e.g., for objects that have (\texttt{experiment=X, model=Y, time=yesterday})  returning the variables and containers in a list that match.
+	\item Queries allow to search for arbitrary metadata, e.g., for objects that have (\texttt{experiment=X, model=Y, time=yesterday}) returning the variables and containers in a list that match.
 	This enables to locate scientific data in an arbitrary namespace.
 \end{itemize}
 
@@ -355,13 +355,13 @@ This notion is shown in the UML by virtue of the optional use of a named plugin 
 	\centering
 	\includegraphics[width=\textwidth]{inf-model/cdm_ldm.eps}
 	\caption{A non-normative UML version of the conceptual and logical data models.
-	The figure includes example for the operators of the invidiual logical operations.
+	The figure includes example for the operators of the individual logical operations.
 	These UML are expected to be updated as the system is developed.  See also figure \ref{fig:dm_map}.}
 	\label{fig:cdm_ldm}
 \end{figure}
 
 The key high level entities are the conceptual container, variable, and domain, which have direct correspondence in the logical
-data model (see \Cref{fig:dm_map}) --- however it is important to recognize that these are not isomorphic relationships. For example,
+data model (see \Cref{fig:dm_map}) --- however it is important to recognise that these are not isomorphic relationships. For example,
 the concept of a domain of a variable in the conceptual model is expanded in the logical data model to include sub-domains associated
 with fragments, but the same class is used for both usages (LDM\_Domain for both variable domain and fragment sub-domain).
 
@@ -389,21 +389,21 @@ These applications usually use GRIB and NetCDF as data format to send and store
 data. Nevertheless, the middleware should be also able to support other types of
 applications that use arbitrary libraries to represent and store data.
 
-The NetCDF and HDF5 libraries define their own atomic and basic datatypes and
-then provide the APIs to build user defined datatypes from these. Generally
-speaking it makes sense to support a restricted number of most common datatypes
+The NetCDF and HDF5 libraries define their own atomic and basic data types and
+then provide the APIs to build user defined data types from these. Generally
+speaking it makes sense to support a restricted number of most common data types
 that application can use out of the box and offer the possibility of extending
 these by means of additional APIs.
 
-The support of native datatypes like H5T\_NATIVE\_INT or NC\_INT is driven by the necessity to decouple the internal representation of the data from the way data is ultimately stored.
-Using native datatypes data can be correctly reconstructed passing from one representation to another.
-Like other libraries, the ESD middleware will also support a restricted range of native datatypes and a series of dedicated APIs to build user defined datatypes.
+The support of native data types like H5T\_NATIVE\_INT or NC\_INT is driven by the necessity to decouple the internal representation of the data from the way data is ultimately stored.
+Using native data types data can be correctly reconstructed passing from one representation to another.
+Like other libraries, the ESD middleware will also support a restricted range of native data types and a series of dedicated APIs to build user defined data types.
 
 \medskip
 
-ESDM will support various atomic datatypes, integers, floating points, with
+ESDM will support various atomic data types, integers, floating points, with
 different width, precision, endian and sign. The following table lists the
-possible atomic datatypes:
+possible atomic data types:
 
 \begin{center}
 	\begin{tabular}{|c|c|}
@@ -427,20 +427,20 @@ possible atomic datatypes:
 	\end{tabular}
 \end{center}
 
-User defined complex datatypes include compound, variable length array,
+User defined complex data types include compound, variable length array,
 and array (fixed length array).
 Compound is similar to a struct in the C language.
-It is an aggregation of members, which are atomic datatypes or other complex
-datatypes.
-Array has fixed number of base datatypes, which are atomic datatypes
-or other complex datatypes.
-A variable-length array has a flexible length of base datatypes.
+It is an aggregation of members, which are atomic data types or other complex
+data types.
+Array has fixed number of base data types, which are atomic data types
+or other complex data types.
+A variable-length array has a flexible length of base data types.
 
-The definition of user defined datatypes have to be stored on back-end. When
-reading data from datasets, these datatypes definition is retrieved from back-end
+The definition of user defined data types have to be stored on back-end. When
+reading data from data sets, these data types definition is retrieved from back-end
 and parsed, and proper in-memory data structures and memories are allocated to
 accommodate the expected data points.
-Complex datatypes are encoded and stored on back-end in various formats according
+Complex data types are encoded and stored on back-end in various formats according
 to different back-end.
 For example, for the Mero backend, these definition will be stored in Key/Value pair in index.
 The datatype is integral part of the stored variable and fragment to allow the storage backend to understand the data and process it on demand (not part of the ESiWACE project).
@@ -451,7 +451,7 @@ The datatype is integral part of the stored variable and fragment to allow the s
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\textwidth]{esdm-semantics/semantics-datatypes.eps}
-	\caption{Interfaces for the compound, array and key-value based data structures in relation to ESDM native datatypes.}
+	\caption{Interfaces for the compound, array and key-value based data structures in relation to ESDM native data types.}
 	\label{fig:datatypes}
 \end{figure}
 
@@ -504,7 +504,7 @@ We expect that an application is using some kind of coordination mechanism to co
 
 
 \paragraph{Sealed Variables/Containers} ensure that data products are preserved and cannot be modified, thus URIs to these objects can typically be safely exchanged with peers.
-The system may use this information to provide even more aggressive optimizations on read patterns.
+The system may use this information to provide even more aggressive optimisations on read patterns.
 
 \bigskip
 
@@ -524,10 +524,10 @@ It is possible to attach metadata to certain data structures such as variables a
 
 \paragraph{Exclusive access and concurrency control:}
 A single parallel application may temporarily transfer own a container or variable exclusively using a locking mechanism.
-This is necessary to facilitate data restructuring to rebuild upon failures or redistribute and optimize the data structures under the hood.
+This is necessary to facilitate data restructuring to rebuild upon failures or redistribute and optimise the data structures under the hood.
 To allow scaling, it is sufficient that a single process of the (parallel) application maintains the lock.
 Locks will timeout to prevent permanent deadlocks.
-Synchronization happens through the HDF5/MPI Vol plugin (see \Cref{frontend: hdf5 + mpi}) but may be implemented as a lightweight  library on top of MPI as well.
+Synchronisation happens through the HDF5/MPI Vol plugin (see \Cref{frontend: hdf5 + mpi}) but may be implemented as a lightweight  library on top of MPI as well.
 Any other parallel programming language should implement such a library to reduce the burden while performing certain (traditionally metadata sensitive) operations.
 For efficient parallel write access, epoch semantics are available which are discussed in more detail in \Cref{sec: viewpoints/logical/data model/epochs}.
 Open structures implicitly are attached with a communication channel by using events and notifications to notify upon changes in the epoch and prevent polling.
@@ -553,11 +553,11 @@ To allow applications developers and ESDM frontends to efficiently exploit concu
 An epoch is an instant in time chosen by the parallel application.
 \Cref{fig:epoch semantics} illustrates the ESDM methods to interact with epochs and also illustrates how the most recent readable view is reconstructed.
 Starting with epoch 0, all processes of the parallel application participating in I/O have to agree on moving to a new epoch.
-This will finalize the outstanding write requests, make the changes durable and publish the information about new data to other applications that registered to read this data.
+This will finalise the outstanding write requests, make the changes durable and publish the information about new data to other applications that registered to read this data.
 Writing data follows the expected semantics for writes but when multiple writers update data from the same variable coordinates, i.e., they overwrite data, the result is undefined.
 In fact, applications of which multiple processes write in the same epoch to the same data region are considered to be wrong.
 
-Closing a variable or finalizing ESDM will also move it to the next Epoch, thus finalize the first version.
+Closing a variable or finalising ESDM will also move it to the next Epoch, thus finalise the first version.
 Writing data to a variable that existed previously will overwrite the data of previous epochs.
 Similarly, if a variable is opened for read/write access, the same application may now read the data from a previous epoch.
 Reading data that has been written by another process of the same application (i.e., a read after write) should be prevented, as users should use means of communication inside the application to prevent this kind of access pattern.
@@ -567,8 +567,8 @@ If a parallel application overwrites data stored in a previously by another appl
 
 %\paragraph{Using epochs to identify data that must be garbage collected}
 When an application crashes, only the last committed epoch remains accessible, all other data is immediately subject to garbage collection.
-If an application does not use the Epoch and not finalize the ESD API correctly, then no data should become visible and durable on the storage.
-%Identifying variables that need to be garbage collected is achieved by initializing the metadata for a variable with Epoch=0 and the current creation time.
+If an application does not use the Epoch and not finalise the ESD API correctly, then no data should become visible and durable on the storage.
+%Identifying variables that need to be garbage collected is achieved by initialising the metadata for a variable with Epoch=0 and the current creation time.
 %A periodic scan may identify variables that are still in Epoch 0 but were created, e.g., a day ago.
 
 
@@ -610,7 +610,7 @@ To allow users to define workflows that depend on ESDM, users can register custo
 
 
 \paragraph{Event Log:}
-To allow for audits and delayed triggering of follow-up tasks in case of failures a event log ist kept.
+To allow for audits and delayed triggering of follow-up tasks in case of failures a event log is kept.
 Applications and administrators may use a query interface to filter for events that are relevant.
 
 
@@ -641,7 +641,7 @@ Usually, an application will use a library such as NetCDF or HDF5 that provides 
 With ESDM these libraries are slightly changed to call ESDM to handle I/O for them.
 It is possible that multiple processes with ESDM are active on the same node in which case the ESDM should coordinate with processes on the same node.
 
-\paragraph{Daemons:} Besides the application use case, a daemon process maybe necessary to ensure unreferenced fragments are cleaned up and also to perform optimization without requiring active applications.
+\paragraph{Daemons:} Besides the application use case, a daemon process maybe necessary to ensure unreferenced fragments are cleaned up and also to perform optimisation without requiring active applications.
 Multiple daemons maybe active at the same time.
 
 
@@ -649,7 +649,7 @@ Multiple daemons maybe active at the same time.
 No changes to the storage backends are expected.
 ESDM backends will interact with the storage systems using the interfaces that are exposed by the storage system.
 
-\paragraph{Site Configration:} The ESDM assumes that there is a description of the site configuration in a machine friendly format. As the system operators change the configuration of the storage systems or the network, the site configuration may need to be updated manually or automatically.
+\paragraph{Site Configuration:} The ESDM assumes that there is a description of the site configuration in a machine friendly format. As the system operators change the configuration of the storage systems or the network, the site configuration may need to be updated manually or automatically.
 
 
 
@@ -753,7 +753,7 @@ However, it would be easy to link a tool that uses the NetCDF interface to ESDM 
 
 The non-functional requirements are resolved as follows:
 \begin{enumerate}
-\item Performant: by moving the serialization from the application into the backends and by selecting appropriate backends depending on the access patterns using the layout component and the performance model, the system should be able to make superior placement decisions and optimize layout depending on the access pattern.
+\item Performant: by moving the serialisation from the application into the backends and by selecting appropriate backends depending on the access patterns using the layout component and the performance model, the system should be able to make superior placement decisions and optimise layout depending on the access pattern.
 \item Reliable: Fragments and variables offer methods to check for integrity (e.g., using checksums); ESDM offers replication of data, potentially transformed for performance, thus offers reliable storage.
 
 \item Versatile: By providing a storage backend for a storage technology and a performance model, it can be integrated into ESDM.

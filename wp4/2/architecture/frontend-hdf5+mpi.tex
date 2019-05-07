@@ -32,14 +32,14 @@ To avoid this limitation, we support a prefix to the filename: \texttt{esd-cfg:/
 \subsubsection{Open}
 
 Opening a container (as defined by the file name) in ESDM will trigger the master process within the communicator to retrieve the necessary metadata from ESDM and broadcast it to all participating processes.
-Since the metadata is serializable to JSON, we can exchange the metadata easily.
+Since the metadata is serialisable to JSON, we can exchange the metadata easily.
 
 \subsubsection{Concurrency semantics}
 
 In general, the system is designed for parallel applications of which processes access data independently of each other.
 Still, metadata of internal objects such as containers and variables should be managed and updated explicitly by a single process of the application.
 That means, within one parallel (MPI) application, some kind of coordination must take place to allow the shared access to containers, variables and shards.
-A correct implementation for this behavior will be performed within the HDF5 VOL plugin.
+A correct implementation for this behaviour will be performed within the HDF5 VOL plugin.
 
 Data sharing between independent applications is intended to happen after an epoch has been completed.
 It is not allowed that multiple parallel applications write data to the same variable at the same time.

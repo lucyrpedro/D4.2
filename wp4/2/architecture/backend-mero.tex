@@ -14,7 +14,7 @@ Examples of Mero applications are: Mero file system client (m0t1fs), Lustre HSM 
 ESD middleware will also uses Clovis interfaces to access and manage Mero system.
 The logical view for interactions between ESDM and Clovis/Mero is illustrated in \Cref{fig:mero backend logical view}.
  \\
-As an object storage, Mero has two types of "objects". In Mero, they are called
+As an object storage, Mero has two types of ``objects''. In Mero, they are called
 Entities, while in object storage, they might be called objects. These
 two types of entities are: \\
 object, is an array of fixed-size blocks, \\
@@ -78,7 +78,7 @@ containers and variables and other information. ESD middleware may store the
 mapping from HDF5 identity to Mero index identifier in external configuration
 storage, e.g. MongoDB, RDBMS, or POSIX file system. Nevertheless, ESD middleware
 can also store this mapping in Mero index, too. This index will be a pre-defined
-index, with well-known identifier. ESD middleware can initialize this index
+index, with well-known identifier. ESD middleware can initialise this index
 at the first of system deployment, and consult it later for this mapping.
 
 \begin{figure}
@@ -253,7 +253,7 @@ this Mero deployment.
 Mero cluster can be configured with different redundant parameters for its
 entities. Pool width, [data units, parity units, spare units] for parity
 groups of an entity, etc. are those parameters to determine the data redundancy
-model, data utilization, performance, and availability. Different configurations
+model, data utilisation, performance, and availability. Different configurations
 have different mappings from logical data to its physical locations on disks.
 But ESD middleware don't have to care about this mapping. ESD middleware uses
 Clovis to manage and access Mero entities (Mero indices and objects).

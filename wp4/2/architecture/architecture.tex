@@ -59,19 +59,19 @@
 
 \begin{abstract}
 Making the best use of HPC in Earth simulation requires storing and manipulating vast quantities of data.
-Existing storage environments face usability and performance challenges for both domain scientists and the data centers supporting the scientists.
+Existing storage environments face usability and performance challenges for both domain scientists and the data centres supporting the scientists.
 
 These challenges arise from data discovery/access patterns, and the need to support complex legacy interfaces. In the ESiWACE project, we develop a novel I/O middleware targeting, but not limited to, earth system data.
 This deliverable sheds light upon the technical design of the ESD middleware, and the user perspective and implications when using the middleware.
-Its architecture builds on well-established end-user interfaces but utilizes scientific metadata to harness a data structure centric perspective.
+Its architecture builds on well-established end-user interfaces but utilises scientific metadata to harness a data structure centric perspective.
 
 In contrast to existing solutions, the middleware maps data structures to available storage technology based on several parameters:
-1) A data center specific configuration of available hardware with their characteristics;
+1) A data centre specific configuration of available hardware with their characteristics;
 2) The intended usage pattern explicitly provided by the user and implicitly by the structure of the data.
 
 This allows exploiting performance characteristics of a heterogeneous storage environment more efficiently.
 
-This deliverable provides the background on data representations and description formats commonly used in earth system modeling.
+This deliverable provides the background on data representations and description formats commonly used in earth system modelling.
 The document isolates the key requirements for an earth system middleware and collects numerous use-case outlining the benefit to existing and anticipated workflows and technologies.
 Finally, a detailed initial design for the architecture of the earth system middleware is proposed and documented.
 
@@ -79,7 +79,7 @@ The document is not intended to describe all components completely but provides 
 During this development, the design will be adjusted to match the prototype; the final version of the design document will be delivered with the end of the project.
 \end{abstract}
 
-
+\parskip 20pt
 
 \chapter*{Revision History}
 
@@ -195,7 +195,7 @@ In addition, the resulting software should be configurable, user-friendly, relia
 
 In chapter \ref{chap:use cases}) use cases covering the most common tasks in existing climate and weather workflows are collected and
 the different stakeholders (e.g. scientists, project managers, institutions which provide infrastructure) are described.
-The core systems such as the supercomputers, storage systems, applications, and software libraries are briefly introduced and characterized by the main failure modes to be considered by the middleware.
+The core systems such as the supercomputers, storage systems, applications, and software libraries are briefly introduced and characterised by the main failure modes to be considered by the middleware.
 The body of the chapter comprises a list of high-level basic use cases which are analysed using a consistent approach to identify key characteristics.
 In each case a flow of events which includes the interaction with the Earth System Data Middleware is identified.
 The cases covered include conventional simulation runs, independent pre/post-processing jobs as well as more integrated scenarios that implement pipelines, workflows and in situ methods.

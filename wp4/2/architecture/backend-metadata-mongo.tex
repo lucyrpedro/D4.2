@@ -1,5 +1,5 @@
 
-A prototypical metadata backend will be realized using MongoDB.
+A prototypical metadata backend will be realised using MongoDB.
 Advantages of using MongoDB are that it scales horizontally with the number of servers, provides fault-tolerance and that the document model supports arbitrary schemas.
 
 
@@ -21,12 +21,12 @@ Relevant technical metadata is shown in \Cref{tbl:additionalTechnicalMetadata} f
 
 Metadata can be optional (O) or mandatory (M), and either is created automatically or must be set manually via the APIs.
 Automatic fields cannot be changed by the user.
-Some of the data can be automatically inferred, if not set manually, but manual setting may allow further optimizations.
+Some of the data can be automatically inferred, if not set manually, but manual setting may allow further optimisations.
 
 Some of the metadata is used on several places, for example, information about the data lineage might be used to create several output variables.
 In our initial implementation, the metadata is stored redundantly because it
 1) simplifies search; 2) enables us to restore data on corrupted storage systems by reading the metadata; 3) reduces contention and potentially false sharing of metadata.
-An implementation might decide to reduce this by utilizing normalized schemas.
+An implementation might decide to reduce this by utilising normalised schemas.
 
 References are the list of objects that are directly used by this object, e.g., other variables that are used to define the data further.
 
@@ -118,7 +118,7 @@ variables:
 	int time(time) ;
 		time:units = "hours since 1900-01-01 00:00:0.0" ;
 		time:long_name = "time" ;
-		time:calendar = "gregorian" ;
+		time:calendar = "Gregorian" ;
 	short sund(time, latitude, longitude) ;
 		sund:scale_factor = 0.659209863732776 ;
 		sund:add_offset = 21599.6703950681 ;
@@ -172,7 +172,7 @@ The dimensionality of the underlying grid is fixed.
 
 The application uses the following information to drive the simulation:
 \begin{itemize}
-	\item Timerange: the simulated model time (from a starting datetime to the specified end)
+	\item Time Range: the simulated model time (from a starting datetime to the specified end)
 	\item Longitude/Latitude: 1D data field with the coordinates [float]
 	\item Temperature: Initial 2D field defined on (lon, lat)
 \end{itemize}
@@ -196,7 +196,7 @@ In \Cref{lst:mongoContainer}, the metadata for the container is shown, after the
 We assume it has used the APIs to provide the information (input, output, scientific metadata).
 In this example, we explicitly define the objects used as input; it is possible to also define
 the input as an already existing container.
-It is also possible to define the input a-priori if the objectIDs are known / looked up prior application run.
+It is also possible to define the input a priori if the object IDs are known / looked up prior application run.
 The intended output variables could be given with their rough sizes.
 This would allow the scheduler to pre-stage the input and ensure that there is enough storage space available for the output.
 The environment information is inferred to the info object but can be changed from the user.
@@ -218,8 +218,8 @@ The environment information is inferred to the info object but can be changed fr
 	"info" : { # This is the scientific metadata
 		"model" : { "name" : "my model", "version" : "git ...4711" },
 		"experiment" : {
-			"tags"        : ["simulation", "poisson", "temperature"]
-			"description" : "Trivial simulation of temperature using a poisson process"
+			"tags"        : ["simulation", "Poisson", "temperature"]
+			"description" : "Trivial simulation of temperature using a Poisson process"
 		},
 	},
 	"environment" : {
@@ -274,8 +274,8 @@ The plugin name must be stored and the respective parameters to identify the coo
 		"unit" : "K",
 		"long description" : "This is the temperature",
 		"experiment" : {
-			"tags"        : ["simulation", "poisson", "temperature"]
-			"description" : "Trivial simulation of temperature using a poisson process"
+			"tags"        : ["simulation", "Poisson", "temperature"]
+			"description" : "Trivial simulation of temperature using a Poisson process"
 		},
 		"model" : { "name" : "my model", "version" : "git ...4711" },
 		"directory" : {
@@ -335,7 +335,7 @@ In the example, we assume two processes create one shard each and the surface of
 	"options" : {
 		"path" : "/mnt/lustre/testdir/file1",
 	},
-	"serialization" : "row-major"
+	"serialisation" : "row-major"
 },
 "references : [
 	ObjectId("<TEMPID>"),

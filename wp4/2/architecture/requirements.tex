@@ -1,7 +1,7 @@
 \begin{chapterIntro}
 The goal of this section is to provide high-level requirements: what the system needs to do and how it relates to dependencies. The chapter distinguishes between functional and non-functional requirements.
-Functional requirements, that is the required features to fulfill the application of the system are enumerated in \Cref{sec: requirements/functional}.
-Non-functional requirements that relate to the runtime qualities (e.g., performance, fault-tolerance or security) of the architecture are collected in \Cref{sec: requirements/non functional}.
+Functional requirements, that is the required features to fulfil the application of the system are enumerated in \Cref{sec: requirements/functional}.
+Non-functional requirements that relate to the run time qualities (e.g., performance, fault-tolerance or security) of the architecture are collected in \Cref{sec: requirements/non functional}.
 \end{chapterIntro}
 
 \label{chap:requirements}
@@ -21,8 +21,8 @@ It must be possible to either retrieve (access) the complete results from experi
 \end{itemize}
 \item Discover, browse and list data. It must be possible to identify the file or object which contains interesting data,  and  eventually obtaining an identifier for the object and an endpoint through which it can be accessed.
 
-\item Handling of scientific/structural metadata as first class citizen, that means the storage system understands the metadata and the API is designed to exploit this knowledge, e.g., data can be searched by consulting metadata catalogs.
-\item Semantical namespace,  meaning that objects can be searched and accessed based on the structural metadata and not by a single hierarchical namespace.
+\item Handling of scientific/structural metadata as first class citizen, that means the storage system understands the metadata and the API is designed to exploit this knowledge, e.g., data can be searched by consulting metadata catalogues.
+\item Semantical namespace, meaning that objects can be searched and accessed based on the structural metadata and not by a single hierarchical namespace.
 \item Supporting heterogeneous storage -- the system shall exploit a heterogeneity of hardware technology, that means using the individual storage technologies for the best purpose, i.e., the characteristics of the storage define their use within ESD. At best, the system makes these decisions without user intervention but it may require users to provide certain ”hints” or intents how data is and will be used.
 
 This includes cases such as:
@@ -58,7 +58,7 @@ These mandatory requirements are accompanied by supporting requirements:
 \item Notifications -- A tool or user may subscribe for a object and be notified if certain modifications are made to the object. This allows to watch the changelog of objects efficiently without polling.
 \item Import/Export -- tools to support data exchange in or out of the ESD system.
 Depending on the format, conventions for mapping the format internal metadata or supplying metadata needed to meet  internal ESD metadata requirements.
-\item Access control -- it should be able to restrict access to objects, supporting several roles, e.g., data center staff, users, projects.
+\item Access control -- it should be able to restrict access to objects, supporting several roles, e.g., data centre staff, users, projects.
 \begin{itemize}
 \item Data sharing -- In particular, the system should make it simple to share data with other researchers.
 \end{itemize}

@@ -2,17 +2,17 @@
 \label{sec: data-formats}
 
 
-Many application developers rely on data description frameworks or libraries to manage datatypes\footnote{A datatype is a collection of properties, all of which can be stored on storage and which, when taken as a whole, provide complete information for data conversion to or from the datatype.}.
+Many application developers rely on data description frameworks or libraries to manage data types\footnote{A datatype is a collection of properties, all of which can be stored on storage and which, when taken as a whole, provide complete information for data conversion to or from the datatype.}.
 Different libraries and middleware provide mechanisms to describe data using basic types and to construct new ones using dedicated APIs.
-Datatypes are provided as a transparent conversion mechanism between internal representation (as data is represented in memory) and external representation (how data is transmitted over the network or saved to permanent storage).
-This section gives an overview of datatypes provided by different software packages.
-Starting from existing middleware and datatype definitions, we will propose a list of basic datatypes to be supported by the ESD middleware.
+Data types are provided as a transparent conversion mechanism between internal representation (as data is represented in memory) and external representation (how data is transmitted over the network or saved to permanent storage).
+This section gives an overview of data types provided by different software packages.
+Starting from existing middleware and datatype definitions, we will propose a list of basic data types to be supported by the ESD middleware.
 
 %The benefits are manifold and many different projects are available.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{MPI}
-The Message Passing Interface supports derived datatypes for efficient data transfer as well as compact description of file layouts (through file views). MPI defines a set of basic datatypes (or type class) from which more complex ones can be derived using appropriate data constructor APIs. Basic datatypes in MPI resemble C atomic types as shown in \Cref{table: mpi-types}.
+The Message Passing Interface supports derived data types for efficient data transfer as well as compact description of file layouts (through file views). MPI defines a set of basic data types (or type class) from which more complex ones can be derived using appropriate data constructor APIs. Basic datatypes in MPI resemble C atomic types as shown in \Cref{table: mpi-types}.
 
 \clearpage
 
@@ -53,16 +53,16 @@ The Message Passing Interface supports derived datatypes for efficient data tran
         \label{table: mpi-types}
 \end{longtable}
 
-Datatypes from Table~\ref{table: mpi-types} can be used in combination with the constructor APIs shown in Table~\ref{table: mpi-constr} to build more complex derived datatypes.
+Data types from Table~\ref{table: mpi-types} can be used in combination with the constructor APIs shown in Table~\ref{table: mpi-constr} to build more complex derived data types.
 
 \begin{longtable}{|>{\centering\arraybackslash} m{5.5cm} | >{\centering\arraybackslash} m{6cm} |}\hline\hline
         \cellHeader Datatype Constructor           & \cellHeader Description                               \\ \hline
         \small \texttt{MPI\_Type\_create\_hindexed}        & \small create an indexed datatype with displacement in bytes  \\ \hline
         \small \texttt{MPI\_Type\_create\_hindexed\_block} & \small create an hindexed datatype with constant-sized blocks \\ \hline
         \small \texttt{MPI\_Type\_create\_indexed\_block}  & \small create an indexed datatype with constant-sized blocks  \\ \hline
-        \small \texttt{MPI\_Type\_create\_keyval}          & \small create an attribute keyval for MPI datatypes           \\ \hline
+        \small \texttt{MPI\_Type\_create\_keyval}          & \small create an attribute keyval for MPI data types           \\ \hline
         \small \texttt{MPI\_Type\_create\_hvector}         & \small create a datatype with constant stride given in bytes  \\ \hline
-        \small \texttt{MPI\_Type\_create\_struct}          & \small create a MPI datatype from a general set of datatypes, %
+        \small \texttt{MPI\_Type\_create\_struct}          & \small create a MPI datatype from a general set of data types, %
                                                              displacements and block sizes                                 \\ \hline
         \small \texttt{MPI\_Type\_create\_darray}          & \small create a datatype representing a distributed array     \\ \hline
         \small \texttt{MPI\_Type\_create\_resized}         & \small create a datatype with a new lower bound and extent %
@@ -74,9 +74,9 @@ Datatypes from Table~\ref{table: mpi-types} can be used in combination with the 
         \label{table: mpi-constr}
 \end{longtable}
 
-Before they can be actually used, MPI derived datatypes (created using the constructors in Table~\ref{table: mpi-constr}) have to be committed to memory using the \texttt{MPI\_Type\_commit} interface.
-Similarly, when no longer needed, derived datatypes can be freed using the \texttt{MPI\_Type\_free} interface.
-Unlike data format libraries, MPI does not provide any permanent data representation (MPI-IO can only read/write binary data), therefore derived datatypes are not used to store any specific data format on stable storage and are instead used only for data transfers or file layout descriptions.
+Before they can be actually used, MPI derived data types (created using the constructors in Table~\ref{table: mpi-constr}) have to be committed to memory using the \texttt{MPI\_Type\_commit} interface.
+Similarly, when no longer needed, derived data types can be freed using the \texttt{MPI\_Type\_free} interface.
+Unlike data format libraries, MPI does not provide any permanent data representation (MPI-IO can only read/write binary data), therefore derived data types are not used to store any specific data format on stable storage and are instead used only for data transfers or file layout descriptions.
 
 An example code for defining a derived data structure for a structure is shown in \Cref{lst:mpi-struct}.
 The structure is defined in Lines 5-9.
@@ -85,7 +85,7 @@ This requires to define the beginning and end of each array, its type and size.
 Once a datatype is defined, it can be used as memory type in subsequent operations.
 In this example, one process sends this datatype to another process (Line 38 and Line 45).
 
-Since MPI datatypes were initially designed for computation and, thus, to define memory regions, they do not offer a way to name the data structures.
+Since MPI data types were initially designed for computation and, thus, to define memory regions, they do not offer a way to name the data structures.
 
 \begin{tcbcode}[label={lst:mpi-struct}]{Example construction of an MPI datatype for a structure}
 \begin{lstlisting}[language=c++,morekeywords={{student_t}}]
@@ -154,9 +154,9 @@ int main(int argc, char **argv) {
 
 %\begin{quotation}
 %\itshape
-HDF5 is a data model, library, and file format for storing and managing data. It supports an unlimited variety of datatypes, and is designed for flexible and efficient I/O and for high volume and complex data.
+HDF5 is a data model, library, and file format for storing and managing data. It supports an unlimited variety of data types, and is designed for flexible and efficient I/O and for high volume and complex data.
 HDF5 is portable and is extensible, allowing applications to evolve in their use of HDF5.
-The HDF5 Technology suite includes tools and applications for managing, manipulating, viewing, and analysing data in the HDF5 format. Like MPI, HDF5 also supports its own basic (native) datatypes reported in \Cref{table: hdf5-types}.
+The HDF5 Technology suite includes tools and applications for managing, manipulating, viewing, and analysing data in the HDF5 format. Like MPI, HDF5 also supports its own basic (native) data types reported in \Cref{table: hdf5-types}.
 %\end{quotation}
 
 \begin{longtable}{|>{\centering\arraybackslash} m{5.5cm} | >{\centering\arraybackslash} m{6cm} |}\hline\hline
@@ -189,10 +189,10 @@ The HDF5 Technology suite includes tools and applications for managing, manipula
         \label{table: hdf5-types}
 \end{longtable}
 
-Besides the native datatypes, the library also provides so called standard datatypes, architecture specific datatypes (e.g., for i386), IEEE floating point datatypes, and others.
-Datatypes can be built or modified starting from the native set of datatypes using the constructors as listed in \Cref{table: hdf5-constr}.
+Besides the native data types, the library also provides so called standard data types, architecture specific data types (e.g., for i386), IEEE floating point data types, and others.
+Data types can be built or modified starting from the native set of data types using the constructors as listed in \Cref{table: hdf5-constr}.
 
-HDF5 constructs allow the user a fine-grained definition of arbitrary datatypes.
+HDF5 constructs allow the user a fine-grained definition of arbitrary data types.
 Indeed, HDF5 allows the user to build a user-defined datatype starting from a native datatype (by copying the native type) and then change datatype characteristics like sign, precision, etc, using the supported datatype constructor API.
 However, since these user-defined data types have often no direct representation on available hardware, this can lead to performance issues.
 
@@ -203,7 +203,7 @@ However, since these user-defined data types have often no direct representation
         \small \texttt{H5Tcreate}                & \small Creates a new datatype of the specified class with the specified number %
                                                    of bytes. This function is used only with the following datatype classes: %
                                                    H5T\_COMPOUND, H5T\_OPAQUE, H5T\_ENUM, H5T\_STRING. %
-                                                   Other datatypes, including integer and floating-point datatypes, are %
+                                                   Other data types, including integer and floating-point data types, are %
                                                    typically created by using H5Tcopy to copy and modify %
                                                    a predefined datatype                                                               \\ \hline
         \small \texttt{H5Tvlen\_create}          & \small Creates a new one-dimensional array datatype of variable-length (VL) with %
@@ -225,7 +225,7 @@ However, since these user-defined data types have often no direct representation
         \small \texttt{H5Tset\_fields}           & \small Sets the locations and sizes of the various floating-point bit fields. %
                                                    The field positions are bit positions in the significant region of the datatype. %
                                                    Bits are numbered with the least significant bit number zero                        \\ \hline
-        \caption{HDF5 Datatypes Constructors}
+        \caption{HDF5 Data types Constructors}
         \label{table: hdf5-constr}
 \end{longtable}
 
@@ -235,7 +235,7 @@ However, since these user-defined data types have often no direct representation
 \subsection{NetCDF}
 
 NetCDF as important alternative is popular within the climate community. NetCDF provides a set of software libraries and self-describing, machine-independent, data formats that support the creation, access, and sharing of array-oriented scientific data.
-In the version 4 of the library (NetCDF4), the used binary file representation is HDF5. Like MPI and HDF5, NetCDF also defines its own set of atomic datatypes as shown in \Cref{table: netcdf-types}.
+In the version 4 of the library (NetCDF4), the used binary file representation is HDF5. Like MPI and HDF5, NetCDF also defines its own set of atomic data types as shown in \Cref{table: netcdf-types}.
 %\end{quotation}
 
 \begin{table}
@@ -275,7 +275,7 @@ Finally, new attributes can be added to the variable using nc\_put\_att and exis
 
 \medskip
 
-Table~\ref{table: netcdf-constr} shows the constructors provided to build user defined datatypes.
+Table~\ref{table: netcdf-constr} shows the constructors provided to build user defined data types.
 
 \begin{longtable}{|>{\centering\arraybackslash} m{1.7cm} | >{\centering\arraybackslash} m{4.5cm} | >{\centering\arraybackslash} m{5cm} |}\hline\hline
         \cellHeader Type & \cellHeader Constructor & \cellHeader Description \\ \hline
@@ -315,7 +315,7 @@ Instead, GRIB very clearly defines the sections of every -- so called -- message
 Every message in GRIB has different sections, each of which contains some information.
 GRIB defines the units that can be represented in every message and thus does not specifically need datatypes to represent them.
 But a library supporting these formats needs to know the mapping from a message type to the contained data fields and their data types.
-In that sense, GRIB is not a self-describing file format but requires code to define the standardized content.
+In that sense, GRIB is not a self-describing file format but requires code to define the standardised content.
 GRIB messages contain 32-bit integers that can be scaled using a predefined data packing schema. The scaling factor is stored along with the data inside the message.
 
 
@@ -331,7 +331,7 @@ Some of the listed systems are directly used by ESD.
 \subsection{WOS}
 \label{WOS background}
 
-DDN (Data Direct Network) WOS (Web object scaler)\footnote{\url{http://www.ddn.com/products/object-storage-web-object-scaler-wos/}} represents an object storage solution able to manage files as "objects".
+DDN (Data Direct Network) WOS (Web object scaler)\footnote{\url{http://www.ddn.com/products/object-storage-web-object-scaler-wos/}} represents an object storage solution able to manage files as ``objects''.
 
 It offers a simple and effective way to manage data stored in the cloud by means of an ease administration interface and IP based direct connection to the nodes.
 WOS architecture is natively geographically agnostic and this represents one of the main features of the product: nodes can be deployed anywhere and the access to data which they host is guaranteed by Internet Protocol (IP) connectivity.
@@ -345,12 +345,12 @@ Multiple nodes form a zone which collects nodes with a certain policy. The WOS s
 The pool of the zones forms the entire WOS cloud; the communication in the cloud is guaranteed by the membership of a common network.
 \item \textbf{policy}: the administrator defines different rules which determine the object distribution. It is important to highlight that files + metadata + policy form an Object.
 \item \textbf{object:} an object is formed by multiple elements managed by WOS as a single entity. For instance, an object could be a file stored in the WOS cloud or a group of them.
-\item \textbf{ObjectID (OID)}: An OID uniquely identifies an object (and its replicas, if any). The OID has to be provided to the WOS system for allowing the addressing and retrieving of the related object.
+\item \textbf{Object ID (OID)}: An OID uniquely identifies an object (and its replicas, if any). The OID has to be provided to the WOS system for allowing the addressing and retrieving of the related object.
 \end{itemize}
 In addition to these, WOS supports the definition of metadata by the users in the form of key-value pairs and multiple replicas for each object (managed by the policy rules).
 
 WOS cloud is a good solution to take into account to manage data in environments which present particular features or challenges that could affect the traditional architectures based on common file-systems and storage solutions.
-For example, it can be applied successfully when datasets are too large for a single file system and, so, they need to be stored on multiple sites or, on the contrary, there are large quantities of files which are very small.
+For example, it can be applied successfully when data sets are too large for a single file system and, so, they need to be stored on multiple sites or, on the contrary, there are large quantities of files which are very small.
 Other examples are systems that present high rates of file read, write and/or file deletion or if users want a small system to start with the possibility to easily scale up.
 The only requirements of a WOS installation are related to the connection between the nodes: nodes must be interconnected through a network (LAN or WAN or a combination of them) and must be able to communicate using the TCP/IP protocol.
 The network between the nodes should be stable and reliable (anyway WOS system are able to recover the normal operational activity after a network outages), fast (multiple Gigabit ports are preferred or 10 Gigabit Ethernet connections) and low-latency (which is an important aspect especially for TCP/IP connections so using low-latency appliances will guarantee the best results).
@@ -374,8 +374,8 @@ It is not allowed to modified objects so each object can be written only once, r
 
 As mentioned above, each object has a unique Object-ID (OID) that is returned to the user when the object is created.
 OID is unique for the entire life of the cluster and no OID replication is allowed also if an object is deleted.
-OID should be used by the clients to access the object; so, common applications have to maintain a catalog for collecting the OID of the stored objects.
-In this context we will analyze the C++ APIs provided by the WOS installation and the extensions developed in order to wrap the C++ APIs on C functions.
+OID should be used by the clients to access the object; so, common applications have to maintain a catalogue for collecting the OID of the stored objects.
+In this context we will analyse the C++ APIs provided by the WOS installation and the extensions developed in order to wrap the C++ APIs on C functions.
 The C++ APIs provide interface for the following operations:
 \begin{itemize}
 	\item Connect to the WOS cluster;
@@ -393,13 +393,13 @@ More in detail in the following list of the calls for each operation mentioned b
 	Connect  & \textit{WosClusterPtr wos = WosCluster::Connect(host);} & \textit{host} represents the IP address of one host of the WOS cluster. A process can open only one connection to the cluster and should keep it open until the termination. \\ \hline
 	Create object & \textit{WosObjPtr wobj = WosObj::Create();} & \textit{wobj} is a C++ WosObject. After creating a WosObject, data and metadata can be associated \\ \hline
 	Set data\newline Set metadata & \textit{wobj-\textgreater SetData(data, len);}\newline \textit{wobj-\textgreater SetMeta("\textless key\textgreater", "value");} & \textit{wobj} represents the WosObject and \textit{data} the void pointer containing the data to store. For metadata, the couple \textit{\textless key\textgreater, \textless value\textgreater} must be passed. \\ \hline
-	Put blocking\newline Put non-blocking & \textit{wos-\textgreater Put(status, oid, policy, wobj);}\newline \textit{wos-\textgreater Put(wobj, policy, callback, context);} & \textit{wobj} is the just created Wos Object to put. The non-blocking form needs a \textit{callback} function and a \textit{context} object to perform and synchronize the starting and the termination of the operation. \\ \hline
-	Get blocking\newline Get non-blocking & \textit{wos-\textgreater Get(status, oid, wobj);}\newline \textit{wos-\textgreater Get(oid, callback, context);} & as for the put function, the non-blocking case uses a \textit{context} and a \textit{callback} function. After retrieving a Wos object data and metadata included can be read. \\ \hline
+	Put blocking\newline Put non-blocking & \textit{wos-\textgreater Put(status, oid, policy, wobj);}\newline \textit{wos-\textgreater Put(wobj, policy, callback, context);} & \textit{wobj} is the just created WOS Object to put. The non-blocking form needs a \textit{callback} function and a \textit{context} object to perform and synchronise the starting and the termination of the operation. \\ \hline
+	Get blocking\newline Get non-blocking & \textit{wos-\textgreater Get(status, oid, wobj);}\newline \textit{wos-\textgreater Get(oid, callback, context);} & as for the put function, the non-blocking case uses a \textit{context} and a \textit{callback} function. After retrieving a WOS object data and metadata included can be read. \\ \hline
 	Get data\newline Get metadata & \textit{wobj-\textgreater GetData(data, length);}\newline \textit{wobj-\textgreater GetMeta("\textless key\textgreater", value);} & \textit{wobj} represents the WosObject and \textit{data} the void pointer for storing the retrieved data. To retrieve metadata the corresponding \textit{key} must be passed. It is worth noting that WOS does not allow to modify/update objects: a modified copy could be stored as a separate object \\ \hline
 	Delete blocking\newline Delete non-blocking & \textit{wos-\textgreater Delete(status, oid);} \newline \textit{wos- \textgreater Delete(oid, callback, context);} & as for the put and get functions, the \textit{delete} operation can be performed in a blocking or non-blocking form \\ \hline
-	Exists blocking\newline Exists non-blocking & wos-\textgreater Exists(status, oid);\newline wos-\textgreater Exists(oid, callback, context);\newline & Check the existence of a Wos Object using its OID. To actually retrieve the object and data the related get functions could be used \\ \hline
+	Exists blocking\newline Exists non-blocking & wos-\textgreater Exists(status, oid);\newline wos-\textgreater Exists(oid, callback, context);\newline & Check the existence of a WOS Object using its OID. To actually retrieve the object and data the related get functions could be used \\ \hline
 	Reserve blocking\newline Reserve non-blocking & wos-\textgreater Reserve(status, oid, policy);\newline wos-\textgreater Reserve(policy, callback, context);& Reserve an OID to be used in the next PutOID call. \\ \hline
-	PutOID blocking\newline PutOID non-blocking & wos-\textgreater PutOID(status, oid, wobj);\newline wos-\textgreater PutOID(wobj, oid, callback, context);& Put a Wos Object using the reserved oid. It is worth noting that the couple of functions Reserve and PutOID perform the same operations of the Put call. They should be used if the application need to execute the two stages at different time.\\ \hline
+	PutOID blocking\newline PutOID non-blocking & wos-\textgreater PutOID(status, oid, wobj);\newline wos-\textgreater PutOID(wobj, oid, callback, context);& Put a WOS Object using the reserved oid. It is worth noting that the couple of functions Reserve and PutOID perform the same operations of the Put call. They should be used if the application need to execute the two stages at different time.\\ \hline
 \caption{WOS Operations}
 \end{longtable}
 
@@ -429,7 +429,7 @@ In the following subsections, the Ophidia multidimensional data model is present
 
 \textbf{Multidimensional data model and star schema}\\
 
-A multidimensional data model is typically organized around a central theme and shows the data by means of the form of a datacube. A datacube consists of several measures which represent numerical values that can be analyzed over the available dimensions.\\
+A multidimensional data model is typically organised around a central theme and shows the data by means of the form of a data cube. A data cube consists of several measures which represent numerical values that can be analysed over the available dimensions.\\
 
 The multidimensional data model exists in the form of star, snowflake or galaxy schema.
 The Ophidia storage model is an evolution of the star schema: in this schema, the data warehouse implementation consists of a large central table (the fact table, FACT) that contains all the data and a set of smaller tables (dimension tables), one for each dimension. The dimensions can also implement hierarchies, which provide a way for performing analysis and mining over the same dimension.
@@ -441,7 +441,7 @@ The Ophidia storage model is an evolution of the star schema: in this schema, th
 	\label{fig: The Ophidia Storage Model}
 \end{figure}
 
-Let us consider the Dimensional Fact Model, a conceptual model for data warehouse and the classic Relational-OLAP (ROLAP) based implementation of the associated star schema. There is one fact table (FACT), four dimensions (dim1, dim2, dim3, and dim4), with the last dimension modeled through a 4-level concept hierarchy (lev1, lev2, lev3, lev4) and a single measure (measure). Let us consider a NetCDF output of a global model simulation where dim1, dim2, and dim3 correspond to latitude, longitude, and depth, respectively and dim4 is the time dimension, with the concept hierarchy year, quarter, month, day; measure represents, for instance, the air pressure.\\
+Let us consider the Dimensional Fact Model, a conceptual model for data warehouse and the classic Relational-OLAP (ROLAP) based implementation of the associated star schema. There is one fact table (FACT), four dimensions (dim1, dim2, dim3, and dim4), with the last dimension modelled through a 4-level concept hierarchy (lev1, lev2, lev3, lev4) and a single measure (measure). Let us consider a NetCDF output of a global model simulation where dim1, dim2, and dim3 correspond to latitude, longitude, and depth, respectively and dim4 is the time dimension, with the concept hierarchy year, quarter, month, day; measure represents, for instance, the air pressure.\\
 
 \textbf{Ophidia internal storage model}\\
 
@@ -449,10 +449,10 @@ The Ophidia internal storage model is a two-step-based evolution of the star sch
 
 In our example, latitude, longitude and depth are explicit dimensions, while time is the implicit one (in this case 1-D array) so the mapping on the Ophidia key-array data storage model consists of having a single table with two attributes:
 \begin{itemize}
-	\item an ID attribute: \textit{ID = f(fk\textunderscore latitudeID, fk\textunderscore longitudeID, fk\textunderscore depthID)} as a numerical data type;
-	\item an array-based attribute, managing the implicit dimension time, as a binary data type.
+	\item an ID attribute: \textit{ID = f(fk\textunderscore latitudeID, fk\textunderscore longitudeID, fk\textunderscore depthID)} as a numerical datatype;
+	\item an array-based attribute, managing the implicit dimension time, as a binary datatype.
 \end{itemize}
-In terms of implementation, several RDBMS allow data to be stored in binary form but they do not provide a way to manage the array as a native data type. The reason is that the available binary data type does not look at the binary array as a vector, but rather as a single binary block: therefore, we have designed and implemented several array-based primitives to manage arrays stored through the Ophidia storage model.\\
+In terms of implementation, several RDBMS allow data to be stored in binary form but they do not provide a way to manage the array as a native datatype. The reason is that the available binary datatype does not look at the binary array as a vector, but rather as a single binary block: therefore, we have designed and implemented several array-based primitives to manage arrays stored through the Ophidia storage model.\\
 
 \textbf{Hierarchical data management}\\
 
@@ -463,7 +463,7 @@ In order to manage large volumes of data, in the following we discuss the horizo
 	\item Level 2: multiple instances of databases on the same IO Server (multi-DB);
 	\item Level 3: multiple fragments on the same database (multi-table).
 \end{itemize}
-The hierarchical data storage organization allows data analysis and mining on a large set of distributed fragments as a whole exploiting multiple processes and parallel approaches.
+The hierarchical data storage organisation allows data analysis and mining on a large set of distributed fragments as a whole exploiting multiple processes and parallel approaches.
 
 \section{Big Data Concepts}
 
@@ -486,7 +486,7 @@ The main concepts:
 The supported interfaces and languages are: HDFS Java API, WebHDFS REST API and libhdfs C API, as well as a Web interface and CLI shells.
 Security is based on file authentication (user identity). However, HDFS accepts network protocols like Kerberos (for users) and encryption (for data).
 HDFS was designed in Java for Hadoop Framework, therefore any machine that supports Java is able to run it.
-It can be considered as the "source" of many processing systems (especially in the Apache eco-system) like Hadoop and Spark. All data stored into HDFS become “sequencefile” files.
+It can be considered as the ``source'' of many processing systems (especially in the Apache ecosystem) like Hadoop and Spark. All data stored into HDFS become ``sequencefile'' files.
 
 However, its sub-optimal performance on high-performance storage and assumption to work on cheap hardware makes it no optimal choice for HPC environments.
 Therefore, many vendors support HDFS adapters on top of high-performance parallel file systems such as GPFS and Lustre.
@@ -495,11 +495,11 @@ One limitation of its design is its consistency semantics which allows concurren
 
 \textbf{HBase}\\
 Apache HBase is a distributed, scalable, big data store.
-HBase is an open-source, distributed, versioned, non-relational database modeled after Google's “Bigtable: A Distributed Storage System for Structured Data” by Chang et al. [R19]. Similarly to Bigtable, which leverages the distributed data storage provided by GFS, Apache HBase provides Bigtable-like capabilities on top of Hadoop and HDFS (https://hbase.apache.org/).
-It can be used to perform random, realtime read/write access to large volumes of data. HBase's goal is the hosting of very large tables, on top of clusters of commodity hardware. As in the case of HDFS this is not the optimal choice for HPC infrastructures. \\
+HBase is an open-source, distributed, versioned, non-relational database modelled after Google's ``Bigtable: A Distributed Storage System for Structured Data'' by Chang et al. [R19]. Similarly to Bigtable, which leverages the distributed data storage provided by GFS, Apache HBase provides Bigtable-like capabilities on top of Hadoop and HDFS (https://hbase.apache.org/).
+It can be used to perform random, real time read/write access to large volumes of data. HBase's goal is the hosting of very large tables, on top of clusters of commodity hardware. As in the case of HDFS this is not the optimal choice for HPC infrastructures. \\
 
 \textbf{Hive}\\
-Apache Hive is a data warehouse software facilitating reading, writing, and managing of large datasets residing in distributed storage using SQL (https://hive.apache.org/). It is built on top of Apache Hadoop and provides:
+Apache Hive is a data warehouse software facilitating reading, writing, and managing of large data sets residing in distributed storage using SQL (https://hive.apache.org/). It is built on top of Apache Hadoop and provides:
 \begin{itemize}
 	\item Tools to enable easy access to data via SQL, allowing data warehousing tasks such as ETL, reporting, and data analysis;
 	\item Access to files stored directly in Apache HDFS or in other data storage systems like Apache HBase.
@@ -535,11 +535,11 @@ In the following the main features of the analytics framework of Ophidia will be
 
 The Ophidia architecture consists of (i) the server front-end, (ii) the OphidiaDB, (iii) the compute nodes, (iv) the I/O nodes and (v) the storage system.
 \begin{itemize}
-	\item The server front-end is responsible for accepting and dispatching requests incoming from the clients. It is a pre-threaded server implementing standard interfaces (WS-I, OGC-WPS, GSI-VOMS). It relies on X.509 digital certificates for authentication and Access Control List (ACL) for authorization;
+	\item The server front-end is responsible for accepting and dispatching requests incoming from the clients. It is a pre-threaded server implementing standard interfaces (WS-I, OGC-WPS, GSI-VOMS). It relies on X.509 digital certificates for authentication and Access Control List (ACL) for authorisation;
 	\item The OphidiaDB is the system (relational) database. By default the server front-end uses a MySQL database to store information about the system configuration and its status, available data sources, registered users, available I/O servers, and the data distribution and partitioning;
 	\item The compute nodes are computational machines used by the Ophidia software to run the parallel data analysis operators;
 	\item The I/O nodes are the machines devoted to the parallel I/O interface to the storage. Each I/O node hosts one or more I/O servers responsible for I/O with the underlying storage system. % described in \Cref{Ophidia Storage model}.
-	\item The I/O servers are MySQL DBMSs or native in-memory services \cite{DBLP:conf/cd/EliaFDPFW16} supporting, at both the data type and primitives levels, the management of n-dimensional array structures. This support has been adding a new set of functions (exploiting the User Defined Function approach, UDF) to manipulate arrays.
+	\item The I/O servers are MySQL DBMSs or native in-memory services \cite{DBLP:conf/cd/EliaFDPFW16} supporting, at both the datatype and primitives levels, the management of n-dimensional array structures. This support has been adding a new set of functions (exploiting the User Defined Function approach, UDF) to manipulate arrays.
 	\item The storage system is the hardware resource managing the data store, that is, the physical resources hosting the data according to the hierarchical storage structure. % defined in \Cref{Ophidia Storage model}.
 \end{itemize}
 
@@ -548,12 +548,12 @@ The Ophidia architecture consists of (i) the server front-end, (ii) the OphidiaD
 As mentioned before, the Ophidia framework addresses the analysis of n-dimensional arrays. This is achieved through a set of primitives included into the system as plugins (dynamic libraries). So far, about 100 primitives have been implemented. Multiple core functions of well-known numerical libraries (e.g. GSL, PETSc) have been included into new Ophidia primitives. Among others, the available array-based functions allow to perform data sub-setting, data aggregation (i.e. max, min, avg), array concatenation, algebraic expressions, and predicate evaluation. It is important to note that multiple plugins can be nested to implement a single more complex array-based task.
 Bit-oriented plugins have also been implemented to manage binary data cubes. Compression routines, based on zlib, xz, lzo libraries, are also available as array-based primitives.\\
 
-Concerning the operators, The Ophidia analytics platform provides several MPI-based parallel functionalities to manipulate (as a whole) the entire set of fragments associated to a datacube. Some relevant examples include: datacube sub-setting (slicing and dicing), datacube aggregation, array-based primitives at the datacube level, datacube duplication, datacube pivoting, and NetCDF file import and export.
-Along with data operators, the framework provides a comprehensive set of metadata operators. Metadata represents a valuable source of information for data discovery and data description. From this point of view some examples include: provenance management, fragmentation and cubesize information, variable and dimensions specific attributes.\\
+Concerning the operators, The Ophidia analytics platform provides several MPI-based parallel functionalities to manipulate (as a whole) the entire set of fragments associated to a data cube. Some relevant examples include: data cube sub-setting (slicing and dicing), data cube aggregation, array-based primitives at the data cube level, data cube duplication, data cube pivoting, and NetCDF file import and export.
+Along with data operators, the framework provides a comprehensive set of metadata operators. Metadata represents a valuable source of information for data discovery and data description. From this point of view some examples include: provenance management, fragmentation and cube size information, variable and dimensions specific attributes.\\
 
 \textbf{Workflows management}\\
 
-The framework stack includes an internal workflow management system \cite{DBLP:conf/ieeehpcs/PalazzoMFDEWA15}, which coordinates and orchestrates the execution of multiple scientific data analytics and visualization tasks (e.g. operational processing/analysis chains). It is able to manage the submission of complex scientific workflows by means of parsing and analyzing input JSON files written in compliance with a predefined JSON Schema, which includes the description of each task, the definition of the dependencies among different tasks, and several metadata. In addition advanced features are available as definition of loops, variable definition and conditional statements. Workflow execution monitoring is allowed by explicitly querying the Ophidia server or in real-time through a graphical user interface.
+The framework stack includes an internal workflow management system \cite{DBLP:conf/ieeehpcs/PalazzoMFDEWA15}, which coordinates and orchestrates the execution of multiple scientific data analytics and visualisation tasks (e.g. operational processing/analysis chains). It is able to manage the submission of complex scientific workflows by means of parsing and analyzing input JSON files written in compliance with a predefined JSON Schema, which includes the description of each task, the definition of the dependencies among different tasks, and several metadata. In addition advanced features are available as definition of loops, variable definition and conditional statements. Workflow execution monitoring is allowed by explicitly querying the Ophidia server or in real-time through a graphical user interface.
 
 \subsection{MongoDB}
 The MongoDB\footnote{\url{https://docs.mongodb.com/}} is an open-source document database.
@@ -590,7 +590,7 @@ Servers can be grouped into replica sets to provide high availability and fault 
 \paragraph{Query documents}
 
 A query document is a BSON document that is used to search all documents of a collection for data that matches the defined query.
-The example in \Cref{lst:mongoQuery} specifies documents that contain the subdocument people with an id field that is bigger than 4711.
+The example in \Cref{lst:mongoQuery} specifies documents that contain the sub-documents people with an id field that is bigger than 4711.
 Complex queries can be defined.
 In combination with indices on fields, MongoDB can search large quantities of documents quickly.
 

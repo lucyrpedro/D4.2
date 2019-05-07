@@ -1,7 +1,7 @@
 
 
 I/O requests handled by the ESD middleware are received via the ESDM interfaces as they are described in \Cref{sec: viewpoints/logical/semantics}.
-In most cases, these requests must collect additional information / identify multiple fragments to fulfill a request.
+In most cases, these requests must collect additional information / identify multiple fragments to fulfil a request.
 The ESDM scheduler is responsible to progress potentially operations, coordinate requests, and invoke the appropriate handlers.
 In particular, the scheduler will consult the layout component to determine which fragments to create or use and which storage backends to use.
 For a discussion of the decision process for a mapping of a I/O request to backends refer to \Cref{component: layout} on the layout component.

@@ -1,6 +1,6 @@
 
 Most climate applications today read and write from and to parallel file systems such as Lustre.
-The section describes how a POSIX-like backend to the ESDM would handle read and write requests and organize the ESDM data structures.
+The section describes how a POSIX-like backend to the ESDM would handle read and write requests and organise the ESDM data structures.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -10,7 +10,7 @@ The section describes how a POSIX-like backend to the ESDM would handle read and
 \begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{esdm-backends/POSIX/logical.eps}
-	\caption{Logical view to the POSIX backend. I/O requests arrive through the ESDM API. The layout component provides a fragmentation (write: site config + perf model / read: as stored in metadata + optimization candidate). As a result actual I/O requests are processed by the progress component which calls the backends. The backends and the datatype components work together to convert data according to what is required (again and read and write differ).}
+	\caption{Logical view to the POSIX backend. I/O requests arrive through the ESDM API. The layout component provides a fragmentation (write: site config + perf model / read: as stored in metadata + optimisation candidate). As a result actual I/O requests are processed by the progress component which calls the backends. The backends and the datatype components work together to convert data according to what is required (again and read and write differ).}
 	\label{fig:backend posix logical view}
 \end{figure}
 
@@ -40,8 +40,8 @@ The sequence of events relevant to the POSIX backend (also illustrated in \Cref{
 
 For a POSIX backend many potential mappings to files and directories are possible.
 Which mappings are the most efficient is an open research question and depends on the application.
-A straight forward approach is to use directory structure to map hierarchical concepts e.g. from NetCDF or HDF5 such as groups and datasets.
-The files within dataset directory would include a description of the domain and an additional directory that is used to store the actual fragments.
+A straight forward approach is to use directory structure to map hierarchical concepts e.g. from NetCDF or HDF5 such as groups and data sets.
+The files within data set directory would include a description of the domain and an additional directory that is used to store the actual fragments.
 
 \begin{figure}
 	\centering
@@ -55,13 +55,13 @@ The files within dataset directory would include a description of the domain and
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \paragraph{Reading data}
 
-Analog to the write case, the reading data with a backend extends the use-case description for general reading (see \Cref{uc: independent read}).
+Analogue to the write case, the reading data with a backend extends the use-case description for general reading (see \Cref{uc: independent read}).
 The sequence of events relevant to the POSIX backend (also illustrated in \Cref{fig:backend posix sequence read}) unfolds as follows:
 
 \begin{itemize}
 	\item Read arrives
 	\item Progress receives requests and splits it potentially into multiple sub requests
-	\item Layout loads metadata, consults indexes and collects a sufficient amount of fragments to reconstruct requested (sub)domain in parallel and from the most "affordable" backends
+	\item Layout loads metadata, consults indexes and collects a sufficient amount of fragments to reconstruct requested (sub)domain in parallel and from the most ``affordable'' backends
 	\item Progress (potentially coordinated across multiple processes) issues requests to backends
 	\item Backends fetch data and return Fragments
 	\item Backend + Layout + Datatype perform necessary conversations
@@ -119,8 +119,8 @@ The progress component is responsible for handling any sync calls as well as out
 
 
 \paragraph{ESDM Compactor component}
-The ESDM compactor may either reorganize POSIX data snippets on their on.. e.g. when running as daemon that improves and maintains the system health.
-As applications issue I/O the progress component may use the ESDM compactor when the decision component determines feasible reorganization/compactification.
+The ESDM compactor may either reorganise POSIX data snippets on their on.. e.g. when running as daemon that improves and maintains the system health.
+As applications issue I/O the progress component may use the ESDM compactor when the decision component determines feasible reorganisation/compactification.
 
 
 \paragraph{(Competing Load):}
@@ -131,7 +131,7 @@ This may influence the decisions used for compactification.
 
 \paragraph{(Service Loads):}
 The backends usually employ service workloads that ensure system health.
-%How do ESDM and there workloads intefere with each other?
+%How do ESDM and there workloads interfere with each other?
 
 
 

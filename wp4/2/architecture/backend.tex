@@ -7,13 +7,13 @@
 	\Cref{component: scheduler} discusses the scheduling component that breaks down incoming read and write requests into subsequent requests to create or receive multiple fragments.
 	The scheduler relies on a layout component to create a set of domain filling subrequests which is discussed in \Cref{component: layout}.
 	In most cases, an application will not interface directly with the ESDM middleware but through a common frontend.
-	\Cref{frontend: hdf5 + mpi} introduces a HDF5 frontend and also discusses how message passing via MPI is realized outside of the ESDM.
-	\Cref{frontend: fuse} addresses legacy interfaces using FUSE to expose datasets via a configurable virtual file systems.
+	\Cref{frontend: hdf5 + mpi} introduces a HDF5 frontend and also discusses how message passing via MPI is realised outside of the ESDM.
+	\Cref{frontend: fuse} addresses legacy interfaces using FUSE to expose data sets via a configurable virtual file systems.
 
 	It follows the discussion of multiple backends.
 	In particular \Cref{backend: posix} discusses a POSIX backend to allow for interactions with parallel file systems.
 	Object storage backends for Mero (see \Cref{backend: mero}) and WOS (see \Cref{backend: wos}) are discussed,
-	Besides data backends, also pure metadata backends are possible allowing to use a existing software stacks that are typically also residing on some kind of storage backend themself.
+	Besides data backends, also pure metadata backends are possible allowing to use a existing software stacks that are typically also residing on some kind of storage backend themselves.
 	\Cref{backend: mongo} describes MongoDB bases metadata backend.
 \end{chapterIntro}
 

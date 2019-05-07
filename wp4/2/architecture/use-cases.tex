@@ -20,7 +20,7 @@ This section briefly collects and groups the data-related high-level use-cases b
 Numerical weather prediction focuses on the production of a short-time forecast based on initial sensor (satellite) data and generates derived data products for certain end users (e.g., weather forecast for the general public or military).
 As compute capabilities and requirements for users increase, new services are added or existing services are adapted.
 Climate predictions run for long time periods and may involve complex workflows to compute derived information such as monthly mean or to identify certain patterns in the forecast data such as tsunamis.
-%before the community settles for large scale ensemble simulations the models go two a continues process of model and performance optimizations.
+%before the community settles for large scale ensemble simulations the models go two a continues process of model and performance optimisations.
 
 In the following, a list of characteristic high-level workloads and use-cases that are typically performed per community is given.
 These use-cases resemble what a user/scientist usually has in mind when dealing with numerical weather prediction (NWP) and climate simulation; there are several supportive use-cases from the perspective of the data centre that will be discussed later.
@@ -30,19 +30,19 @@ These use-cases resemble what a user/scientist usually has in mind when dealing 
 
 \begin{itemize}
 	\item Data ingestion: Store incoming stream of observations from satellites, radar, weather stations and ships.
-	\item Pre-Processing: Cleans, adjusts observation data and then transforms it to the data format used as initial condition for the prediction. For example, insufficient sampling makes pre-processing necessary so models can be initialized correctly.
+	\item Pre-Processing: Cleans, adjusts observation data and then transforms it to the data format used as initial condition for the prediction. For example, insufficient sampling makes pre-processing necessary so models can be initialised correctly.
 	\item Now Casting (0-6h): Precise prediction of the weather in the near future.
 	Uses satellite data and data from weather stations, extrapolates radar echos.
 	\item Numeric Model Forecasts (0-10+ Days): Run a numerical model to predict the weather for the next few days.
 	Typically, multiple models (ensembles) are run with some perturbed input data.
-	The model proceeds usually as follows: 1) Read-Phase to initialize simulation; 2) create a periodic snapshots (write) for the model time, e.g., every hour.
+	The model proceeds usually as follows: 1) Read-Phase to initialise simulation; 2) create a periodic snapshots (write) for the model time, e.g., every hour.
 	\item  Post Processing: create data products that may be used for multiple purposes.
 	\begin{itemize}
 		\item for Now Casting: multi sensor integration, classification, ensembles, impact models
 		\item for Numeric Model Forecasts: statistical interpretation of ensembles, model-combination
 		\item generation of data products like GRIB files as service for customers of weather forecast data
 	\end{itemize}
-	\item Visualizations: Create fancy presentations of the future weather; this is usually part of the post processing.
+	\item Visualisations: Create fancy presentations of the future weather; this is usually part of the post processing.
 \end{itemize}
 
 
@@ -51,19 +51,19 @@ These use-cases resemble what a user/scientist usually has in mind when dealing 
 Many use cases in climate are very similar:
 
 \begin{itemize}
-	\item Pre-Processing: Similar to the NWP use case.
+	\item Pre-processing: Similar to the NWP use case.
 	\item Forecasting with Climate Models: Similar to the NWP use case, with the following differences:
 	\begin{itemize}
 		\item The periodic snapshots (write) uses variable depending frequencies, e.g., some variables are written out with higher frequencies than others
 	\end{itemize}
-	\item Post Processing: create data products that are useful, e.g., run CDOs (Climate Data Operations) to generate averages for certain regions. The performed post processing depends on the task the scientist has in mind. While at runtime of the model some products are clear and may be used to diagnose the simulation run itself, later scientists might be interested to run additional post processing to look for new phenomena.
-	\item Dynamic visualisation: use interactive tools to search for interesting patterns. Tools such as VTK and  Paraview are used. %Potentially create a time series movie.
-	\item Archive data: The model results are stored on a long-term archive. They may be used for later analysis --  often at other sites and by another user, e.g., to search for some interesting pattern, or to serve as input data for localized higher-resolution models. Also it supports reproduceability of research.
+	\item Post-processing: create data products that are useful, e.g., run CDOs (Climate Data Operations) to generate averages for certain regions. The performed post processing depends on the task the scientist has in mind. While at runtime of the model some products are clear and may be used to diagnose the simulation run itself, later scientists might be interested to run additional post processing to look for new phenomena.
+	\item Dynamic visualisation: use interactive tools to search for interesting patterns. Tools such as VTK and Paraview are used. %Potentially create a time series movie.
+	\item Archive data: The model results are stored on a long-term archive. They may be used for later analysis --  often at other sites and by another user, e.g., to search for some interesting pattern, or to serve as input data for localised higher-resolution models. Also it supports reproduceability of research.
 \end{itemize}
 
 Note that compared to NWP there is more dynamic and flexibility needed in climate forecasting.
 Scientists may run prototypical code simulating novel features and creating new data products.
-They may use many different tools on different sites to post process and visualize data and, over time, new methods may be found to interact with data model output.
+They may use many different tools on different sites to post process and visualise data and, over time, new methods may be found to interact with data model output.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Roles and Human Actors}
@@ -93,7 +93,7 @@ In general, we refer to scientists as users of ESDM.
 \medskip
 
 Commonly, scientists share technical infrastructure such as compute and storage systems with other groups within an organisation.
-But as scientists collaborate across the boundaries of their institution, the operation of, e.g., a data center is outsourced and embedded into a separate organisation (such as the DKRZ, ECMWF or Met office) with the different organisations as stakeholders.
+But as scientists collaborate across the boundaries of their institution, the operation of, e.g., a data centre is outsourced and embedded into a separate organisation (such as the DKRZ, ECMWF or Met office) with the different organisations as stakeholders.
 Yet, it is not uncommon to find smaller systems operated by individual research groups for analysis tasks.
 %\Cref{fig:use_case_relationships} illustrates the various actors that are involved in data management within and across sites.
 A role in this context does not translate to persons, but a person may fill multiple roles, but also multiple persons may collaborate on a single role.
@@ -113,8 +113,8 @@ The use cases described in this chapter, are illustrated in \Cref{fig:overview-a
 In general, by use case we mean a typical workflow that may consist of multiple steps that are run sequentially or in parallel (concurrently).
 It covers the execution of applications (Simulation),
 the pre/post processing of data needed to drive applications,
-the concurrent simulation and post processing, i.e., while the simulation runs we already produce relevant data products,
-the simulation coupled with in-situ post processing,
+the concurrent simulation and post-processing, i.e., while the simulation runs we already produce relevant data products,
+the simulation coupled with in-situ post-processing,
 the simulation coupled with interactive visualisation,
 the simulation coupled with tools for big data analytics.
 These use cases are built on the generic use cases for independent write and read.
@@ -122,7 +122,7 @@ These use cases are built on the generic use cases for independent write and rea
 
 An experimenter (user) has a use case in mind that consists of multiple steps (jobs) that are run sequentially or concurrently.
 He/she submits a job of the workflow to the job scheduler which assigns resources on the supercomputer and starts the execution of the job script.
-Optionally, it may use the ESDM interfaces to steer data migration and staging or additional optimizations.
+Optionally, it may use the ESDM interfaces to steer data migration and staging or additional optimisations.
 The job script runs on one of the allocated nodes and processes a sequence of instructions such as running of applications.
 An application may use the ESDM interface directly or via an existing API such as NetCDF indirectly.
 
@@ -184,7 +184,7 @@ Controlling access:
 	\item They must themselves be members of any group they create.
 	\item They can add/remove any other user identifiers known to them to that group.
 	\item How users find the identifiers of other users is not defined here.
-	\item If they use the identifier ``public'' for a group, then users in this group (who may also include the special identifier "anonymous"), then users in this group will have read-only access to these objects.
+	\item If they use the identifier ``public'' for a group, then users in this group (who may also include the special identifier ``anonymous''), then users in this group will have read-only access to these objects.
 	\item Users can assign any group identifier of which they are a member to any object they create. In doing so, they make ``their'' objects into ``shared'' objects (except for the public group as defined above, where they are simply making the object read-only to that group).
 	\item Any user with ``shared'' access has the same privileges for that object as the original owner, except that of modifying or removing the group tag.
 	\begin{itemize}
@@ -288,7 +288,7 @@ For long-term archival also automatic tape libraries are wide spread.
 \paragraph{Risks:}
 \begin{itemize}
 	\item Data loss / Media Failures/Wear
-	\item Performance Degradation over time / Aging
+	\item Performance Degradation over time / Ageing
 \end{itemize}
 
 
@@ -312,7 +312,7 @@ For long-term archival also automatic tape libraries are wide spread.
 \end{figure}
 
 \paragraph{System Description:}
-A parallel application that utilizes a HPC system to collaboratively solve a large task (for example as listed in \Cref{sec:use cases/climate and weather}).
+A parallel application that utilises a HPC system to collaboratively solve a large task (for example as listed in \Cref{sec:use cases/climate and weather}).
 Many applications use MPI to coordinate and exchange data across compute nodes.
 \Cref{fig:System: Application} illustrates how work represented by the colourful boxes is divided and distributed to be handled by multiple processes.
 
@@ -339,7 +339,7 @@ Applications commonly use
 
 
 \paragraph{System Description:}
-Climate/NWP codes commonly use libraries to produce portable data formats and also to some extent achieve optimized I/O performance.
+Climate/NWP codes commonly use libraries to produce portable data formats and also to some extent achieve optimised I/O performance.
 Examples are HDF5, NetCDF, Adios, CDI-PIO, XIOS.
 
 
@@ -352,7 +352,7 @@ Examples are HDF5, NetCDF, Adios, CDI-PIO, XIOS.
 
 \paragraph{Subsystems:}
 We ignore/assume no subsystems for the software libraries for this considerations.
-But it is common for a software library to depend on other specialized libraries.
+But it is common for a software library to depend on other specialised libraries.
 
 
 
@@ -372,13 +372,13 @@ But it is common for a software library to depend on other specialized libraries
 \paragraph{System Description:}
 The earth system middleware.
 The middleware sits in between the applications and plugins to interact with various data backends.
-The middleware decides on the storage backend and exposes characterizations of the data centers as well as assumed data access patterns to be used by backend plugins to realize a fitting segmentation and distribution of domains in the application to storage objects and fragments.
+The middleware decides on the storage backend and exposes characterisations of the data centres as well as assumed data access patterns to be used by backend plugins to realise a fitting segmentation and distribution of domains in the application to storage objects and fragments.
 The ESDM manages data in virtual containers and provides a data model (see \Cref{fig:System: Application} and \Cref{fig:system esdm}).
 In principle the ESDM in the use cases could be any high-level middleware.
 
 
 \paragraph{Subsystems:}
-We ingore/assume no subsystems except of ESDM backends for the use case discussion.
+We ignore/assume no subsystems except of ESDM backends for the use case discussion.
 
 
 
@@ -546,7 +546,7 @@ The ESDM has to lookup the metadata and discover available fragments. A domain f
 \label{uc: simulation}
 
 Simulations are the main data producers on weather and climate related HPC systems.
-Many reading and writing clients are using the persistent storage systems (currently mostly PFS)  to periodically write snapshots that can be used to continue a simulation in case of failure, but more importantly, that is used to analyse the results of simulation runs.
+Many reading and writing clients are using the persistent storage systems (currently mostly PFS) to periodically write snapshots that can be used to continue a simulation in case of failure, but more importantly, that is used to analyse the results of simulation runs.
 
 \paragraph{Use-Case Description:}
 A user requests a job to be spawned on multiple nodes to perform a simulation of the earth system.
@@ -558,13 +558,13 @@ For a detailed handling of the different phases refer to the section on the flow
 
 
 \paragraph{Priority:}
-High; The standard use-case for simulation driven science in most data centers.
+High; The standard use-case for simulation driven science in most data centres.
 
 \paragraph{Actors:}
 \begin{itemize}
 	\item Scientist (initiating the job submission)
-	\item Application (a coordinated parallel application, that collaborates collectively on sth.)
-	\item Process (the application is realized by N processes. Processes are assumed to perform work independently.
+	\item Application (a coordinated parallel application, that collaborates collectively on something.)
+	\item Process (the application is realised by N processes. Processes are assumed to perform work independently.
 	\item ESDM
 	\item Storage devices (could be anything to store, this is a generic use case)
 	%\item Supercomputer (physical hardware, offers resources to be used)
@@ -595,7 +595,7 @@ For simulations in regard to the middleware we mainly care about how the data is
 \begin{itemize}
 	\item \emph{Node view:} a subset of the data domain is stored in the main memory of each node.
 	%Typically, two copies are necessary: data of the previous time step is used to compute the next time step.
-	\item \emph{Storage view:} somehow the data of the variables' domain is serialized into ESD variables and fragments
+	\item \emph{Storage view:} somehow the data of the variables' domain is serialised into ESD variables and fragments
 \end{itemize}
 
 \begin{figure}
@@ -640,7 +640,7 @@ For simulations in regard to the middleware we mainly care about how the data is
 	  \item Workload Manager: Using the information about the virtual container trigger actions, e.g., pre-staging of input data into local storage hardware or reserving bandwidth and storage space on output devices with limited capacity such as NVRAM.
 	  \end{itemize}
 	\item Application opens the IN container (read-only) in collective mode.
-	\item ESDM: optimizes the container for read mode (optionally done during staging mode).
+	\item ESDM: optimises the container for read mode (optionally done during staging mode).
 	\item Application opens the OUT container (write-only) in collective mode, allocate known space if necessary.
 	\item ESDM: prepares the container for write mode.
 	\item Application: announces to read initial simulation data.
@@ -699,7 +699,7 @@ Pre- and post processing jobs are therefore an integral part of the workload mix
 
 
 \paragraph{Use-Case Description:}
-A user submits a pre/post processing job to the workload manager requiring to read datasets from one or more input sources.
+A user submits a pre/post processing job to the workload manager requiring to read data sets from one or more input sources.
 Ideally, the task is described using a common tool or a framework for data transformations (e.g. CDO).
 There are countless possibilities for type of calculations performed and for the regions that need to be accessed in the logical domain (see \Cref{fig:domain pre + post processing})
 Many analysis workloads access time series data, thus require to access similarly-structured files with the same pattern.
@@ -719,30 +719,30 @@ Many analysis workloads access time series data, thus require to access similarl
 \paragraph{Data/Domain Description and Decomposition:}
 In alignment with the other use cases, a Cartesian grid is assumed but many other grids are in principle handled in similar manner.
 \Cref{fig:domain pre + post processing}
-%\todo{text in figure: stripe size 5- may be stride you mean?  Some systems call it stride some call it stripe.. On instance with lustre wich uses strips in the same context as in the picutre..  https://www.nics.tennessee.edu/computing-resources/file-systems/lustre-striping-guide }
- illustrates the logical decomposition, an example serialization and the distribution across a storage system.
-The producing application decided for which access pattern the serialization is favourable, in many situations the provided serialization is suboptimal for the transformation.
+%\todo{text in figure: stripe size 5- may be stride you mean?  Some systems call it stride some call it stripe.. On instance with lustre which uses strips in the same context as in the picture..  https://www.nics.tennessee.edu/computing-resources/file-systems/lustre-striping-guide }
+ illustrates the logical decomposition, an example serialisation and the distribution across a storage system.
+The producing application decided for which access pattern the serialisation is favourable, in many situations the provided serialisation is suboptimal for the transformation.
 
 
 \begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{use-cases/uml/prepost-processing/domain}
-	\caption{The logical domain view, a serialization and how it is striped across a storage system. The grey grids below illustrate possible access patterns, but the layout on storage is not optimal for any of the shown access patterns. }
+	\caption{The logical domain view, a serialisation and how it is striped across a storage system. The grey grids below illustrate possible access patterns, but the layout on storage is not optimal for any of the shown access patterns. }
 	\label{fig:domain pre + post processing}
 \end{figure}
 
 
 \paragraph{Pre-Conditions:}
 \begin{itemize}
-	\item Dataset is available via ESDM (because of producer termination or epoch)
-	\item The dataset maybe available, but may have suboptimal fragmentation.
+	\item Data set is available via ESDM (because of producer termination or epoch)
+	\item The data set maybe available, but may have suboptimal fragmentation.
 	\item A common description/framework for post processing is used (e.g. CDO)
 \end{itemize}
 
 \paragraph{Post-Conditions:}
 \begin{itemize}
 	\item The pre/post processing region of interest result is accessible by the user.
-	\item The dataset container is improved by additional indexes or additional fragments for faster access next time.
+	\item The data set container is improved by additional indexes or additional fragments for faster access next time.
 \end{itemize}
 
 \paragraph{Related Use-Cases:}
@@ -761,7 +761,7 @@ The producing application decided for which access pattern the serialization is 
 	\item Process: opens the INPUT  (see UC: Read \Cref{uc: independent read})
 	\item Process: performs transformation or analysis (e.g. compute average)
 	\end{enumerate}
-	\item Process: Writes a transformed dataset (see UC: Write \Cref{uc: independent write})
+	\item Process: Writes a transformed data set (see UC: Write \Cref{uc: independent write})
 	\item Process: Possibly, creates plot or film of analysis.
 \end{enumerate}
 
@@ -808,7 +808,7 @@ The producing application decided for which access pattern the serialization is 
 \label{uc: pipeline}
 
 For weather prediction it is common to have post processing pipelines responsible for the generation of value-added services.
-In expectancy of formal definition of workflows and increased use of containerization this use case describes how an ESDM would need to realize automatic post-processing as soon as data becomes available.
+In expectancy of formal definition of workflows and increased use of containerisation this use case describes how an ESDM would need to realise automatic post-processing as soon as data becomes available.
 
 
 \paragraph{Use-Case Description:}
@@ -872,7 +872,7 @@ Finally, the output data is post processed for which the domain description, aga
 \paragraph{Post-Conditions:}
 \begin{itemize}
 	\item Post processing can compute results as soon as an epoch completes.
-	\item Combined task is hopefully faster than traditional approaches (generate, write, [read, transform, write], read, postprocess, write result)
+	\item Combined task is hopefully faster than traditional approaches (generate, write, [read, transform, write], read, post-process, write result)
 \end{itemize}
 
 
@@ -927,7 +927,7 @@ Multiple failure modes are possible, but they are all inherited by the used use 
 \subsection{UC: Simulation + In situ post processing}
 \label{uc: simulation + in-situ + post processing}
 
-A common problem with post processing applications is that data is first written to storage, just to be read again from another consumer for post processing.
+A common problem with post processing applications is that data is first written to storage, just to be read again from another consumer for post-processing.
 This unnecessarily stresses the storage system, because if it is known in advance that an average for an area needs to be calculated, then the generating application can notify or perform the post processing on the node where the data is already present.
 
 
@@ -953,11 +953,11 @@ As the simulation proceeds, a number of post processing calculations are perform
 
 \paragraph{Data/Domain Description and Decomposition:}
 The logical model domain corresponds to the domain description and decomposition in the UC: Simulation (see \Cref{uc: simulation}).
-Candidates for in-situ post processing can be derived from UC: Pre/Post processing on an existing Data (\Cref{uc: pre + post processing}).
+Candidates for in-situ post processing can be derived from UC: Pre/Post-processing on an existing Data (\Cref{uc: pre + post processing}).
 \Cref{fig:domain simulation+insitu+postproc} illustrates how the domains are decomposed and which computational loads are performed by a certain process (only simulation or simulation with post processing).
 
 %\begin{itemize}
-%	\item Node: Variable, a tuning parameter usually maximize ram usage for model data.. commonly two copies for current  and previous time step.
+%	\item Node: Variable, a tuning parameter usually maximise ram usage for model data.. commonly two copies for current  and previous time step.
 %	\item Storage: PFS default configuration?
 %\end{itemize}
 
@@ -1002,9 +1002,9 @@ Candidates for in-situ post processing can be derived from UC: Pre/Post processi
 \paragraph{Flow of Events:}
 \begin{enumerate}
 	\item Scientist: submits a jobs to run an application with containers for input and output specified. In addition, a list of required post processing is provided (provided by the job script, derived from a workflow or possibly learned automatically).
-	\item Workload manager: eventually allocates resources to start job. (ESDM can optimize prior to job start see \Cref{uc: simulation}).
+	\item Workload manager: eventually allocates resources to start job. (ESDM can optimise prior to job start see \Cref{uc: simulation}).
 	\item Application opens the IN container (read-only) in collective mode.
-	\item ESDM: optimizes the container for read mode (optionally done during staging mode).
+	\item ESDM: optimises the container for read mode (optionally done during staging mode).
 	\item Application opens the OUT container (write-only) in collective mode, allocate known space if necessary.
 	\item ESDM: prepares the container for write mode.
 	\item Application: announces to read initial simulation data.
@@ -1118,9 +1118,9 @@ Alternatively, if a user decides to start storing snapshots, the post-conditions
 \paragraph{Flow of Events:}
 \begin{enumerate}
 	\item Scientist: submits jobs to run on an application with containers for input and output specified. In addition, a list of required post processing is provided (provided by the job script, derived from a workflow or possibly learned automatically).
-	\item Workload manager: eventually allocates resources to start job. (ESDM can optimize prior to job start see \Cref{uc: simulation}).
+	\item Workload manager: eventually allocates resources to start job. (ESDM can optimise prior to job start see \Cref{uc: simulation}).
 	\item Application opens the IN container (read-only) in collective mode.
-	\item ESDM: optimizes the container for read mode (optionally done during staging mode).
+	\item ESDM: optimises the container for read mode (optionally done during staging mode).
 	\item Application opens the OUT container (write-only) in collective mode, allocate known space if necessary.
 	\item ESDM: prepares the container for write mode.
 	\item Application: announces to read initial simulation data.
@@ -1166,7 +1166,7 @@ Alternatively, if a user decides to start storing snapshots, the post-conditions
 Inline with the previous in-situ use cases (see \Cref{uc: simulation + in-situ + post processing} and \Cref{uc: simulation + in-situ + cam}), the goal is to take stress off the storage system, in this case by being more selective about which snapshots are permanently stored.
 Big data tools in combination with machine learning techniques promise to allow computers to automatically apply complex analysis tasks on large amounts of data.
 Such analysis is already applied to satellite data e.g. to track biodiversity, combating desertification or detect wild fires.
-In the future, this might be also applied to faux satellite images  generated from model output (or the raw data directly) to better characterize the impact on various ecological factors of climate policy actions.
+In the future, this might be also applied to faux satellite images  generated from model output (or the raw data directly) to better characterise the impact on various ecological factors of climate policy actions.
 
 
 
@@ -1225,9 +1225,9 @@ More sophisticated analysis may be also responsive to the time evolution within 
 \paragraph{Flow of Events:}
 \begin{enumerate}
 	\item Scientist: submits a jobs to run an application with containers for input and output specified. In addition, a list of required post processing is provided (provided by the job script, derived from a workflow or possibly learned automatically).
-	\item Workload manager: eventually allocates resources to start job. (ESDM can optimize prior to job start see \Cref{uc: simulation}).
+	\item Workload manager: eventually allocates resources to start job. (ESDM can optimise prior to job start see \Cref{uc: simulation}).
 	\item Application opens the IN container (read-only) in collective mode.
-	\item ESDM: optimizes the container for read mode (optionally done during staging mode).
+	\item ESDM: optimises the container for read mode (optionally done during staging mode).
 	\item Application opens the OUT container (write-only) in collective mode, allocate known space if necessary.
 	\item ESDM: prepares the container for write mode.
 	\item Application: announces to read initial simulation data.

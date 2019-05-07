@@ -72,9 +72,9 @@ Fragments are associated to WOS Objects: the lookup phase is allowed by using th
 \textbf{Progress Component} The progress component is responsible to manage the interactions with the WOS backend, in terms of synchronous and asynchronous call handling. It communicates with the ESDM\textunderscore WOS\textunderscore Service exchanging the proper information about data transferring, metadata management and status of the processes.
 \Cref{fig:WOS backend process view} illustrates the processes and services related to the WOS backend.
 
-\textbf{ESDM\textunderscore WOS\textunderscore Service} The ESDM\textunderscore WOS\textunderscore Service represents the middleware between the progress component and the WOS System Storage. It accepts requests incoming from the progress component concerning data and/or metadata management, fragments read and write. The ESDM\textunderscore WOS\textunderscore Service is able to translate such requests into WOS Cluster call which finalizes the operations to the WOS Storage. As supported by the WOS architecture, the ESDM\textunderscore WOS\textunderscore Service is able to manage blocking and non-blocking calls on behalf of the progress component.\\
+\textbf{ESDM\textunderscore WOS\textunderscore Service} The ESDM\textunderscore WOS\textunderscore Service represents the middleware between the progress component and the WOS System Storage. It accepts requests incoming from the progress component concerning data and/or metadata management, fragments read and write. The ESDM\textunderscore WOS\textunderscore Service is able to translate such requests into WOS Cluster call which finalises the operations to the WOS Storage. As supported by the WOS architecture, the ESDM\textunderscore WOS\textunderscore Service is able to manage blocking and non-blocking calls on behalf of the progress component.\\
 
-\textbf{WOS Cluster} The WOS Cluster represents the remote host pool and services able to accept, manage and finalize the incoming requests/data from the ESDM\textunderscore WOS\textunderscore Service. It hosts the WOS Storage and physically handles the retrieval of the requested information triggered by the higher level applications and services.
+\textbf{WOS Cluster} The WOS Cluster represents the remote host pool and services able to accept, manage and finalise the incoming requests/data from the ESDM\textunderscore WOS\textunderscore Service. It hosts the WOS Storage and physically handles the retrieval of the requested information triggered by the higher level applications and services.
 
 \begin{figure}
 	\centering
@@ -98,7 +98,7 @@ Such services are able to handle the entire WOS infrastructure from a hardware a
 WOS configuration allows the administrator to define zones and policies for defining different groups of nodes associated with different rules and objects distribution on the physical storage.
 In addition, administrator can configure replica policy rules which will be automatically managed by the WOS cloud system. 
 In this perspective, ESD middleware relies on the WOS configuration and policies for the management of the distribution of the objects among the nodes of the cluster and the physical mapping of the data on the disks. 
-At higher level, ESD middleware can exploit the WOS backend functionalities in order to customize the objects distribution.
+At higher level, ESD middleware can exploit the WOS backend functionalities in order to customise the objects distribution.
 
 
 \begin{figure}
