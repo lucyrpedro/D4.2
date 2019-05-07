@@ -1,0 +1,64 @@
+@startuml
+!include skinparams.iuml
+left to right direction
+
+: Experimenter : as exp
+: Job (runs as script): as job
+: Application : as app
+: Job scheduler : as sched
+: Supercomputer : as sup
+: Storage system : as stor
+: ESDM : as esdm
+: Workflow / Use case : as uc
+: Library : as lib
+
+exp --> uc : thinks of / starts
+uc --> job : consists of
+exp --> sched : submit job
+sched --> job : dispatch job
+sched --> sup : assign resources
+sup --> job : runs script
+job --> app : start (parallel) applications
+app --> esdm : (optionally) uses API
+app --> lib : uses API
+lib --> esdm : uses API
+esdm --> stor : uses
+sched -> esdm : plans storage, triggers staging
+
+(Simulation) as uc1
+(Pre/Post Processing) as uc2
+(Concurrent Simulation and Post Processing) as uc3
+(Simulation + In Situ Post Processing) as uc4
+(Simulation + Interactive Visualisation) as uc5
+(Simulation + Big Data Analysis ) as uc6
+(Independent Write) as uc7
+(Independent Read) as uc8
+
+uc7 --> esdm
+uc8 --> esdm
+
+uc --> uc1
+uc --> uc2
+uc --> uc3
+uc --> uc4
+uc --> uc5
+uc --> uc6
+
+uc1 --> uc7 : <<includes>
+uc1 --> uc8 : <<includes>
+
+uc2 --> uc7 : <<includes>
+uc2 --> uc8 : <<includes>
+
+uc3 --> uc7 : <<includes>
+uc3 --> uc8 : <<includes>
+
+uc4 --> uc7 : <<includes>
+uc4 --> uc8 : <<includes>
+
+uc5 --> uc8 : <<includes>
+
+uc6 --> uc7 : <<includes>
+uc6 --> uc8 : <<includes>
+
+@enduml

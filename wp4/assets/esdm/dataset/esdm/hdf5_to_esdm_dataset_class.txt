@@ -1,0 +1,100 @@
+@startuml
+package "HDF5" { 
+  Dataset "0..*" o--> "1" Datatype
+  Dataset "0..*" *--> "1" Dataspace
+  Dataset "0..*" -- "Filter" : RequiredInPipeline
+  Dataset "1" --> "0..*" Attribute
+  Dataset *--> "1" Data
+
+  Dataset : layout: H5D_layout_t
+  Dataset : chunk_ndims: int
+  Dataset : chunk_dims: hsize_t[]
+  Dataset : deflate_level: int
+  Dataset : fill_value_type: hid_t
+  Dataset : fill_value: void*
+
+  Datatype -- "Data" : describesOneElement
+  Dataspace -- "Data" : describesArrayOfElements
+
+  Filter : filter_H5Z_filter_t
+  Filter : flags: unsigned int
+  Filter : cd_nelmts: size_t
+  Filter : cd_values: unsigned int[]
+}
+
+package "NetCDF" {
+  Variable --|> Dataset
+}
+
+package "ESD" {
+  Dataset "1" -- "1" EsdVariable : StoredIn
+
+  class EsdContainer {
+    id: union
+  }
+
+  class EsdVariable {
+    id: union
+    chunk_ndims: int
+    chunk_dims: size_t[]
+  }
+
+  note top of Shard : "A shard is a composition of chunks\nordered using a filling function.\nShard id can be a Mero id or a\nfile name (union)"
+  class Shard {
+    id: union
+    size: size_t
+    block_size: size_t
+  }
+
+  class Chunk {
+    id: int
+    padding: size_t
+  }
+
+  note left : "A chunk is identified by id\nand can be padded to align\nto FS block boundaries\n(e.g. after compression)"
+
+  package "Layout" {
+    class ShardInStorage {
+      storage_id: int
+    }
+
+    class ChunkInVar {
+      offset: size_t[]
+    }
+
+    class ChunkInShard {
+      seq_num: size_t
+    }
+
+    class Domain {
+      dims: int
+      dim: size_t[]
+    }
+  }
+
+  EsdContainer o--> "0..*" EsdVariable : Contains
+
+  EsdVariable "0..*" -- EsdFilter
+  EsdVariable *-- "1..*" Shard
+  EsdVariable "0..*" o--> "1" EsdDatatype
+  EsdVariable *-- Domain
+
+  Shard *--> ShardInStorage : "Locates Shard in Storage"
+  Shard *--> "1..*" Chunk : IsMadeOf
+
+  Chunk *-- ChunkInVar : "Locates Chunk in Variable"
+  Chunk *-- ChunkInShard : "Locates Chunk in Shard"
+}
+
+package "POSIX" <<Database>> {
+  ExternalFile : name: string
+  ExternalFile : offset: off_t
+  ExternalFile : size: hsize_t
+
+  Shard --> "ExternalFile" : StoredIn
+}
+
+package "Mero" <<Database>> {
+  Shard --> Object : StoredIn
+}
+@enduml

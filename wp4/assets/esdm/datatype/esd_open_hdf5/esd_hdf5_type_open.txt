@@ -1,0 +1,31 @@
+@startuml
+hide footbox
+
+actor "User"
+Database "Storage Backend"
+Database "Metadata Backend"
+
+"User" -> "ESD" : esd_type_open
+activate "ESD"
+
+"ESD" -> "ESD Layout" : esd_layout_init(obj)
+activate "ESD Layout"
+
+"ESD Layout" -> "Metadata Backend" : lookup
+"ESD Layout" -> "ESD Layout" : init
+"ESD Layout" --> "ESD" : return
+deactivate "ESD Layout"
+
+"ESD" -> "Storage Backend" : obj->read
+"ESD" -> "ESD Datatype" : esd_type_decode
+activate "ESD Datatype"
+
+"ESD Datatype" -> "ESD Datatype" : esd_type_get_format
+"ESD Datatype" -> "ESD Datatype" : esd_h5_type_decode
+"ESD Datatype" --> "ESD" : return
+deactivate "ESD Datatype"
+
+"ESD" --> "User" : return
+deactivate "ESD"
+
+@enduml

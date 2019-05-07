@@ -1,0 +1,34 @@
+@startuml
+(*) --> "User submits job"
+
+--> "Job allocation granted"
+
+partition Application {
+	--> "Application reads initialisation data"
+	--> "Application computes intermediate result"
+	--> "Application writes intermediate result"
+	"Application writes intermediate result" --> "Application computes intermediate result"
+	"Application writes intermediate result" --> "Application finalizes"
+}
+
+"Application finalizes" --> [Ending process] (*)
+
+
+partition ESDM
+	"Application writes intermediate result" --> "ESDM decides storage backend and layout"
+
+	if "Write successful"
+	  -->[true] "Write to storage backend" 
+          -->[Ending process] (*)
+	else
+	  -->[false] "clean up unreferenced"
+          -->[Ending process] (*)
+	endif
+}
+
+
+
+
+
+
+@enduml

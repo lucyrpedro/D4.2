@@ -1,0 +1,44 @@
+@startuml
+
+package "Application" {
+	class Application
+}
+
+package "ESDM" {
+	interface "ESDM API" as API
+	class Scheduler
+	class Layout
+}
+
+package "ESDM Backends 2" {
+	class "Backend Handler" as Backend1
+}
+
+package "ESDM Backend 1" {
+	class "Backend Handler" as Backend2
+}
+
+
+class "Performance Model" as PM
+class "Site Configurtion" as siteconfig
+
+Application -> API: incoming request
+API -> Scheduler
+Scheduler -r-> Layout
+Layout -> PM: consult to influence fragmentation
+
+PM -> siteconfig
+
+
+
+
+Scheduler -> Backend1: read/write fragment\nor metadata lookup
+Scheduler -> Backend2: read/write fragment\nor metadata lookup
+
+
+
+
+
+
+
+@enduml

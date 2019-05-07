@@ -1,0 +1,362 @@
+
+A prototypical metadata backend will be realized using MongoDB.
+Advantages of using MongoDB are that it scales horizontally with the number of servers, provides fault-tolerance and that the document model supports arbitrary schemas.
+
+
+Each type of object in the data model (container, variable, fragment) becomes a collection with indices on certain fields.
+Multikey indices allows indexing array fields such as the references.
+
+
+
+\subsection{Logical View}
+\label{backend: mongo/logical}
+
+\subsubsection{Metadata}
+
+There are two methods to include metadata, large metadata is includes as a reference to another variable containing the data, small metadata is embedded into the JSON of the MongoDB document.
+
+Besides scientific metadata, the dynamic mapping of data to storage backends requires further metadata that must be managed.
+To distinguish technical metadata from scientific metadata, an internal namespace is created.
+Relevant technical metadata is shown in \Cref{tbl:additionalTechnicalMetadata} for shards, variables and containers, respectively.
+
+Metadata can be optional (O) or mandatory (M), and either is created automatically or must be set manually via the APIs.
+Automatic fields cannot be changed by the user.
+Some of the data can be automatically inferred, if not set manually, but manual setting may allow further optimizations.
+
+Some of the metadata is used on several places, for example, information about the data lineage might be used to create several output variables.
+In our initial implementation, the metadata is stored redundantly because it
+1) simplifies search; 2) enables us to restore data on corrupted storage systems by reading the metadata; 3) reduces contention and potentially false sharing of metadata.
+An implementation might decide to reduce this by utilizing normalized schemas.
+
+References are the list of objects that are directly used by this object, e.g., other variables that are used to define the data further.
+
+\begin{table}
+	\begin{subtable}[t]{\textwidth}
+		\begin{tabular}{llll}
+			Metadata & Field & Creation & Description\\
+			\hline
+			Domain   & M & Auto & The subdomain this data covers from the variable\\
+			Type     & M & Auto & The (potentially derived) datatype of this shard\\
+			Variable & M & Auto & The ID of the varitechnical-on-metadata.texable this data belongs to\\
+			Storage  & M & Auto & The storage backend used and its options\\
+			References & M & Auto & A list of objects that are referenced by this data\\
+			Sealed   & M & Auto & A sealed shard is read-only\\
+		\end{tabular}
+		\caption{For a shard}
+	\end{subtable}
+
+	\begin{subtable}[t]{\textwidth}
+		\begin{tabular}{llll}
+			Metadata & Field & Creation & Description\\
+			\hline
+			Domain      & M & Manual & Describes the overall domain\\
+			Type   	    & M & Manual & The (potentially derived) datatype\\
+			Info   	    & M & Manual & The scientific metadata of this document\\
+			References  & M & Auto & A list of objects that are referenced by this data\\
+			Permissions & M & Auto/Manual & The owner and permissions \\
+			Shards      & M & Auto & The list of shard objects for this variable\\
+			Sealed      & M & Auto & A sealed variable is read-only\\
+		\end{tabular}
+		\caption{For a variable}
+	\end{subtable}
+
+
+	\begin{subtable}[t]{\textwidth}
+		\begin{tabular}{llll}
+			Metadata & Field & Creation & Description\\
+			\hline
+			Owner    & O     & Manual   & The owner of this file view (see the permission model)\\
+			Info     & O     & Manual   & Additional scientific metadata for this view\\
+			Directory & O    & Manual   & Contains a mapping from names to variables\\
+			Environment & O  & Automatic & Information about the application run\\
+			Permissions & M & Auto/Manual & The owner and permissions \\
+			References  & M & Auto & A list of objects that are referenced by this data.
+		\end{tabular}
+		\caption{For a container}
+	\end{subtable}
+	\caption{Excerpt of additional technical metadata}
+	\label{tbl:additionalTechnicalMetadata}
+\end{table}
+
+
+
+%\subsection{Metadata mapping: Needs updating}
+%\todo{Some examples driven from the use cases}
+%\input{technical-on-metadata.tex}
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Mapping of metadata}
+
+To illustrate the applied mapping, we use a subset of our NetCDF metadata described in \Cref{sec:netcdfDataMapping}.
+The excerpt is given in \Cref{lst:NetCDF-data-map}.
+The mapping of a single logical variable is exemplarily described in \Cref{lst:NetCDF-data-map}.
+
+
+\begin{tcbcode}[label={lst:NetCDF-data-map}]{NetCDF metadata for one variable}
+\begin{lstlisting}
+dimensions:
+	longitude = 480 ;
+	latitude = 241 ;
+	time = UNLIMITED ; // (1096 currently)
+variables:
+	float longitude(longitude) ;
+		longitude:units = "degrees_east" ;
+		longitude:long_name = "longitude" ;
+	float latitude(latitude) ;
+		latitude:units = "degrees_north" ;
+		latitude:long_name = "latitude" ;
+	int time(time) ;
+		time:units = "hours since 1900-01-01 00:00:0.0" ;
+		time:long_name = "time" ;
+		time:calendar = "gregorian" ;
+	short sund(time, latitude, longitude) ;
+		sund:scale_factor = 0.659209863732776 ;
+		sund:add_offset = 21599.6703950681 ;
+		sund:_FillValue = -32767s ;
+		sund:missing_value = -32767s ;
+		sund:units = "s" ;
+		sund:long_name = "Sunshine duration" ;
+
+// global attributes:
+		:Conventions = "CF-1.0" ;
+		:history = "2015-06-03 08:02:17 GMT by grib_to_netcdf-1.13.1: grib_to_netcdf /data/data04/scratch/netcdf-atls14-a562cefde8a29a7288fa0b8b7f9413f7-lFD4z9.target -o /data/data04/scratch/netcdf-atls14-a562cefde8a29a7288fa0b8b7f9413f7-CyGl1B.nc -utime" ;
+}
+\end{lstlisting}
+\end{tcbcode}
+
+To simplify search and identify data clearly, data services such as the WDCC and CERA, that offer data to the community, request scientists to provide additional metadata.
+Normally, such data is provided when the results of an experiment is ingested into such a database.
+Example metadata is listed in \Cref{tbl:additionalMetadata}.
+In existing databases, the listed metadata is split into several fields, e.g. an address and email for persons, for simplicity only a rough overview is given.
+Instead of encoding the history as a simple text field, it could
+indicate detailed steps including the arguments for the commands and versions and transformations to reproduce the data.
+This should include for each step, where and the time when it is performed, and the versions of software used.
+
+It is easily imaginable that most of this information could be useful already when the data is created as it simplifies the search and data management on the online storage.
+Some of the data fields become only available after the initial data creation, e.g., the DOI.
+Potentially the data must be updated / curated after the data is created.
+
+\begin{table}
+\begin{tabular}{ll}
+Metadata & Description\\
+\hline
+Project & The scientific project during which the data is created \\
+Institute & The institution which conducted the experiment\\
+Person &  A natural person; could be a contact, running the experiment \\
+Contact & Reference to person or consortium \\
+DOI      & A document object identifier; useful for identifying a data publication\\
+Topic     & Some information about the topic of the data / experiment \\
+Experiment & Description of this particular experiment \\
+History & A list with the history and transformations conducted with the data \\
+\end{tabular}
+\caption{Excerpt of additional scientific metadata}
+\label{tbl:additionalMetadata}
+\end{table}
+
+
+
+\subsection{Example}
+
+This example illustrates data of a predictive model could be stored on the system and the resulting metadata.
+The dimensionality of the underlying grid is fixed.
+
+The application uses the following information to drive the simulation:
+\begin{itemize}
+	\item Timerange: the simulated model time (from a starting datetime to the specified end)
+	\item Longitude/Latitude: 1D data field with the coordinates [float]
+	\item Temperature: Initial 2D field defined on (lon, lat)
+\end{itemize}
+A real model would use further parameters to estimate the temperature but these are sufficient to demonstrate the concepts.
+This information is either given as parameter to the simulation or read from an input (container).
+A mixture of both settings is possible.
+
+
+The application produces the following output:
+\begin{itemize}
+	\item Longitude/Latitude: 1D data field with the coordinates [float]
+	\item Model time: the current datatime for the simulation
+	\item Temperature: 2D field defined on (lon, lat, time) [float], containing the precise temperature on the coordinates defined by lon and lat for the given timestep
+	\item AvgTemp: 1D field defined on (time) [float]; contains the mean temperature for the given time
+\end{itemize}
+
+\subsubsection{Container}
+
+Upon application startup, we create a new virtual container that provide links to the already existing input.
+In \Cref{lst:mongoContainer}, the metadata for the container is shown, after the application is started.
+We assume it has used the APIs to provide the information (input, output, scientific metadata).
+In this example, we explicitly define the objects used as input; it is possible to also define
+the input as an already existing container.
+It is also possible to define the input a-priori if the objectIDs are known / looked up prior application run.
+The intended output variables could be given with their rough sizes.
+This would allow the scheduler to pre-stage the input and ensure that there is enough storage space available for the output.
+The environment information is inferred to the info object but can be changed from the user.
+
+\begin{tcbcode}[label={lst:mongoContainer}]{JSON document describing the container}
+	\begin{lstlisting}
+	"_id" : ObjectId(".."),
+	"directory" : {
+		"input" : {
+			"longitude" : ObjectId(".."),
+			"latitude" : ObjectId(".."),
+			"temperature" : ObjectId("..")
+		},
+		"output" {
+			"temperature" : ObjectId(".."),
+			"avgTemp" : ObjectId("..")
+		}
+	},
+	"info" : { # This is the scientific metadata
+		"model" : { "name" : "my model", "version" : "git ...4711" },
+		"experiment" : {
+			"tags"        : ["simulation", "poisson", "temperature"]
+			"description" : "Trivial simulation of temperature using a poisson process"
+		},
+	},
+	"environment" : {
+		"date"  : datetime(2016, 12, 1),
+		"system" : "mistral",
+		"nodes" : ["m[1-1000]"]
+	},
+	"permissions" : {
+		"UID"  : 1012,
+		"GID"  : 400,
+		"group" : "w", # allows read also
+		"other" : "r"
+	},
+	"references" : {
+		[ all links to used object IDs from input / output ]
+	}
+	\end{lstlisting}
+\end{tcbcode}
+
+\subsubsection{Variable}
+
+The metadata for a single variable is build based on the information available in the container (such as permissions) and additional data provided by the user.
+Indeed, part of the metadata is replicated between container and variable as this preserves information about the creation of the variable that will typically not change during the lifetime of the variable.
+
+An example for the temperature variable is shown in \Cref{lst:mongotemperature}.
+When describing the domain that is covered by the variable, there are three alternatives:
+1) a reference to an existing variable is embedded and the minimum / maximum value is provided.
+This allows reusing descriptive information as data has to be stored only once. Min and max describe the multidimensional index of the subdomain in the variable that is actually referenced;
+2) data becomes embedded into the file. This option is used when the size of the variable is small.
+An advantage of option 2) is that searches for data with a certain property do not require to lookup information in additional metadata.
+
+Similarly, information about the data lineage (history) can originally be inferred from the objects linked in the directory mapping.
+In that case, the metadata of the referenced object must be copied, if the original object is removed.
+
+3) A plugin for the interpretation and mapping of the coordinate system is used.
+The plugin name must be stored and the respective parameters to identify the coordinates stored.
+
+
+\begin{tcbcode}[label={lst:mongotemperature}]{JSON document for temperature}
+	\begin{lstlisting}
+	"_id" : ObjectId("<TEMPID>"),
+	"sealed" : true,
+	"domain" : [
+		"longitude" : [ "min" : 0, "max" : 359999, "reference" : ObjectId("..") ],
+		"latitude" : [ "min" : 0, "max" : 179999, "reference" : ObjectId("..") ],
+		"time" : [ datetime(...), datetime(...), ... ]
+	],
+	"type" : "float",
+	"info" : {
+		"convention" : "CF-1.0",
+		"name" : "temperature",
+		"unit" : "K",
+		"long description" : "This is the temperature",
+		"experiment" : {
+			"tags"        : ["simulation", "poisson", "temperature"]
+			"description" : "Trivial simulation of temperature using a poisson process"
+		},
+		"model" : { "name" : "my model", "version" : "git ...4711" },
+		"directory" : {
+			"input" : {
+				"longitude" : ObjectId("<LONID>"),
+				"latitude" : ObjectId("<LATID>"),
+				"temperature" : ObjectId("<TEMPID>")
+			}
+	},
+	"environment" : {
+		"date"    : datetime(2016, 12, 1),
+		"system" : "mistral",
+		"nodes"  : ["m[1-1000]"]
+	},
+	"history" : [
+		...
+	],
+
+	"permissions" : {
+		"UID"  : 1012,
+		"GID"  : 400,
+		"group" : "w", # allows read also
+		"other" : "r"
+	},
+	"references" : {
+		[ all links to used object IDs ]
+	},
+	"shards" : [
+		ObjectId(<SHARD1 ID>),
+		# For a sealed object, the domains of its shards can optionally be embedded:
+		{ "reference" : ObjectId(<SHARD2 ID>), "storage" : ... , "domain" },
+		ObjectId(<SHARD3 ID>),
+		ObjectId(<SHARD4 ID>)
+	]
+	\end{lstlisting}
+\end{tcbcode}
+
+\subsubsection{Shards}
+
+The variable is split into multiple shards; metadata for one of them is shown in \Cref{lst:mongotemperatureshard}.
+Since we assume domain decomposition in the application, the longitude and latitude variables are now only partially stored in a shard.
+In the example, we assume two processes create one shard each and the surface of the earth is partitioned into four non-overlapping rectangles.
+
+\begin{tcbcode}[label={lst:mongotemperatureshard}]{JSON document for a shard of the temperature variable}
+\begin{lstlisting}
+"_id" : ObjectId("<SHARD1 ID>"),
+"sealed" : true,
+"variable" : ObjectId("<TEMPID>"),
+"type" : "float",
+"domain" : {
+	"longitude" : [ "min" : 0, "max" : 179999, "reference" : ObjectId("..") ],
+	"latitude" : [ "min" : 0, "max" : 89999, "reference" : ObjectId("..") ],
+	"time" : [ datetime(...), datetime(...), ... ]
+},
+"storage" : {
+	"plugin" : "pfs",
+	"options" : {
+		"path" : "/mnt/lustre/testdir/file1",
+	},
+	"serialization" : "row-major"
+},
+"references : [
+	ObjectId("<TEMPID>"),
+	ObjectId(".."),
+	ObjectId("..")
+]
+\end{lstlisting}
+\end{tcbcode}
+
+
+\subsection{Physical View}
+\label{backend: mongo/physical}
+
+The MongoDB servers will be deployed on the HPC cluster.
+Due to the scalability of the infrastructure, the number of servers can be adjusted to the experienced load.
+
+
+\subsection{Process View}
+\label{backend: mongo/process}
+
+We are using the typical deployment of MongoDB including all the services it provides such as the mongo daemon.
+
+% \subsection{Development View}
+% \label{backend: mongo/development}

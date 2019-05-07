@@ -1,0 +1,128 @@
+graph changed {
+  graph [fontname = "sans serif"];
+  node [fontname = "sans serif", shape=box, style="filled, rounded", fillcolor="white"];
+  edge [fontname = "sans serif"];
+
+  {rank = same;
+  Application1 [shape="invhouse"];
+  Application2 [shape="invhouse"];
+  Application3 [shape="invhouse"];
+
+  "cp-esd" [shape="invhouse", fillcolor="cornflowerblue",style=filled];
+  "esd-daemon" [shape="invhouse", fillcolor="cornflowerblue",style=filled];
+  "esd-FUSE"  [shape="house", fillcolor="lightcyan",style=filled];
+  }
+  Application1 -- NetCDF4 ;
+  Application2 -- NetCDF4 ;
+
+  Application3 -- GRIB;
+
+  {rank = same;
+  GRIB  [shape="component",fillcolor="orchid",style=filled];
+  NetCDF4;
+  }
+
+  GRIB -- "ESD interface";
+  "cp-esd" -- "ESD interface";
+  "esd-daemon" -- "ESD interface";
+  "esd-FUSE" -- "ESD interface";
+
+  #NetCDF4 -- "ESD interface"  [style=dashed];
+
+  {rank = same;
+  NoteNetCDF [shape="plaintext", label="The patch adds ESD VOL plugin suport. Manual API call or based on file prefix ESD://"]
+  NetCDF4 [label="NetCDF4 (patched)",shape="component",fillcolor="cornsilk",style=filled];
+  NetCDF4 -- NoteNetCDF [style=invis];
+  }
+
+  NetCDF4 -- "HDF5-High-level" [style=dashed]; # alternative path
+  NetCDF4 -- "H5T" [style=dashed]; # alternative path
+
+  subgraph cluster {
+    graph[style=dotted];
+
+    "H5T";
+
+    VOL; # Which layout to choose: see H5Dlayout.c, do IO in: H5Dio.c ; H5Dread()
+
+    "HDF5-High-level" -- H5F;
+    "HDF5-High-level" -- H5D;
+    "HDF5-High-level" -- H5G;
+    "HDF5-High-level" -- H5A;
+    "HDF5-High-level" -- H5L;
+
+    H5F -- VOL;
+    H5D -- VOL;
+    H5G -- VOL;
+    H5A -- VOL;
+    H5L -- VOL;
+
+    "H5P/FAPL" -- VOL
+
+    VOL -- "H5VL native (Plugin)"
+
+    label="HDF5 VOL (unmodified)";
+  }
+
+  subgraph cluster_esd {
+    "ESD interface" [shape="ellipse", style="dotted"];
+    {rank = same;
+    "Layout component" [fillcolor="palegreen",style=filled];
+    "Datatypes" [fillcolor="palegreen",style=filled];
+    "Performance model"  [fillcolor="palegreen",style=filled];
+    }
+
+    "ESD interface" -- "Layout component";
+    "ESD interface" -- "Datatypes";
+    "Site configuration" [shape="note",fillcolor="gold",style=filled];
+
+
+    "Site configuration" -- "Layout component";
+    "Layout component" -- Datatypes [style="dotted"];
+    "Layout component" -- "Performance model";
+
+
+    "Mapping store backend" [shape="oval", style="dotted"];
+    "Layout component" -- "Mapping store backend";
+
+    "Storage backend" [shape="oval", style="dotted"];
+
+    "Storage backend" -- "POSIX-IO driver";
+    "Storage backend" -- "LFS POSIX-IO driver";
+    "Mero Object Driver";
+
+    label="ESD";
+    graph[style=dotted];
+  }
+
+  subgraph cluster_seagate {
+    graph[style=dotted];
+    label="Seagate";
+
+    "Clovis" [fillcolor="lightpink",style=filled];
+    "Mero Object Driver" [fillcolor="lightpink",style=filled];
+    "Mero Object" [fillcolor="lightpink",style=filled];
+
+    "Mero Object Driver" -- "Clovis";
+    "Clovis" -- "Mero Object";
+  }
+
+  "ESD (Plugin)" [shape="component",fillcolor="gray",style=filled];
+  VOL -- "ESD (Plugin)";
+
+
+  "ESD (Plugin)" -- "ESD interface";
+
+  "POSIX-IO" [shape="oval", style="dotted"];
+  "Lustre" [shape="component", fillcolor="orchid",style=filled];
+  "POSIX-IO driver" -- "POSIX-IO";
+  "LFS POSIX-IO driver" -- "POSIX-IO";
+
+  "POSIX-IO" -- "Lustre";
+
+  "Mapping store" [shape="component",fillcolor="orchid",style=filled];
+  "Mapping store backend" -- "Mapping store";
+
+  "Layout component" -- "Storage backend";
+  "Storage backend" -- "Mero Object Driver";
+}

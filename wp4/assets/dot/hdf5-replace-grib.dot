@@ -1,0 +1,77 @@
+graph changed {
+  graph [fontname = "sans serif"];
+  node [fontname = "sans serif", shape=box];
+  edge [fontname = "sans serif"];
+
+  Application1 -- NetCDF4 ;
+
+  Application2 -- GRIB;
+
+  GRIB -- "Layout component";
+
+  NetCDF4 -- "Layout component"  [style=dashed];
+
+  NetCDF4 -- "HDF5-High-level" [style=dashed]; # alternative path
+  NetCDF4 -- "H5T" [style=dashed]; # alternative path
+
+  subgraph cluster {
+    graph[style=dotted];
+
+    "H5T";
+
+    VOL; # Which layout to choose: see H5Dlayout.c, do IO in: H5Dio.c ; H5Dread()
+
+    "HDF5-High-level" -- H5F;
+    "HDF5-High-level" -- H5D;
+    "HDF5-High-level" -- H5G;
+    "HDF5-High-level" -- H5A;
+    "HDF5-High-level" -- H5L;
+
+    H5F -- VOL;
+    H5D -- VOL;
+    H5G -- VOL;
+    H5A -- VOL;
+    H5L -- VOL;
+
+    "H5P/FAPL" -- VOL
+
+    VOL -- "H5VL native (Plugin)"
+
+    label="HDF5";
+  }
+
+  subgraph cluster_esd {
+
+
+
+    "Layout component";
+    "Site configuration" [shape="ellipse",style="dotted"];
+
+    "Datatypes" [shape="ellipse",style="dotted"];
+
+    "Site configuration" -- "Layout component";
+
+    VOL -- "Layout component";
+
+    "Layout component" -- "POSIX-IO driver";
+    "Mero Object Driver";
+
+    label="ESD";
+    graph[style=dotted];
+  }
+
+
+  "POSIX-IO driver" -- "POSIX-IO";
+
+  "POSIX-IO" -- "Lustre";
+
+  subgraph cluster_seagate {
+    graph[style=dotted];
+    label="Seagate";
+
+    "Mero Object Driver" -- "Clovis";
+    "Clovis" -- "Mero Object";
+  }
+
+  "Layout component" -- "Mero Object Driver";
+}

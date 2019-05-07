@@ -1,0 +1,29 @@
+graph changed {
+  graph [fontname = "sans serif"];
+  node [fontname = "sans serif", shape=box];
+  node [fontname = "sans serif", shape=box, style="filled, rounded", fillcolor="white"];
+  edge [fontname = "sans serif"];
+
+  {rank = same;
+    "Compute nodes" [fillcolor="cornflowerblue"];
+  }
+
+  {rank = same;
+    "Memory" [fillcolor="white"];
+  }
+  "Compute nodes" -- "Memory";
+  "Compute nodes" -- "NVRAM";
+
+  {rank = same;
+    "Object store" [fillcolor="orchid"];
+  }
+
+  {rank = same;
+    "Network" [shape="octagon", fillcolor="orange"];
+    "Cloud"  [shape="egg", fillcolor="orange"];
+  }
+
+  "Network" -- "Cloud";
+  "Network" -- "Compute nodes";
+  "Network" -- "Object store";
+}

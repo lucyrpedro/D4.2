@@ -1,0 +1,26 @@
+graph changed {
+  graph [fontname = "sans serif"];
+  node [fontname = "sans serif", shape=box, style="filled, rounded", fillcolor="white"];
+  edge [fontname = "sans serif"];
+
+
+  {rank = same;
+    "Component 1" [fillcolor="cornflowerblue"];
+  }
+
+  {rank = same;
+    "Subcomponent" [label="Subcomponent\nKey1:Value1\nKey2:Value2", fillcolor="white"];
+  }
+  "Component 1" -- "Subcomponent" [label="Key:Val"];
+
+  {rank = same;
+    "Component 2" [fillcolor="orchid",style="filled, rounded"];
+  }
+
+  {rank = same;
+    "Root Component" [fillcolor="purple"];
+  }
+
+  "Root Component" -- "Component 1" [label="Key:Val"];
+  "Root Component" -- "Component 2" [label="Key:Val"];
+}

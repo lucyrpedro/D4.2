@@ -1,0 +1,37 @@
+@startuml
+
+
+
+
+package ApplicationProc {
+	class Application
+	class ESDM
+	class Layout
+	class "Performance Model" as Performance
+	class "POSIX Backend" as Backend
+}
+
+class "Site Configuration" as SiteConfig
+
+package StorageSystem {
+ 	class StorageConfiguration
+}
+
+
+
+
+
+Application -> ESDM
+ESDM -> Layout
+Layout -> Performance
+ESDM -> Performance
+ESDM -> Backend
+
+Performance -> SiteConfig
+Backend -> SiteConfig
+
+
+
+
+
+@enduml

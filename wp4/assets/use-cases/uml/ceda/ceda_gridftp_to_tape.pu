@@ -1,0 +1,52 @@
+@startuml
+skinparam note {
+    BackgroundColor AliceBlue
+    BorderColor Black
+}
+|Ingest Endpoint|
+start
+:incoming GridFTP\n(or other) file;
+|ESDM demon|
+floating note right
+This use case covers both
+CP-ESD and GridFTP ingest.
+endnote
+|Ingest Endpoint|
+: check cache;
+floating note left
+There is no semantic
+information yet
+available!
+So we need a cache
+for ESDM ingest.
+endnote
+|Ingest Endpoint|
+: data cached;
+floating note left
+High performance native
+GridFTP client needed
+to storage "under ESDM"
+control.
+endnote
+|Ingest Endpoint|
+:file closed;
+:file closed hook\n fires off action;
+split
+    stop
+    floating note right
+    Ingest doesn't
+    need to wait
+    on ESDM write
+    endnote
+split again
+    |ESDM demon|
+    :file parsed;
+    :ESDM layout selected;
+    :ESDM write initiated;
+    :ESDM write concluded;
+    :ESDM flags data available;
+    :ESDM clears cache;
+    detach
+endsplit
+
+@enduml

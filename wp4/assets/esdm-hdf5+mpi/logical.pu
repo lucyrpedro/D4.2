@@ -1,0 +1,52 @@
+@startuml
+
+
+class Application
+class HDF5
+class "HDF5 VOL Plugin" as vol
+
+class MPI
+
+interface "ESDM API" as ESDMAPI
+
+class Scheduler
+class Layout
+class "Performance Model" as perfmodel
+class "Site Configuration" as siteconfig
+
+class "Backend A" as A
+class "Backend B" as B
+
+
+
+Application -> HDF5: read/write data
+HDF5 -down-> vol: handle with to VOL Plugin
+
+
+Application -down-> MPI: may use
+HDF5 -down-> MPI: may use
+vol -left-> MPI: may use
+
+
+vol -> ESDMAPI
+ESDMAPI -> Scheduler
+Scheduler -> Layout
+
+Layout -down-> perfmodel
+Layout -down-> siteconfig
+
+perfmodel -down-> A
+perfmodel -down-> B: performance estimates
+
+Scheduler -down-> A: requests for fragments/metadata
+Scheduler -down-> B
+
+
+
+
+
+
+
+
+
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+package "HDF5" { 
+Dataset "0..*" <--o "1" Datatype
+Dataset "0..*" *--> "1" Dataspace
+Dataset "0..*" -- "Filter" : requiredInPipeline
+Dataset "1" --> "0..*" Attribute
+Dataset "0..*" -- "ExternalFile" : storedIn
+Dataset *--> "1" Data
+
+Dataset : layout: H5D_layout_t
+Dataset : chunk_ndims: int
+Dataset : chunk_dims: hsize_t[]
+Dataset : deflate_level: int
+Dataset : fill_value_type: hid_t
+Dataset : fill_value: void*
+
+Datatype -- "Data" : describesOneElement
+Dataspace -- "Data" : describesArrayOfElements
+
+Filter : filter_H5Z_filter_t
+Filter : flags: unsigned int
+Filter : cd_nelmts: size_t
+Filter : cd_values: unsigned int[]
+
+ExternalFile : name: string
+ExternalFile : offset: off_t
+ExternalFile : size: hsize_t
+
+}
+@enduml

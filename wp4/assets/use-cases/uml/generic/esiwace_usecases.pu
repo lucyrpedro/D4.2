@@ -1,0 +1,29 @@
+# This is a set of high level esiwace use cases for the storage activity
+# note left of scientist2: We are not expecting\n these activities\n for the demo"
+# note right of analyseY: This means the ESD middleware\nwould need to shuffle data to disk\nbefore and after the analysis workflow.
+
+@startuml
+!include skinparams.iuml
+left to right direction
+(runs model) as runmX
+note right of runmX:  For ESiWACE demonstrator,\nthis will be a PRACE platform
+(migrates data) as migrateXY
+note right of migrateXY: For ESiWACE demonstrator\nthis will be (at least) JASMIN
+note right of migrateXY: For JASMIN data will need to be written\nto tape!
+(analyses data ) as analyseY
+(creates data products) as outputY
+(takes results home) as hometoZ
+
+: Scientist\n(Experimenter) : as workflow
+
+project --> workflow : <<includes>>
+workflow --> runmX
+workflow --> migrateXY
+
+: Scientist\n(Analyst) : as scientist1
+project --> scientist1: <<includes>>
+
+scientist1 --> analyseY
+scientist1 --> outputY
+scientist1 --> hometoZ
+@enduml

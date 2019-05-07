@@ -1,0 +1,34 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{PMF{\etalchar{+}}15}
+
+\bibitem[EFD{\etalchar{+}}16]{DBLP:conf/cd/EliaFDPFW16}
+Donatello Elia, Sandro Fiore, Alessandro D'Anca, Cosimo Palazzo, Ian~T. Foster,
+  Dean~N. Williams, and Giovanni Aloisio.
+\newblock An in-memory based framework for scientific data analytics.
+\newblock In {\em Proceedings of the {ACM} International Conference on
+  Computing Frontiers, CF'16, Como, Italy, May 16-19, 2016}, pages 424--429,
+  2016.
+
+\bibitem[FDP{\etalchar{+}}13]{DBLP:conf/iccS/FioreDPFWA13}
+Sandro Fiore, Alessandro D'Anca, Cosimo Palazzo, Ian~T. Foster, Dean~N.
+  Williams, and Giovanni Aloisio.
+\newblock Ophidia: Toward big data analytics for escience.
+\newblock In {\em Proceedings of the International Conference on Computational
+  Science, {ICCS} 2013, Barcelona, Spain, 5-7 June, 2013}, volume~18 of {\em
+  Procedia Computer Science}, pages 2376--2385. Elsevier, 2013.
+
+\bibitem[{Phi}95]{philippe_kruchten_architectural_1995}
+{Philippe Kruchten}.
+\newblock Architectural blueprints\textemdash{}{{The}} ``4+ 1'' view model of
+  software architecture.
+\newblock {\em Tutorial Proceedings of Tri-Ada}, 95:540--555, 1995.
+
+\bibitem[PMF{\etalchar{+}}15]{DBLP:conf/ieeehpcs/PalazzoMFDEWA15}
+Cosimo Palazzo, Andrea Mariello, Sandro Fiore, Alessandro D'Anca, Donatello
+  Elia, Dean~N. Williams, and Giovanni Aloisio.
+\newblock A workflow-enabled big data analytics software stack for escience.
+\newblock In {\em 2015 International Conference on High Performance Computing
+  {\&} Simulation, {HPCS} 2015, Amsterdam, Netherlands, July 20-24, 2015},
+  pages 545--552, 2015.
+
+\end{thebibliography}

@@ -1,0 +1,44 @@
+@startuml
+/' title __Epoch__ '/
+skinparam noteBackgroundColor beige
+skinparam noteBorderColor black
+skinparam class {
+    BackgroundColor AliceBlue
+    BorderColor Black
+    ArrowColor Black
+    AttributeIconSize 0
+}
+
+
+package Notification {
+
+
+        class "ESDM_notification" as esdm_notification {
+           +context: notification_context
+	   +UserEvents: []
+
+           +subscribe(ESDM_EVENT/UserEvent, filter, callback)
+           +unsubscribe(subscriptionID)
+
+	   +registerEvent(EventName)
+	   +unregisterEvent(EventName)
+	   +publishEvent(EventName, message)
+
+	   +queryEvent(filter)
+        }
+
+        enum ESDM_EVENT {
+		ESDM_EVENT_epoch_commited
+		ESDM_EVENT_container_open
+		ESDM_EVENT_container_close
+		ESDM_EVENT_variable_open
+		ESDM_EVENT_variable_close
+		ESDM_EVENT_finalize
+		ESDM_EVENT_DAEMON_error
+		...
+	}
+  
+
+}
+
+@enduml

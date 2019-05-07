@@ -1,0 +1,44 @@
+graph changed {
+  graph [fontname = "sans serif"];
+  node [fontname = "sans serif", shape=box];
+  edge [fontname = "sans serif"];
+
+  {node [fontcolor=blue, style=filled] "NetCDF4 (patched)"}
+
+  Application1 -- "NetCDF4 (patched)";
+
+  Application2 -- "NetCDF4 (patched)";
+
+  "NetCDF4 (patched)" -- "HDF5-High-level";
+  "NetCDF4 (patched)" -- "H5T";
+
+  subgraph cluster {
+    graph[style=dotted];
+
+    "H5T";
+
+    VOL; # Which layout to choose: see H5Dlayout.c, do IO in: H5Dio.c ; H5Dread()
+
+    "HDF5-High-level" -- H5F;
+    "HDF5-High-level" -- H5D;
+    "HDF5-High-level" -- H5G;
+    "HDF5-High-level" -- H5A;
+    "HDF5-High-level" -- H5L;
+
+    H5F -- VOL;
+    H5D -- VOL;
+    H5G -- VOL;
+    H5A -- VOL;
+    H5L -- VOL;
+
+    "H5P/FAPL" -- VOL
+
+    VOL -- "H5VL native (Plugin)"
+
+    node [fontcolor=blue, style=filled] "Layout Component"
+    VOL -- "Layout Component"
+
+    label="HDF5";
+  }
+
+  }

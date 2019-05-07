@@ -1,0 +1,2784 @@
+\documentclass{../../template/esiwace-report}
+
+
+\usepackage{booktabs}
+
+%\usepackage[inline]{showlabels}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{D4.1 Business Model with Alternative Scenarios}
+% lead author, then everyone else in alphabetical order ...
+\author{Jakob Lüttgau
+	\and Jens Jensen
+	\and Julian Kunkel
+	\and Bryan Lawrence
+	}
+\date{\today} % Replace with final date
+
+\ESIWACEworkpackage{WP4 Exploitability}
+
+\ESIWACElead{DKRZ}
+\ESIWACEparticipants{STFC}
+
+
+
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+
+This report summarises the work on business models with alternative scenarios for storage infrastructure in data centres. The work focuses on the cost factors as they apply to climate and weather computing facilities, but much of the work is relevant to other data intensive sciences. We begin with a motivation in terms of the scientific and technical drivers as they apply in this field, before introducing generic and specific requirements, recognising the importance and impact of (i) durability and (ii) the way that data is packaged for storage, on cost and performance. We introduce some of the related trends in hardware and software before introducing our coarse grained graph-based cost modelling methodology and how it applies to a range of components and sub-systems of importance to weather and climate workflows. We then use this methodology to investigate costs at DKRZ, and indicate how it might be used to do the same at STFC.  Several scenarios of how DKRZ could have been (could be) configured are examined, each introducing some architectural changes to currently deployed high-performance systems and discusses the cost and performance implications. A more refined modelling approach is introduced and applied to archive systems at DKRZ, which shows good approximations to observed behaviour. However, this refined approach also shows the need for the collection of significant amounts of data, and for a very detailed understanding of all of the hardware components and software stack. Nonetheless, in this context we conclude that detailed system simulation of this sort will be necessary for weather and climate institutions to design affordable and performant storage and analysis systems --- it is unlikely that the domain is large enough to rely on vendors to do the work. The report finishes with a list of avenues for further work in: refining models, building component catalogues, testing, and in the gathering of more data.
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% #####  ###    ###
+%   #   #   #  #
+%   #    ###    ###
+\newpage
+\tableofcontents
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Introduction}
+\label{sec:introduction}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Relation to the ESiWACE Project}
+% Description of the task / WP / Deliverable.
+% Copy the text of the proposal here and add some filling to make sure people can understand.
+
+Workflows in weather and climate computing generate vast amounts of data, and ever increasing proportions of budgets are dedicated to systems for managing and manipulating those data. This work package is about "exploitability", that is, the ability of the community to exploit that data.  In this context, the community ranges from "the modellers who are running the simulations" through the direct collaborators working on model analysis, to downstream users.
+
+It will be seen in the material presented here that there are a range of facilities that are needed to support the community in exploiting the data, but at heart they all depend on storage systems which need to be secure, performant, and affordable. In this task we concentrate on developing a body of material which help address understanding the various trade-offs between performance and affordable (e.g. everything on disk might be performant but not affordable, everything on tape might be affordable but not performant).
+
+When the description of work for ESIWACE was written, we described this task and deliverable as follows:
+
+\begin{quote}
+	\itshape
+	System and data centre design and procurement are complex tasks. We will
+	parameterize the required activities into a business model that could, for
+	example, given building and power capacity, predict storage capacity and power
+	drawdown. In and of itself, such a model is very straightforward, but building
+	in the ability to understand how choices as to ensemble-size, model resolution,
+	and run length, will impact both on compute and storage requirements, is a much
+	more demanding task. This new model will expose the very direct trade-offs between
+	scientific aspirations and physical limits (power, machine room and tape
+	library size).  Specifically, the very significant increases needed in the
+	proportion of budget devoted both to storage capital costs, and storage
+	recurrent costs will be contrasted with future compute availability. The model
+	will also be designed to help direct future research in I/O towards the most
+	promising activities. Addressing this will require a short period of sustained
+	working in the two main academic partners to develop, test and publish suitable
+	business models.
+
+	In a first step, the developed model will be disseminated to participating data
+	centres and checked.  In a second step, it will be published. DKRZ will develop
+	model components to cover hardware, software and data centre aspects where STFC
+	will incorporate domain-specific aspects for Earth system models and operation.
+	A report describing the model and a lightweight ESiWACE implementation that
+	allows experimenting with model parameters will be released as D4.1.
+\end{quote}
+
+It will be seen that some of these aspirations have not yet been met, in part because the influence of new technology (such as NVRAM) is expected to be pervasive and important, and we cannot yet quantify relevant costs and performance; and in part because we conceived of the elements of the task in the wrong order, and under-estimated the size of the task. What we do here is to concentrate on developing the base information and base business and performance model, recognising that further refinement is needed before dissemination. We discuss those further refinement steps and how we will achieve them in the further work section (see \Cref{further-work}).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Motivation}
+
+There are three aspects that motivate the work described here: the growth in data volumes, the change in the technology environment, and the impact of both these trends on cost.  The challenges are partly on the science side --- how to do science with larger data volumes --- as well as the data
+centre side --- how to implement a data centre to support models running on exascale machines.  One of the specific aims of the work in WP4 is thus the \emph{scalability}: How does the data centre scale to the exascale, both in terms of volume, (towards the exabyte), and velocity (rate at which data is ingested, and analysed and transferred).
+
+\input{intro_scientific_context}
+\input{intro_technical_context}
+
+\input{intro_goals}
+% includes goals and structure of deliverable, now one section
+
+\chapter{Modelling the Data Centre}
+
+\input{data_centre.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Related Trends}
+\input{related_work.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+ \chapter{Cost Modeling}
+\label{sec:modeling}
+
+This section documents the considerations that are necessary to implement better tools for cost modeling of storage infrastructure in data centres.
+\Cref{sec:modeling/level of abstraction} outlines the hierarchical approach to manage the granularity of the models as well as how temporal workload considerations can be achieved.
+We continue by introducing abstractions for the most important subcomponents commonly found in data centre subsystems in  \Cref{sec:modeling/components}.
+Next, \Cref{sec:modeling/subsystems} outlines cost considerations as they apply to the scalable storage and network subsystems.
+%\Cref{sec:modeling/tco} and \Cref{sec:modeling/qos} conclude by demonstrating how to aggregate TCO and QoS from the previous subsections.
+
+
+\section{Level of Abstraction}
+\label{sec:modeling/level of abstraction}
+
+To approach cost estimates and analysis, we propose two levels of abstraction:
+
+\begin{itemize}
+	\item A coarse grained model covering relevant components and related metrics for a data centre, an abstract workload description and optimization strategies related to system technology and workload organization.
+	Goal of the model is to provide a heuristics to quickly determine promising combinations of data centre layouts and their associated costs. It is not our aim to provide a cent-accurate model.
+	The model ignores temporal and spatial factors of the workload runtime behavior.
+	\item Parts of the coarse grained model can be refined with more detailed models, for example, describing a temporal behavior of workload execution using workload traces in combination with actual topologies to predict estimated performance. This allows to narrow down gray areas in the general model.
+\end{itemize}
+
+These models should allow to provide an workload mix, i.e., behavior of multiple typical workloads and estimate the inherent costs, performance and required fault tolerance.
+It allows to explore different data centre designs in respect to storage for a fixed budget but also required features for hardware and software.
+
+\comment{
+Aspects:
+- Workload
+- Components
+- Metrics
+ * Costs
+ * Performance
+ * Resilience / Fault tolerance
+- Available hardware and software features
+-- Scheduler feature
+-- QoS for I/O and communication
+-- Clever backup (backup tolerates user mistakes / fahrlässigkeit) can be integrated here, e.g., with Snapshots.
+...
+}
+
+
+\section{Coarse Grained Model}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.45]{dot/coarse-grained-components}
+	\caption{Example of how to specify relationships and characteristics for system components.}
+	\label{fig:abstract + key-value}
+\end{figure}
+
+The coarse grained model assumes a graph of components -- at this point we do not have to discuss the individual components -- and their relation.
+The graph of components is the foundation to compute the resilience, estimate performance and the costs.
+An example graph is shown in \Cref{fig:abstract + key-value}.
+Component 1 and 2 have dependencies to the root component, and the Subcomponent to Component 1.
+Annotations can be placed on edges and nodes; the exact meaning of the figure and the annotations depends on the model.
+
+
+
+
+\newpage
+\subsection{Resilience Model}
+
+
+
+
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.45]{dot/coarse-grained-failure}
+	\caption{Component dependency graph to model resilience.}
+	\label{fig:resilience example}
+\end{figure}
+
+
+The resilience model is based on component failure metrics and derived using statistical methods.
+A very simple example is shown in \Cref{fig:resilience example}.
+The graph shows the error propagation of failures, i.e., dependencies of errors, as a directed graph.
+For example, if the overall data centre power supply fails, then the global switch fails and the failure is propagated to the Rack UPS (uninterruptible power supply).
+However, the UPS actually mitigates this error for an amount of time; still it introduces a new source of error, but if these errors are less likely than a global power outage the overall availability increases.
+Thus, such a graph can contain technology and strategies to mitigate errors.
+Mitigation strategies usually depend on redundancy, i.e., replication of data, which adds costs and may reduce performance.
+
+Similarly, for block devices, the RAID strategy replicates data and, thus, tolerates failures of individual components.
+The annotations in the graph show the MTBF, MTTR, or simply the reliability rate in \% and for mitigation devices some short information.
+In fact, for every type of failure, a MTBF and MTTR could be provided to account for different probabilities of the various types of error and the recovery time.
+
+Since mitigation strategies are rather complex, only a short hint is given (after the +).
+The level of detail of such a model can be varied, modeling each subcomponents of a node like a CPU, power supply, or memory DIMM.
+Or it becomes more coarse grained modeling a data centre on the level of compute, storage, cooling and power supply based on the available data or interest of the modeler.
+More coarse grained models can be build usually on the fine (subcomponent based) failure rates.
+%\todo{F = failure rate or probability of failure in one hour \url{http://answers.google.com/answers/threadview?id=390140} Define failure and availability rate in definitions!}
+%\todo{JJ: Notationally, it would be better to reserve F for the CDF}
+To determine the reliability rate of a component, the rate of all components it depends on can be multiplied when modeling independent failures.
+
+\paragraph{Example}
+Let us compute the MTBF of the RAID system to fail with RAID 0 and RAID 1+0.  For simplicity, we assume initially a
+uniform distribution of errors, i.e., it is equally likely the system fails in the first minute after is has been
+started and in one minute after it run 100 days without error.  In other words, if $p$ is the probability of failure in
+any given minute, then the assumption is that $p$ is independent of time.
+
+If we look at it discretely, with $\mathbb{T}$ (as a stochastic variable) being the minute a failure occurs (minute 0
+being when the device is started), then $\mathbb{T}\sim\mathcal{N}(1,p)$ where $\mathcal{N}(k,p)$ denotes the negative
+binomial distribution with parameters $k\in\mathbb{N}$ and $0\leq p\leq 1$.  The expectation is $E(\mathbb{T})=(1-p)/p$.
+Returning to the original case, if the MTTF is 10 years\footnote{In practice, the vendor-specified MTTF is more likely
+  to be $10^6$ hours or more, which translates to well over 100 years.}, we do indeed get $p=1.9\cdot 10^{-7}$, which is
+the probability of failure in any given minute.
+
+In practical reliability engineering, one will often look at the ``bathtub curve'' which includes a component of
+``infant mortality,'' i.e.\ early failures of the device which is prominent in the early timespan of the device, as well
+as a component of aging which gets prominent obviously in the later stages of the device lifecycle.  On top of that is a
+constant probability of failure throughout the lifecycle of the device.  Let us consider these components in turn.
+
+As regards infant mortality, STFC's data centres, for example, will typically ``burn in'' disks by putting them through
+high intensity activity for about four weeks, thus ensuring that the early-life device failures get caught before the
+drive is put into production.  At the other end of the scale, a drive is typically retired long before its MTTF: if the
+MTTF is 10 years, say, the disk server may be retired at 5 or 6, and may even have been reallocated to less critical use
+well before then (after 3-4 years), with the critical disk services being taken over by newer disk servers with higher
+capacity.  In these cases, one should be able to ignore the sides of the bathtub curve and should get an essentially
+constant failure rate.
+
+However, it would likely be a mistake to use the MTTF to derive the constant rate, as the MTTF is based on the aging
+device.  We thus need to revisit the data on drive failures.  Moreover, one also needs to take into account the
+possibility of systemic failures, like those arising through firmware bugs, environmental disasters (like failure of
+cooling or power), or simply the usage which have low likelihood but high impact as they are likely to affect a larger
+number of drives.  Also the usage is relevant, where drivers under higher load are more likely to fail, particularly in
+the early months of its use \cite{pinheiro}.
+
+%\todo{Statistics here!}
+
+%% \todo{Exponential distributions, reference to work on reliability or survival?
+%% JL: If you have particular in mind, drop it here :)
+%% }
+
+%The \emph{exponential distribution}, $E(\lambda)$ with parameter $\lambda>0$ is based on the assumption of a constant
+%\emph{hazard function}, the constant value being $\lambda$ for $t>0$ -- this means that given that the device has not
+%failed at time $t$, the probability of failure in time $t$ to $t+\delta t$ (for small $\delta t$) is $\delta t\lambda$.
+%The \emph{survival function} for $E(\lambda)$ is $\exp(-\lambda t)$ for $t>0$.
+
+%\todo{more stuff here, but need the stats first}
+
+%% Even though we are introducing a simple model, we still need to do the maths ``properly,'' otherwise we risk getting the
+%% wrong result, and we would need to do the maths properly anyway in order to develop more sophisticated models.  We thus
+%% need to introduce a little bit of elementary probability theory.\todo{We could move some of the stuff to appendices}
+
+%% With $p$ as above, time between failures is thus exponentially distributed\footnote{Of course, in practice, once a
+%%   device has failed, it is dead; but mathematically, it may make sense to allow failures to recur, a natural consequence
+%%   of the independence of time.  In practice, it will not affect the result.} with parameter $\lambda$, which we need to
+%% relate to both $p$ and the MTBF.  If $\mathbb{T}$ is the time to fail (as a stochastic variable), then
+%% $\mathbb{T}\sim\mathrm{Exp}(\lambda)$.  As the exponential distribution has CDF
+
+%% \begin{equation}
+%%   F_{\mathrm{Exp}(\lambda)}(t)=1-e^{-\lambda t},
+%% \end{equation}
+%% (JJ: TODO - epxand later)
+
+For RAID 0, the RAID system is degraded if any device fails, and again for simplicity we assume failures are independent.
+%% This bit is too simplistic, it won't work:
+%% Based on the 10 year MTBF, the probability that one device fails in any given minute is $F(HDD) = 1.9\cdot 10^5
+%% \%$\todo{this is completely wrong...! (aside from the missing minus), it would be exponential.}
+%% The chance that at a given time one of the four HDDs fails is $1 - (1 - F(HDD))^4$ and, thus the RAID system would fail.
+%% Based on this value the MTBF of a RAID 0 system can be computed that is 2.5 years.
+%% For a RAID 1+0, two HDDs must fail, .... \todo{eintragen}
+Instead of using simple models of MTBF and MTTR probability distributions over time could be used.
+%\todo{Figure probability distribution of failed HDDs}
+
+
+\comment{
+TODO: more complex model:
+* Component failure rate, probability distribution over time, dependencies to other components, graph can show the dependencies (e.g. power failure in a Rack or overheating in a Rack)
+* Software must protect against component failures e.g. using erasure coding, redundant components / space.
+** RAID / erasure component: RAID0 => x fach replication, ... 1.1 x components needed
+=> reduces performance and increases component counts
+}
+
+\subsubsection{Performance Model}
+\label{sec:modeling:perf}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.45]{dot/coarse-grained-performance}
+	\caption{Component dependency graph to model performance.}
+	\label{fig:performance example}
+\end{figure}
+
+
+The performance model also uses a  graph based model annotating relevant components with throughputs and latencies.
+Using the hardware graph it is easy to determine theoretic peak performance for individual components.
+But also for more complex situations, it is possible to gauge the performance that can be obtained from using components in parallel.
+
+\Cref{fig:performance example} shows an example graph with performance metrics for compute nodes, network and storage media added. E.g. it is simple to see that node to node communication can not exceed bandwidths of 10GB/s, while the storage server will be happy to handle incoming bandwidths of up to 15GB/s.
+While networks are relatively simple, storage media require a more granular approach to account for different transfer rates for read or writes.
+The throughput for paths to the network is simply defined by $max(edge0_{throughput}, ..., edgeN_{throughput})$.
+Similarly the latency is the accumulation of latencies attached edges and nodes on the path $\sum_{item}^{path}{item_{latency}}$.
+
+For common groups of components used in combination such as RAID systems it can be useful to not model the complexity explicitly as the dynamics are sometimes well understood can be abstracted as described in \cite{kunkel_iopmmodeling_2012}.
+For example for a deployed RAID 1+0 the relevant performance of interest is no longer the performance of the individual HDDs but the performance of the RAID group.
+This can be derived in two steps:
+
+\begin{enumerate}
+	\item RAID1 has performance implications in two most notable ways: the throughput is slightly reduced and capacity is reduced.
+
+\begin{align}
+	 & RAID1_{capacity}   &  & = min(child0_{capacity}, ..., childN_{capacity})     \\
+	 & RAID1_{throughput} &  & = min(child0_{throughput}, ..., childN_{throughput}) \\
+	 & RAID1_{latency}    &  & = max(child0_{latency}, ..., childN_{latency})
+\end{align}
+
+
+	\item RAID0 pushes in the opposite direction. Throughput and capacity can be obtained by taking the sum of the direct children:
+\begin{align}
+	 & RAID0_{capacity}   &  & = \sum^{children}{child_i:capacity}   \\
+	 & RAID0_{throughput} &  & = \sum^{children}{child_i:throughput}
+\end{align}
+\end{enumerate}
+
+
+
+%\url{wr-publications/Papers/2012/kunkel-pdp12-abstraction_and_graphical_modeling}
+
+%* annotated graph of the components, how data flows, costs for additional software stacks / middleware
+%* throughput model parallelism from n clients / aggregated across all clients
+
+
+
+
+
+
+
+%\subsubsection{Workload Model}
+%
+%A coarse grained workload model defines the required performance characteristics for the executed workload mix.
+%Naturally, some components must be sized based on the most intense workload run on this component.
+%For example, the memory capacity of a node must be sized to meet the needs for the memory occupied by the biggest application -- in this specific example otherwise more nodes would be needed and available resources would be wasted.
+%
+%Example for the execution of a specific application (fine grained).
+%Beispieltrace wie eine Anwendung laufen könnte in verschiedene Phasen.
+%Das kann resultieren in aggregierten Leistungsdaten wie Cite aus paper.
+%
+%We assume performance characteristics for the data centre have been derived from the workloads.
+%Note that this is similar to the typical estimation strategy used during the procurement of new HPC systems.
+
+
+\subsection{Cost Model}
+
+%
+%\begin{figure}
+%	\centering
+%	\includegraphics[scale=0.49]{dot/coarse-grained-cost}
+%	\caption{Component dependency graph to model cost.}
+%	\label{fig:}
+%\end{figure}
+
+The cost model can be divided into a model for operating a supercomputer and the costs for executing a scientific workflow.
+
+\paragraph{Supercomputer TCO}
+
+The total costs of ownership for a system depends on the investment costs and the operational costs.
+\Cref{eq:tco} gives an idea how the TCO can be computed based on individual components.
+
+
+\begin{align}
+\label{eq:tco}
+TCO(system)  & = \mbox{investment costs} + \mbox{operational costs} \nonumber \\
+\mbox{investment costs} & = \mbox{costs for hardware components} + \mbox{support contract} \\
+\mbox{operational costs} & = \mbox{facility} + \mbox{staff} + \mbox{maintenance} + \mbox{energy} \nonumber
+\end{align}
+
+In the equation it is assumed the operational costs are accumulated over the lifetime\footnote{The time a system or component is in production.} of the system.
+Potentially, the investment costs could contain already the costs for the support during the system's lifetime -- this is typical for procurements of public data centres.
+Other cost factors are usually integrated into one of these factors, for example, cooling costs are integrated in the energy costs and the cooling hardware infrastructure in the facility costs (for the lifetime of a system).
+
+Many of the listed costs can be easily distributed across the individual components of the system.
+For example, the investment costs for a system is the sum of the costs for the individual components (and some extra costs for planning and integration).
+However, in some cases the distribution of costs across subcomponents is not trivial:
+When hosting multiple systems into one building, one issue is how to divide fixed operational costs like facility and staff costs across IT equipment?
+Facility costs could be distributed based on the percentage of occupied floor space.
+Staff could be employed for a dedicated system but is usually shared for all systems making it difficult to account for.
+A typical assumption could be that a fixed number of staff people is needed regardless of the number of components in the system due to the economy of scale.
+
+%\todo{Componenten graph mit Kosten?}
+\comment{
+Mitigation strategies usually depend on redundancy, i.e., replication of hardware, this adds costs.
+Dependency graph of costs.
+for a fixed configuration:
+* count components
+
+Bei veränderung der Komponentenanzahl, ein Lineares Modell, in realität gibt es nichtlineare Sprünge, bspw. wenn der Switch nicht mehr aussreicht für alle kabel.
+}
+
+
+
+\paragraph{Costs for executing scientific workflows}
+
+The costs for some workload W depends on its usage behavior on all stressed components of the system.
+The usage of exclusively used resources implies costs based on the fraction of used resources divided by the overall available resources.
+For example, if 10\% of a system is used for 100\% of its lifetime, this should cost about 10\% of the TCO for the system.
+
+
+A naive approach of computing the costs for the workload is given in \Cref{eq:distributeCosts}:
+\begin{align}
+\label{eq:distributeCosts}
+\mbox{costs}(W) = \sum_{\mbox{c}} \frac{\mbox{TCO(c})}{\mbox{lifetime(c)} \cdot \mbox{resources(c)}} \cdot \gamma(c)  \cdot \int_{t = 0}^{T} {\mbox{u}(W,c,t)}
+\end{align}
+By dividing the TCO for each component that is used with its lifetime and amount of resources it offers, the relative costs per second and resource utilized is computed.
+This value then has to be multiplied with the actually utilized resources over time.
+$u(W,c,t)$ are the used resources at a given time for the workload W and this component.
+
+However, overall the system might experience periods in which it is idle.
+Thus, as these times also incur costs but cannot be assigned to a workload, they must be assigned to actual workloads.
+The utilization of a component can be defined as the fraction in its lifetime it is doing useful work, e.g., typical supercomputers are scheduling production jobs in more than 90\% of their lifetime.
+Since the final utilization is not known a-priori and would require to determine the actual usage of the component until the end of its lifetime, an empiric estimate can be used.
+To accommodate for unused resources, the costs for a job can be multiplied with the inverse of the estimated utilization of the component to account these costs to the job.
+$\gamma$ as inverse of the utilization is our correction term $> 1$, e.g., with a value of 1.1 for compute node utilization.
+
+
+
+
+
+
+
+
+
+There are costs which depend on the actual usage behavior, e.g., the consumed energy and, thus, energy costs, are influenced by the behavior of the workload.
+For simplicity, we will not consider them explicitly in our coarse grained model.
+
+Note that this model can be applied to many resources, as for example, jobs running on compute nodes.
+Also, costs caused by passive behavior such as files occupying on a storage system imply costs in a similar fashion.
+As costs of idle data can be significant, we describe a model for them explicitly and demonstrate the overall concept on this example.
+
+\paragraph{Costs for idle data}
+
+To quantify the costs for idle data, we recapitulate the life cycle of data first\footnote{Please also see the paper \cite{CECOSDKMKL10} that describes how this information could be gathered and how energy consumption could be computed.}.
+See \Cref{fig:datalifecycle} for an example of a file's life cycle.
+In the example, we assume a simulation which iteratively updates the current state and stores the computed results in a file -- that is, appends them.
+It consists of different phases (file creation, running of the simulation), post-processing, later analysis by other scientists and deletion.
+A vertical bar indicates a discrete time which triggers I/O activity during a particular phase.
+The modifications to the file size are shown in \Cref{fig:size_changes}.
+A post-processing (or visualization of the results) requires to read the data and might generate derived results.
+Later, additional analysis might be conducted with the simulated data.
+For instance, to compare the old results with newer results or to answer new scientific questions with the recorded simulation results.
+Over time, data loses its importance and is accessed less often -- gradually losing value in terms of the need for fast access -- and ultimately gets archived (moved to a slower less expensive medium, such as on-line, near-line, or off-line tape) or disposed of.
+As a rule, newer data and data that must be accessed more frequently is stored on faster but more expensive storage media, while less critical data is stored on cheaper but slower media.
+However, the actual usage of data depends on the use case and on the user interaction.
+
+\begin{figure}
+\centering
+  \includegraphics[width=.45\textwidth]{figures/old-papers/life-cycle}
+\caption{Example scientific data life cycle}
+\label{fig:datalifecycle}
+\end{figure}
+
+
+\begin{figure}
+\centering
+  \includegraphics[width=.45\textwidth]{figures/old-papers/size_changes}
+\caption{Trivial file size increases during the life cycle}
+\label{fig:size_changes}
+\end{figure}
+
+
+The costs for storing a file on the system could be computed by understanding the space occupied on the available storage system over time.
+In that sense, it can be computed analogous to the costs of an workflow in \Cref{eq:distributeCosts}.
+That means, a file that occupies 10\% of space for the whole production time of a storage system should be budgeted with 10\% of the costs for supporting the storage system for its lifetime, i.e., its TCO.
+Similarly, a file that occupies 20\% of space for half the production time is also budgeted with 10\% of the storage system's TCO.
+For a file, the integral of the occupied space, that means, the file size over time is the relevant metrics to compute the fraction of costs from the TCO that it accounts for.
+Thus far this model does not account for the costs of empty space (which might be necessary for performance reasons, or which might be a consequence of an initially empty resource filling up), but this can be dealt with by identifying $\gamma$  to be a ``fill factor'' which might vary between something like $1.05$ to represent $5\%$ ``performance headroom'' and $1.5$ for an initially empty resource which is filled by the end of the lifetime of the resource.
+
+Based on these considerations an equation can be constructed:
+\begin{align}
+%\caption{Computing costs for idle files}
+\label{eq:idlefiles}
+\mbox{costs-idle}(F) = \frac{\mbox{TCO}}{\mbox{lifetime} \cdot \mbox{capacity}}  \cdot \gamma \cdot \int_{t = 0}^{T} {\mbox{size}(F,t)}
+\end{align}
+
+\Cref{eq:idlefiles} computes the (idle) costs for keeping a file on the storage.
+$F$ is the file, $t$ the discretized time.
+$\mbox{size}(F,t)$ is the size the file occupies at a given time.
+Capacity, lifetime and TCO refer to the storage system's total capacity, the lifetime and TCO, respectively.
+$\gamma$ is the ``fill factor'' correction term $> 1$, e.g., 1.1, to accommodate for empty space.
+
+Theoretically, the costs for transferring data (i.e., for active files) could be captured by measuring the amount of data accessed and number of I/O operations.
+
+\paragraph{Example}
+To demonstrate how a HSM system which consists of spinning disks and tape could migrate data, a simple scenario is setup.
+Consider an iterative application which appends 10\,G\-Bytes of data to a file every 10 minutes.
+For instance the application could be a climate simulation which runs for 1,000 minutes, that is, performs 100 iterations.
+In total a single file of 1\,TByte is created.
+After completion of the program, in a post-processing phase, data is extracted, post-processed and 100 minutes later the whole data set is visualized -- that is, data is read completely two times.
+Then -- at the end of the post-processing phase -- the data is migrated to tape.
+
+\begin{figure} [htb]
+\centering
+  \includegraphics[width=.75\textwidth]{figures/old-papers/example-ea}
+\caption{A qualitative view of the contributions to the terms of equation \ref{eq:idlefiles} for the example scenario with migration between tape and disk (note that
+the \texttt{file\_size\_over\_time} terms correspond to the integral term in that equation). }
+\label{fig:exampleEA}
+\end{figure}
+
+In a phase of further analysis the data is requested one year later to perform new analysis and compare the simulation run with new data.
+Between each run 100 minutes elapse.
+Therefore, data is staged from tape to disk and read sequentially two times by various applications.
+Then the data on disk is deleted immediately.
+The changes of various metrics such as file size on the device, blocks read, and the integrated file size are shown in \Cref{fig:exampleEA}.
+
+In this example one could use use equation \ref{eq:idlefiles} to sum up the costs of the storage on disk in each phase, and the cost of the tape.
+A key confounding problem in this sort of analysis is whether or not the data recall from tape requires recall of more data because of packaging considerations (\Cref{sec:packaging_and_metadata}).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Modeled Components}
+\label{sec:modeling/components}
+
+The previous section covered the bigger picture of the approach. This section serves as reference for considerations that apply to common subsystems and components.
+In some cases more detailed models are required in support of the course grained models this section collects abstract cost and performance information for various components and subsystems relevant to storage systems in data centres.
+\Cref{sec:modeling/components/unconfigurable} collects individual components that are usually not configurable.
+The implications by key configuration choices for compute nodes and I/O nodes are listed in \Cref{sec:modeling/components/computenodes} and \Cref{sec:modeling/components/ionodes} respectively.
+\Cref{sec:modeling/subsystems} discusses similar considerations for important storage subsystems such as object stores, parallel file systems or tape systems.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Unconfigurable Components}
+\label{sec:modeling/components/unconfigurable}
+
+Many components in data centres cannot be internally configured and have to be purchased as unit components or appliances. However, it is still important to consider these units as their characteristics determine e.g. peak performance and cost of higher level components and subsystems.
+
+\begin{itemize}
+	\item Processing Units: CPUs, Accelerators, possibly FPGAs
+	\item Memory: DIMMs
+	\item Storage: HDDs, SDDs, Tapes
+	\item Other: NICs, PCI Cards
+\end{itemize}
+
+Each of the components is associated with performance values in regard to:
+
+\begin{itemize}
+	\item Unit Price, Throughput (read, write), Capacity, Power Consumption
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Compute Nodes}
+\label{sec:modeling/components/computenodes}
+
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=0.5\linewidth]{figures/components_compute-node.eps}
+%	\caption{A typical compute node.}
+%	\label{fig:componentscompute-node}
+%\end{figure}
+
+
+\begin{figure} [htb]
+	\centering
+	\begin{subfigure}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{dot/model_node_cost/compute_cost}
+		\caption{cost}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{dot/model_node_cost/compute_power}
+		\caption{power}
+	\end{subfigure}
+	\caption{Cost and power footprint bay component for compute nodes. A darker shade represents a larger share relative to the total node configurations.}
+	\label{fig:components-compute-node}
+\end{figure}
+
+Compute nodes come in various flavours.
+Depending on the task different configurations are useful.
+For climate simulations for example, nodes usually require substantial amount of compute power and memory in combination with a low latency network.
+%Other use cases such as visualization or increasingly big data workloads, maybe less dependent on synchronous communication.
+
+\paragraph{Storage related factors for compute nodes:}
+\begin{itemize}
+	\item  CPU / GPU / Processors:
+	\begin{itemize}
+		\item How fast can be data processed or generated?
+		\item Is there spare processing power e.g. that can be invested into data reduction or more intelligent data handling?
+	\end{itemize}
+
+	\item Memory
+	\begin{itemize}
+		\item Affects the problem size that can be held quickly accessible on the node.
+		\item Can greatly improve storage performance by use of caching.
+		\item Maybe contended by e.g. network components that require buffers.
+	\end{itemize}
+
+	\item Storage (Node Local)
+	\begin{itemize}
+		\item Usually too slow for large amounts of data in comparison to PFS/Object Storage.
+		\item How will this change as node local NVRAM and burst buffers become more affordable?
+	\end{itemize}
+
+	\item Network Adapters
+	\begin{itemize}
+		\item Determines how fast nodes may communicate with each other.
+		\item Determines how fast we can drain data away from the compute nodes e.g. when writing snapshots.
+		\item Determines how quickly compute can begin.
+	\end{itemize}
+
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{I/O Nodes}
+\label{sec:modeling/components/ionodes}
+
+
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=0.5\linewidth]{figures/components_io-node.eps}
+%	\caption{A typical I/O node.}
+%	\label{fig:componentscompute-node}
+%\end{figure}
+
+
+\begin{figure} [htb]
+	\centering
+	\begin{subfigure}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{dot/model_node_cost/io_cost}
+		\caption{cost}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{dot/model_node_cost/io_power}
+		\caption{power}
+	\end{subfigure}
+
+
+	\caption{Cost and power footprint bay component for I/O nodes. A darker shade represents a larger share relative to the total node configurations.}
+\label{fig:components-compute-ionode}
+\end{figure}
+
+
+I/O nodes are used by all parallel file systems. I/O nodes are specialised nodes with the only purpose to handle requests that the storage subsystem receives. At the same time I/O serve as an intermediate cache layer. Different type of I/O nodes are common:
+
+\paragraph{Load Balancers:}
+Either special switches, or more or less compute only nodes responsible to assign targets for read and write access.
+In general this is probably not a cost factor for deployments with no need to strictly separate customers.
+
+\paragraph{Metadata Handlers and Targets:}
+Especially file systems use metadata targets with configurations optimised for high IOPs and mostly small reads and writes. (Metadata servers can
+often be configured with very different storage media than the data handlers they serve, in particular, they often have faster and more expensive
+solid state disks, and may be candidates for SCM.) The number of meta data handlers and targets is proportional to the amount of objects that need to stored.
+% Bryan guessed what the half complete sentence was meant to say.
+
+\paragraph{Data Handlers and Targets:}
+Data targets are configured for capacity and high throughput.
+Data targets may feature quite a bit of memory for caching but the cost is dominated by the amount of hard drives.
+For HPC systems usually larger reads and writes are observed, for data base systems also the data targets might profit substantially from the usage of SSDs
+RAID controllers may also be a factor but software based RAID is becoming very popular for being more flexible.
+
+\paragraph{Factors by component:}
+\begin{itemize}
+	\item  CPU / GPU / Processors:
+	\begin{itemize}
+		\item How many requests can be handled by a single node?
+		\item Is there spare processing power e.g. for data reduction and other in-transit transformations?
+	\end{itemize}
+
+	\item Memory -  e.g. as a quick cache layer.
+
+	\item Storage in RAID
+	\begin{itemize}
+		\item Storage media is bundled into RAID for performance and fault tolerance.
+	\end{itemize}
+
+	\item Network Adapters
+	\begin{itemize}
+		\item Commonly these nodes use a expensive interconnect.
+		\item Determines how fast nodes may communicate with each other.
+		\item Determines how fast we can drain data away from the compute nodes e.g. when writing snapshots.
+		\item Determines how quickly compute can begin.
+	\end{itemize}
+
+\end{itemize}
+
+
+
+
+
+%\paragraph{Cost driving factors}
+%
+%\begin{itemize}
+%	\item Meta Data Handlers and Targets
+%		\begin{itemize}
+%		\item Main memory for caches in handlers
+%		\item SSDs in targets
+%	\end{itemize}
+%
+%
+%	\item Data Handlers and Targets
+%		\begin{itemize}
+%		\item Storage media (mostly disk count)
+%		\item RAID controllers when hardware RAID is used
+%	\end{itemize}
+%\end{itemize}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Data Centre subsystems}
+\label{sec:modeling/subsystems}
+
+In this section we discuss other sub-systems which are built up from components, but given the bespoke complexity typical of any application, we do not provide any further diagrams in this section - although we will produce such diagrams in planned future work looking at comparisons of data centres.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Network: Switches and Interconnect}
+
+
+The cost of an interconnect network is usually dominated by the number and length of the requisite network cables which in turn depends main on the chosen topology (but also on the physical layout of the data centre\footnote{For example, shorter network cables might be possible if the topology allows compute to be interspersed with storage, and the situation is likely to be further complicated by the advent of hyper-converged compute and storage systems.}).
+
+The secondary cost driver in most networks is the number, type and size of switches, which again is topology dependent.
+
+Some popular network topologies in primarily compute data centres are:
+
+\begin{itemize}
+	\item Fat Tree, high bisection bandwidth at reasonable costs. Connections closer to the root switch have higher bandwidth.
+	\item 3D Torus, well suited to represent the spatial properties of physical simulations.
+	\item Hybercube. Also in form of incomplete hypercubes with similar properties at a fraction of the cost. Good performance and resilient to node failures.  % https://en.wikipedia.org/wiki/Hypercube
+\end{itemize}
+
+In general, variations of fat-tree are used for storage only network interconnects, however, in many weather and climate data centres, storage networks share the compute interconnect - whatever that is. The actual network technology is also a significant factor on both cost and performance, with several options available, although Ethernet and Infiniband  (both offering a range of possible bandwidths) dominate, particularly for parallel file systems.  FibreChannel is not often used, and Intel's new OmniPath is now a consideration.
+
+\paragraph{Factors by component:}
+\begin{itemize}
+	\item  CPU
+	\begin{itemize}
+		\item Is the network completely offloaded from the CPU?
+		\item Cost and bandwidth of network cards will vary by network type (and bandwidth).
+	\end{itemize}
+
+	\item Memory
+	\begin{itemize}
+		\item  Maybe contended by e.g. network components that require buffers.
+	\end{itemize}
+
+	\item Network Adapters
+	\begin{itemize}
+		\item Usually specialised chips by network vendors. Often not software defined, which can lead to the necessity for multiple network adaptors
+		(e.g. to support I/O and compute interconnect independently).
+		\item May use different speed interconnects in different parts of the network topology (e.g. 10 Gbit to data processing clients and 100 Gbit to data processing servers, similarly, high bandwidth interconnects between switches, lower bandwidth to clients.)
+		\item In HPC not uncommon to find only high-performance network.
+	\end{itemize}
+
+\end{itemize}
+
+
+%\todo{are switches energy hungry in comparison?}
+
+\paragraph{Cost driving factors}
+\begin{itemize}
+	\item Choice of topology, both within and between sub-systems.
+	\begin{itemize}
+		\item Number of connections/cables.
+		\item Length of cables
+		\item The number of switches and other network supporting hardware.
+	\end{itemize}
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Parallel File Systems}
+
+Most of the storage workload on most HPC systems is handled using parallel file systems which expose a POSIX\footnote{The storage interface part of the portable operating system interface, POSIX, exposes a range of I/O interfaces.}) interface. Data is arranged on partitions which provide directories and files organised in a nested tree-like structure, with significant associated metadata including access control criteria, timestamps of last-access etc.
+
+Files are generally spread across multiple storage targets, and so data access requires considerable interactions with metadata, and in particular, data writes involve locking of resources on multiple nodes.  On massively parallel environments these file systems often need to be partitioned inflexibly into pools for reliability or performance isolation and are expensive. Given performance issues around bottlenecks for the metadata operations as well, other storage options are being investigated, and likely to be deployed - which is one of the motivations for cost and performance modelling within ESIWACE. However, even were parallel file systems are baed on open-source software (such as lustre), they are  often procured as appliance units because otherwise it would be difficult to address (or get vendors to own) performance issues --- which can arise in the hardware, software, or the combination of both.
+
+\paragraph{How to estimate cost and performance?}
+\begin{itemize}
+	\item Cost: Disks, number of disks per storage server, number of storage servers, internal networking.
+	\item Performance: Size and type of media, network used, number of storage and metadata servers, amount of RAID required, pool configuration. Note that the aggregate performance will differ from the maximum single-client performance, and both will need to be known (and potentially differ within a single system if different sized pools are used with different user or system defined striping configurations).
+\end{itemize}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Object Storage}
+
+File systems generally manage files as entities on top of blocks, and as noted above, metadata operations and POSIX semantics limit file system performance and flexibility. By contrast, object stores manage data as objects, and in some implementations objects can be of completely arbitrary length. At the fundamental level  these objects carry no metadata beyond a key (and a size). Vendors provide object store systems that do carry more metadata, but this metadata can be either explicitly handled with the object, or more flexibly managed than with a traditional file system. Object stores are generally accessed via either native APIs or standard APIS such as Amazon's S3 or Openstack's Swift API.  Some object stores can also be configured to provide POSIX file semantics as well, and some parallel file systems are deployed in object stores.  (See \ref{sec:related work/pfs and object stores} for a more complete discussion of some of the alternatives).
+
+\paragraph{How to estimate cost and performance?}
+\begin{itemize}
+	\item Cost. These can either be deployed as appliances, in which case we deal with a cost per storage unit, or configured manually
+	\begin{itemize} \item Number and size of drives.
+	\item Number of CPUs used for storage targets (and amount of RAM necessary, HBA controllers etc)
+	\item Amount of erasure coding used.
+	\end{itemize}
+	There might also be a software licensing component (typically proportional to storage volumes).
+	\item Performance issues are either related to the number and configuration of vendor appliances, or the particular configuration of object storage deployed (hardware, software, and amount of erasure coding). Like parallel file systems it is important to consider both aggregate and per client performance.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{NVRAM, SCM}
+
+A new class of storage technology for the storage hierarchy is non-volatile, so called ``storage-class'', memory (SCM) (by contrast with traditional random-access memory, RAM, which requires electricity to retain stored data and is therefore a volatile memory technology).
+
+Of course any kind of storage which persists through power cycling (such as tape or disk whether magnetic or solid-state) can be thought of as memory, but the key distinct difference associated with SCM is that the latency and bandwidth are comparable with standard memory technologies - that said, SSDS are deployed in memory like configurations already (e.g Cray's Datawarp\texttrademark). At the other end of the spectrum, not all kinds of non-volatile RAM (NVRAM) will be normally considered to be SCM, primarily because of cost, durability, or packaging considerations. (SCM and NVRAM should not be confused with SRAM (static random access memory) which cannot retain data indefinitely.)
+
+The performance and cost of SCM in commercial products is not yet known, although initial publicity suggest that, for example, the soon to be available Intel Optane memory when configured as drives is expected to be comparable in speed to traditional (high performance) SSD, but have lower latency, support more IOPS, and have much higher durability.   Future releases are expected to allow such SCM to go into memory slots, allowing system memory buses to write to SCM, with significant implications for I/O, buffering, and other aspects of storage technology.
+
+\paragraph{How to estimate costs?}
+\begin{itemize}
+	\item Cost and performance are hard to estimate as yet. While we should expect to model SCM when configured as storage in the same way as SSD, the implications for use as a replacement for memory is harder to quantify.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Tape}
+
+With large amounts of infrequently accessed data, magnetic tape is currently still the most cost effective solution with large weather and climate data centres typically managing o(10-100) PB of tape data (see \Cref{sec:archive_intensity} for an introduction to the relationship between tape archive volume and available compute).
+
+Tapes are generally deployed in tape libraries which are then deployed as part of either commercially provided or locally developed bespoke high performance storage systems (HPSS), that is, systems which provide some sort of disk based cache front end to the back-end tape system. In commercial HPSS, systems can mount file systems which look like POSIX file systems, but where data is transparently migrated to/from tape depending on usage, and the POSIX file system metadata has been augmented by extra semantics to show whether the data is online on disk or nearline on tape. Bespoke systems such as the Met Office MASS system combine commercial HPSS with their own extra disk cache systems as well as extra control over content packaging and metadata. (Future ESIWACE work will include an analysis and assessment of the varieties of systems deployed at several major weather and climate sites).
+
+We treat such HPSS systems as sub-systems which we can model in their own right, and consider only the tape systems themselves here:
+
+
+\paragraph{How to estimate cost and performance?}
+
+\begin{itemize}
+\item Cost
+\begin{itemize}
+\item Number of Cartridges
+\item Number of Drives
+\item Number of Libraries (one "uber-library" can sometimes be constructed by joining smaller libraries)
+\item Rewrite/Resilvering frequency
+\end{itemize}
+\item Performance is a function of the number of drives, the drive I/O speed, and the packaging/metadata systems used.
+\end{itemize}
+
+The most promising avenues for improving performance are associated with how data is distributed on tape, that is, how the data is packaged, and potentially striped across tapes (RAIT) or into pools.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Cloud}
+\label{sec:cloud}
+
+There are two aspects of cloud computing relevant to weather and climate data centres:
+\begin{enumerate}
+\item local or private cloud computing, that is, the  \textit{provision} of cloud computing services \textit{by} weather and climate centres, and
+\item public and/or remote cloud computing, that is, the \textit{use} of \textit{remote} cloud computing services \textit{in} weather and climate workflows.
+\end{enumerate}
+
+Cloud computing \cite{mell_800-145:_2011} generally refers to the provision of compute resources on-demand from a pool of (shared) resources over a network.
+Users are billed by their resource usage and benefit from increased elasticity as additional resources can be added as demand increases.
+
+Multiple service models are commonly distinguished as the needs vary with the tasks and type of user; in particular, the
+distinction is made between \begin{enumerate}
+\item Software as a Service (SaaS), that is,  the provision of elastic services (e.g. data visualisation services),
+\item Platform as a Service (PaaS), that is, the provision of a specific type of computing (e.g. a specific version of linux configured with certain software) with or without management of the users and with or without access to managed data, and
+\item Infrastructure as a Service (IaaS), that is, the provision of access to virtual machines which can be configured as the user requires (and where the users absolutely have to manage their own users and data).
+\end{enumerate}
+
+\subsection{Private Clouds}
+
+There are significant advantages to providing private cloud services to the weather and climate community, particularly for facilitating access and use of data. The JASMIN system in the UK provides a leading exemplar, where users can exploit PaaS to gain access to petabytes of curated and managed data, or exploit IaaS to provide their own local analysis environments with gateways to PaaS systems which themselves gateway the data. The advantage of these approaches over traditional compute services is they allow users more flexible customisation of their computing environment and do not incur network or data access costs for data usage (as would be likely when using a public cloud).
+
+The cost and performance implications of providing a private cloud are:
+\begin{itemize}
+\item Cost:
+\begin{itemize}
+\item Hypervisor systems can be costed as special configurations of compute nodes,
+\item Additional storage systems are needed to deal with system images and block storage for virtual machines (but these can be costed as storage systems),
+\item Additional networking and firewall systems may be necessary to provide secure isolation from the locally managed systems,
+\item Additional data servers in the private system may be necessary to provide alternatives to mounting file systems in the private cloud.
+\item Additional software (license and/or bespoke systems) may be needed to manage services.
+\end{itemize}
+\item Performance: There are two elements of cloud that users perceive as important: elasticity, and flexibility. Elasticity can only be provided in a private cloud by over-provisioning systems, or by dynamic (or manual) reconfiguration of systems from other services into the cloud. The most important criterion however is memory, without enough memory, virtual machines cannot be sustained. Within those provisos, other aspects of performance include are similar to those for regular compute and storage.
+\end{itemize}
+
+\subsection {Public Cloud}
+
+Commercial cloud providers could potentially compete with dedicated weather and climate centres in terms of cost as they benefit from the economics of scale. However, where users have long-term requirements for large amounts of base-load compute (that is, compute that meets or exceeds 80\% utilisation) they themselves benefit from significant economies of scale. Public cloud providers also have to deliver very large over-capacity to meet elasticity requirements, and they need to make (or project) a profit. Hence the cost comparison is whether
+\begin{equation}
+  \mathrm{large scale benefits} + \mathrm{elasticity costs} + \mathrm{ profit} > \mathrm {local scale benefits} + \mathrm{local elasticity costs}
+\end{equation}
+or not.  In this equation, local elasticity costs may refer the requirement to support fluctuations above base load that occur from internal work, or to requirements that occur from the provision of private cloud computing to local or remote users.
+
+Public cloud providers generally have at least three tiers of pricing, being based on special agreements, normal priority, and spot pricing (where prices are cheaper, but users can have their jobs terminated without warning at any time if the cloud provider needs access to their resources).
+
+We are aware of no current public cloud provision that meets the scalability requirements of the bulk workload of typical medium to large scale climate compute jobs (even when using spot pricing), and none that even approach cost comparability with data storage and use in and by a dedicated weather and climate facility. Spot pricing has been investigated \cite{girone}, and some smaller sized jobs (in terms of number of cores and duration) may be economically feasible at this time, but there are even issues there (work still needs to be non-urgent/operational and short lived, and checkpointing has to be small and frequent).
+
+Cost models for cloud usage are based on advertised pricing of CSPs, for transferring data into and out of the cloud, and for the ongoing storage, including the time required for the transfer \cite{kindura}; these should be compared with the full storage costs
+that we can calculate here for non-cloud based resources.
+
+Several European framework 7 projects have looked into using Cloud service level agreements (SLAs), based on WS-Agreement and WS-AgreementNegotiation; the premise is that a cloud service provider will have their pricing expressed in a machine readable format, and an intelligent client can then optimise for cost or performance, or on other advertised parameters such as ``green-ness'' \cite{blasi}.
+
+Distinguishing features of cloud service providers include:
+
+\begin{itemize}
+\item Is there a fast/cheap peering between the cloud network and the appropriate NREN?
+\item Is there special pricing or SLAs negotiated available for regular high-volume and/or academic use?
+\item The cost of \emph{moving data} into, or (more often) out of the cloud data centre.
+\item The cost of accessing data within the cloud environment (e.g. from Amazon S3 or Glacier storage).
+\item Can services be paid through invoicing against an account (e.g. for a grant), as opposed to having to pay through a credit card.
+\item Are ready-made and maintained virtual machine images or clusters available (e.g. for data science, or with Jupyter notebooks, etc.)
+\item What support is available? For example, some companies that provide cloud services also have significant research divisions.  Also, some support research use directly --- e.g.\ with a presence at research-focused HPC workshops.  There are also smaller companies that specialise in aiding the migration of research into the cloud, to, for example, simplify language (researchers are not in general computer scientists or cloud experts), or to help the customer avoid vendor lock-in.  In summary, support for cloud use generally comes through:
+  \begin{itemize}
+  \item Experience in own or peer research organisations,
+  \item From the CSP if they provide resources targeted at research (e.g. Azure4Research),
+  \item Via academic support, such as that provided by NRENs,
+  \item Through SMEs that specialise in supporting research, e.g.\ the adaption of applications to run in clouds.
+  \end{itemize} Experience suggests this can be variable even with the largest providers. For example, one of us has experience in having to educate a large public provider as to how MPI works in order to help them make suitable cluster provision.
+\end{itemize}
+
+%Cloud for research is expected to continue to play a role in the future, particularly as it can be a
+%cloud data centres that are optimised for research (XXX ref Azure4Research...)
+
+The cost and performance implications of exploiting a public cloud are hard to abstract and depend on the concrete services available and used. However
+most CSPs provide ``costing calculators'' where the customer can enter the desired storage volumes, transfers, and CPU requirements, but full costing
+is complicated by the relationship between the various services and their (a priori) unknown performance characteristics. At the time of writing there are a
+number of projects running which are evaluating costs and performance of various weather and climate activities in the cloud. When more is known
+of the results from these exercises we can revisit the possibility for abstraction and inclusion in our modelling.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Speculative and Non-Architectural Changes}
+\label{sec:conclusion}
+
+
+Besides the choice of technologies that are already available or announced as product a few other areas  deserve consideration or further research as they posses a lot of potential.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Workflow}
+
+The complexity of today systems makes optimal system utilization a complex problem.
+At the core of this challenge is the limited amount of information available to scheduling components and the inefficiency that arrive by data which passes the network multiple times as is often the case in current workflows due to the separation of pre processing, data generation and post processing.
+While this cannot be avoided completely, as it is hard to predict which data becomes relevant and is worthy for further analysis, usually over time common workflows crystallize which should be formalized so the system can exploit idle resources and data locality.
+It is notable that many cloud solutions and containerization are likely to ease the transition for scientists to adopt new approaches that include the specification of workflows.
+
+
+%\paragraph{How to estimate costs?}
+%\begin{itemize}
+%	\item Scheduling Simulations
+%	\item
+%\end{itemize}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{In situ}
+
+Closely related to improvements in support of more sophisticated workflow managements are in situ capabilities of simulation codes.
+In situ can greatly reduce application run times as I/O time is reduced.
+The downside is that data is not stored to be used by post processing applications.
+For production runs such as the IPCC reports or weather forecasts that are distributed in situ can be expected to be of limited relevance.
+During development however the benefit can e.g. be faster physics verification.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Active Storage, software defined networks and in transit}
+
+Many special purpose hardware components such as switches or various components in the storage system today are computers themselves. Today most of these systems run proprietary codes, but it can be expected that more open alternatives may become available as the technology in many cases already permits custom firmwares.
+In particular equipping storage media with programmable compute capabilities promises to take pressure of the network for post-progressing workloads e.g. by performing aggregations close to the data.
+It remains unclear how to best program and utilize components with such capabilities.
+implications especially on security and other storage system features such as data ownership..
+Similary data transformations can be applied during transmission through the network.
+Finally, reprogramming the network potentially can reduce hop counts and will be convenient in low latency cloud clusters. They also allow clusters to adapt the the communication requirements of applications.
+
+\paragraph{How to estimate costs?}
+\begin{itemize}
+	\item Products and software for these technology are at best experimental. A cost estimate depends on the actual products.
+
+	\item Active Storage
+	\begin{itemize}
+		\item For active storage media slightly higher prices like SSDs/HDDs and higher energy consumption can be assumed.
+		\item For active storage I/O nodes, more ram and processing units will increase cost. Energy consumption may also increase.
+	\end{itemize}
+
+	\item In transit
+	\begin{itemize}
+		\item Similar to storage, in transit enabled switches might consume more energy.
+		\item Software driven in transit will not directly impact the cost, and is likely to happen on on various the compute before transmission.
+	\end{itemize}
+\end{itemize}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Policy and Pricing Strategies}
+
+One important factor when considering system utilisation, without a technical solution concerns user behaviour and capacity.
+
+In general scientists deal with situations associated with new systems where either their workloads
+\begin{itemize}
+\item can be easily reformulated to push system limits, or
+\item can be reformulated to push system limits (but this will take time and effort), or
+\item cannot exploit the new system(or at least not without heroic effort and/or unexpected mathematical progress).
+\end{itemize}
+For example, until the last few years, faster clock cycles meant that new CPU
+releases meant faster code trivially (the first option). In the last few years,
+and in the known future, the amount of effort to exploit new computing
+architectures has increased, and is likely to become a significant cost (the
+second option). However, for those interested in paleoclimate, there are no
+computing options which can allow them to get faster simulations without new
+mathematics (e.g time-parallel simulations) - the third option. When considering
+end-to-end situations and costs, the cost implications of these alternatives may
+need consideration.
+
+Another important issue is to appropriately understand the impact of irresponsible usage, lack of experience, or flawed feedback systems, and their results on system load and performance - particularly in shared environments.
+Data centre operators therefor also have the additional responsibility to educate users, communicate feedback and best practices and formulate policies that govern how users interact with the systems, particularly as is likely, when they have to introduce
+complicated new storage systems. More subtle ways to influence user behavior are the construction of pricing schemas that encourage desirable workloads, e.g. by panellizing small file operations by counting by the gigabyte when dealing with tape media.
+Communicating these cost beyond project coordinators to individual user should also serve to increase awareness and shortens the feedback loop.
+
+
+
+\paragraph{How to estimate savings?}
+\begin{itemize}
+	\item Scheduling simulations, and small scale experiments.
+\end{itemize}
+
+%\input{unused_chapter_use_cases.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\chapter{Evaluation}
+\label{sec:evaluation}
+
+This chapter discusses cost and performance implications for data centre configurations. 
+\Cref{sec:DKRZ current} and \Cref{sec:STFC current} introduce two real world deployment types for climate research, contrasting a data centre (DKRZ) which includes the full spectrum from simulation, analysis, and archive with the STFC JASMIN data centre, which provides only analysis and archive.
+
+Variations of the DKRZ system are then examined by recombining compute, parallel file systems and tape options in \Cref{sec:compute + pfs + tape}.
+\Cref{sec:compute + objects + tape} looks at a similar configuration but evaluates the replacement of file systems with object stores.
+In \Cref{sec:compute + objects + cloud} the cloud is included as an option to replace long-term archives and to provision hardware for only occasionally required workloads.
+\Cref{sec:compute + nvram + tape} evaluates how NVRAM in combination with tape might simplify the data centre.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\comment{
+%\subsection{Assumptions}
+%
+%For most scenarios there will be additional assumptions but this section collects some important assumption that remain invariant across the following scenarios.
+%
+%
+%\todo{Fill in other assumptions you find relevant..}
+%
+%
+%Bspw. anhand vom DKRZ-System diskutiert.
+%Cloud usw.
+%
+%\begin{itemize}
+%	\item How do we choose unite prices as estimate?  In many cases consumer prices, which should serve as a upper boundary.
+%	\item Prices / Performance ...   ???  % what was ment here anyway?
+%	\item The workload requirements are derived from observed behaivor and from the use cases
+%	\item Goal: fixe Anforderungen (performanz) was sind die Kosten
+%	\item
+%	\item traditional software means X, PFTP, explicit namespace / component
+%\item copy file between hierachy (evtl. by using policies)
+%\item Performance angaben?
+%\end{itemize}
+%
+%
+%
+%comparison matrix for improvements over a current reference system
+%e.g. DKRZ 2015 vs.. this architecture
+%
+%notes and comments
+%}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Example Data centre: DKRZ}
+\label{sec:DKRZ current}
+
+
+
+\Cref{fig:dkrz topology} illustrates the most important subsystems currently deployed at DKRZ.
+As the system was procured in two phases, the system is slightly more heterogeneous than previous systems. In particular there a number of different compute partitions.
+The first phase features less but slightly more powerful cores (2 x 12 cores @ 2.5GHz), and features two different memory configurations with 64 or 128 GB RAM respectively.
+For the second phase features nodes with more cores at lower frequencies (2x18 cores @ 2.1Ghz) and the same memory configuration as phase 1.
+In addition to the computes nodes there is a small visualization cluster with nodes that have additional memory and two accelerators each.
+
+In \Cref{tbl:dkrz characteristics} the characteristics and the costs of the DKRZ systems for the last three procurements (2004, 2009 and 2015) are collected.
+The table accounts for performance in FLOPs and the network performance for the compute sysetem. In separate sections the storage systems are covered with a distinction made between online and archival storage systems.
+For the provided number of network links to compute nodes, it should be noted that the internal links used in the actual topology have been ignored.
+Power consumption is a substantial driving factor for the operational cost of a data centre.
+Therefor, \Cref{tbl:dkrz model costs} apportions the power consumption and the cost of the different subsystems. The archive is procured independently from the compute system.
+
+
+
+\begin{figure} [htbp]
+	\centering
+	\includegraphics[width=\textwidth]{dot/topo-real-dkrz}
+	\caption{Simplified fat-tree topology of DKRZ}
+	\label{fig:dkrz topology}
+\end{figure}
+
+
+
+\begin{table} [htbp]
+\centering
+\small
+\begin{tabular}{|l||lll|}
+	\hline
+	                   & 2004      & 2009      & 2015        \\ \hline
+	Performance        & 1.5 TF/s  & 150 TF/s  & 3.1 PF/s    \\
+	Nodes              & 24        & 264       & 2882        \\
+	Node performance   & 62.5 GF/s & 0.6 TF/s  & 1.0 TF/s    \\
+	System memory      & 1.5 TB    & 20 TB     & 200 TB      \\
+	Network links      & -         & -         & 3100        \\ \hline
+	Storage	capacity   & 100 TB    & 5.6 PB    & 52 PB       \\
+	Storage	throughput & 5 GB/s    & 30 GB/s   & 700 GB/s    \\
+	Storage servers    & 1         & 12        & 130         \\
+	Disk drives        & 4000      & 7200      & 10600       \\ \hline
+	Archive	capacity   & 6 PB      & 53 PB     & 500 PB      \\
+	Archive	throughput & 1 GB/s    & 9.6 GB/s  & 18 GB/s     \\ \hline
+	Power consumption  & 250 kW    & 1.6 MW    & 1.2 MW      \\
+	Investment         & 26 M\euro & 35 M\euro & 38.5 M\euro \\ \hline
+\end{tabular}
+ \caption{DKRZ System characteristics}
+ \label{tbl:dkrz characteristics}
+ \vspace*{-0.35cm}
+\end{table}
+
+
+\begin{table}
+\centering
+\begin{tabular}{|l|r|r|}
+	\hline
+	         &   Investment & Power consumption \\ \hline
+	Compute  & 15.75 M\euro &           1100 kW \\
+	Network  &  5.25 M\euro &             50 kW \\
+	Storage  &   7.5 M\euro &            250 kW \\
+	Archive  &     5 M\euro &             25 kW \\
+	Building &     5 M\euro &                -- \\ \hline
+\end{tabular}
+\caption{Potential investment costs and power consumptions for DKRZ}
+\label{tbl:dkrz model costs}
+\vspace*{-0.35cm}
+\end{table}
+
+\input{jasmin.tex}
+
+%\todo{as well as associated costs + progniss on scale of future systems? }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\comment{
+%\subsection{Example Data Center: ??? italy}
+%
+%\todo{italy data center ?}
+%}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Compute + Parallel File System + Tape}
+\label{sec:compute + pfs + tape}
+
+
+%\begin{figure}[]
+%	\centering
+%	\includegraphics[scale=0.49]{dot/topo-compute+pfs+tape+COST}
+%	\caption{}
+%	\label{fig:topology compute + pfs + tape}
+%\end{figure}
+
+The status quo at DKRZ is the system described in \Cref{sec:DKRZ current}. Here we investigate changing
+the proportions of the individual storage subsystems. Given that the disk systems are purchased independently
+of the tape systems, at different times, there is a natural technological mismatch.
+
+The costs for this scenario in comparison to the baseline system (see \Cref{sec:DKRZ current}) is listed in \Cref{tbl:costsforcomputepfstape}.
+%\Cref{tbl:benefits for compute + pfs + tape} summarizes and rates the changes by their impact to the various use cases (see \Cref{sec:use cases}).
+\Cref{fig:topology compute + pfs + tape} provides a quick visual overview of this architecture.
+Lets begin by establishing the price per terrabyte and year for tape and disk in a current deployment.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.49]{dot/topo-compute+pfs+tape}
+	\caption{Topology for the traditional case: Compute + File System + Tape}
+	\label{fig:topology compute + pfs + tape}
+\end{figure}
+
+%\comment{
+%media is constantly replace..
+%
+%	every year.. about 6000 tapes replaced
+%
+%	thus.. 70000 * 6000 *
+%
+%invisible to our operations.. but tape drives fail pretty regulary.. every month.. and need maintenaince.. which is the maintence contracts are there...
+%
+%
+%hpss, was procured with the other systems..  and also is in its second generation already..
+%	originally power arch
+%	but now x86
+%
+%also mentioned is a pricing policy shift..
+%	where Sun and other would grant generous discounts to academic users...
+%		that in regard to the low media prices
+%
+%
+%}
+
+
+
+\paragraph{Tape Cost (TB/Y, EUR):}
+\label{calc:TAPE EUR/TB/Y}
+
+%\todo{JJ: "huge" $rightarrow$ "signficant"?}
+To operate a tape system it is necessary to commit to a huge upfront investment for the tape system.
+The DKRZ operates 7 StorageTek SL8500 library complexes with 3 library units on site and an additional library unit procured together with the others as an offsite backup in Garching.
+The tape infrastructure does not age as quickly as compute or storage systems do as cartridges, robot systems and drives remain compatible even as tape media evolves.
+For the current system it seems fair to assume that the tape archive infrastructure remains usable for 2-3+ generations of supercomputers.
+This is due to two main factors: 1) the current configurations does not exhaust all the available drive slots 2) as tape media increases in capacity with each new generation of tape media there is the potential to reclaim a significant number tape slots.
+Tape technologies and futures will be covered in further detail in D4.4.
+
+Lets assume each SL8500 module equipped with about 20 drives will cost slightly under 1M EUR, thus 7M EUR for DKRZ but assume it can be used for 3 generations reducing it to 2.3M EUR investment costs for the life time of one supercomputer.
+As the tape storage requires a license for HPSS and storage cache with some support for the library and the software; let us assume a total investment of 7.5M EUR for the life time of the system. 
+Staffing requires three specialists, assume an operational budget for DKRZ of about 3M EUR, and assuming 3 staff are 5\% of that total, the annual cost is 150 kEUR.   
+In addition, the floor space to keep the system is equivalent to 70k EUR per year.
+We neglect the cost to maintain the oxygen reduction environment here.
+This adds up to 8.6M EUR over the life time of the system.
+Thus, for each of our 67,000 tape slots, we roughly pay 128.36 EUR per supercomputer generation (and 5 years) or 25.70 EUR per year.
+
+Assume a tape medium costs about 20 EUR and can be used for 5 years. 
+The investment of tape medium and costs per slot space would sum up to the costs of 30 EUR per year and tape.
+With 2.5 TByte of raw capacity for an LTO-6 tape, this would sum up to 12 EUR/TB/Y. 
+As practice shows, on one hand, the embedded compression may yield a compression ratio of 1.5 but, on the other hand, 
+empty space due to deleted files may compensate for this leading to a realistic cost of 12 EUR/TB/Y.
+
+%\comment{
+%oben bei Tape beschreiben:
+%\todo{real cost for tape system since procurement}
+%fixed costs ca 1 Mio pro Library block, 5 Mio, für 2-3 Supercomputer generationen
+%5 MIo für die Laufzeit des Supercomputers
+%ca. 7.5 MIO Investment für Laufzeit
+%Anzahl Personen nötig für Tape ? ca. 3 Personen == 5% DKRZ Staff costs, plus Raum, für 5 Jahre, ca. 0.75 Mio für die Laufzeit
+%ca. 10 MIO für alles, 2 MIO pro Jahr für den Betrieb. 70000, stellfläche kostet:
+%- 142 Euro pro Stellplatz und Jahr, 6 TByte == 23 EUR (unkomprimiert) für ein Jahr,
+%Tape medium 20 EUR, sagne wir mal für 5 Jahre gut, 4 EUR pro Jahr drauf: 27 EUR pro TB / Jahr
+%21.25 EUR pro TB OHNE Kosten für Staff und Gebäude usw.
+%}
+
+
+\paragraph{PFS Cost (TB/Y, EUR):}
+\label{calc:PFS EUR/TB/Y}
+
+To put this price into perspective, we need also need to consider the price per TB for online storage in parallel file systems.
+EUR 7.5M and a expected system life of 5 years bought 52 PB for the storage servers and storage media.
+
+$$7.5\mathrm{M EUR} / 52 \mathrm{PB} / 5 \mathrm{Years} = 28.17 \mathrm{EUR/TB/Year}$$
+
+As this does not account for staff, facility and most importantly power consumption. So lets assume 250KW which would cost 400k EUR/Year thus increasing the price for a TB/Year to to roughly 36 EUR.
+This does neglect that the files system will be underutilized in the beginning.
+
+
+%\todo{gamme a 95\%... filling level..}
+
+%\comment{
+%The parallel file system is
+%
+%52 PByte  / (7.5 M Euro (for 5 years) / 5 year (lifetime)) => 34.7 PBs per million and year
+%=> 28.8 EUR pro Terrabyte and year idle costs, d.h. for a HDD with 3 TByte one would pay 75 EUR per year.
+%Es kommt noch Personen und Building Kosten dazu, auch Energiekosten ....
+%Sagen wir mal 250 KW == 400 k = 1.9 MIO pro Jahr == 36.5 EUR
+%
+%Gamma dazu rechnen, sagen wir mal 95% voll (gerade am Anfang eines neuen Dateisystems ist das doch recht leer), später durchaus immer zu 99% voll
+%}
+
+
+\subsection{Potential for optimization}
+
+\paragraph{Reduced Online Storage Budget}
+For this scenario lets assume we would like to reduce the storage footprint on the budget.
+For example if we cut our storage spending in half, in the case of DKRZ, that would amount to EUR 3.75M that can be spent elsewhere.
+That corresponds to about 24\% of the cost of the compute system and we can expect an similar increase in performance at the disposal for scientists.
+This would translate into 686 additional nodes and thus would add about 0.74 PFLOPS of performance to the system, while 65 storage nodes (+600 connections) are removed in comparison to the reference.
+
+We can not change the compute system without also making changes to the network lets approximate the optimization process necessary to find a realistic investment.
+The network costs would increase by $(3100 + 686 - 65) / 3100 = 1.20 = 1.05 \mbox{M EUR}$, which combined is beyond the budged.
+If we choose to instead invest EUR 3M in to compute, accounting for only  540 nodes and a 10\% performance increase.
+Now can afford a network to support the additional hardware with a additional network cost of $ network_{cost} \cdot 1.156 = 6 \mbox{M EUR}$.
+The increase in power is not necessarily proportional so lets assume a increase in power consumption of roughly 10%.
+The changes may affect how user will work.
+By shrinking the online storage architecture, also the maximum working set is smaller.
+For example jobs potentially should specify when to stage/unstage data.
+Staging mechanisms in many cases maybe be automated by Slurm thus making staging transparent to the users.
+
+
+%
+%\comment{
+% Less online storage, migrating more idle data to tape:
+%
+%Assumption: We spend half the money for storage in compute (and potentially in the archive).
+%storage - 50\%.
+%3.75 M euro, corresponds to 24\% of the compute costs, theoretically \% more science.
+%Means + 686 nodes + 0.74 PF/s. - 65 storage nodes (+600 connections), d.h. network, 3100 network + 621 connections.
+%However, the network costs would increase as well by $(3100 + 686 - 65) / 3100 = 1.20 = 1.05M EUR$.
+%
+%With 3 M euro in the compute, 19\% more compute, +540 nodes.
+%Network 1.156 = 6 M euro.
+%
+%
+%would increase the power consumption also by roughly 10\%.
+%2.5\% performance of the archive vs. the best case of the storage (additional latency).
+%Staging embedded into Slurm would allow batch jobs to run with regular speed hidden from the user.
+%Alternatively 2.5 million improving the archive, two new complexes.
+%
+%Smaller working set on storage.
+%Users have to adjust jobs to potentially stage / unstage data.
+%}
+
+
+
+
+\begin{table}
+\centering
+\begin{tabular}{|l|r|r|r|}
+	\hline
+	Characteristics    &        Value & Factor & New value \\ \hline
+	Performance        &     3.1 PF/s &   1.19 &  3.7 PF/s\\
+	Nodes              &         2882 &   1.19 &  3430\\
+	Node performance   &     1.0 TF/s &        &  \\
+	System memory      &       200 TB &   1.19 &  238\\
+	Network links      &         3100 &   1.15 &  3565\\ \hline
+	Storage	capacity   &        52 PB &    0.5 &  26 PB\\
+	Storage	throughput &     700 GB/s &    0.5 &  350 GB/s\\
+	Storage servers    &          130 &    0.5 &  65\\
+	Disk drives        &        10600 &    0.5 &  5300\\ \hline
+	Archive	capacity   &       500 PB &        &  \\
+	Archive	throughput &      18 GB/s &        &  \\ \hline\hline
+	Compute costs      & 15.75 M EUR &   1.24 &  19.53 M EUR\\
+	Network costs      &  5.25 M EUR &   1.15 &  6.04 M EUR\\
+	Storage costs      &   7.5 M EUR &    0.5 &  3.75 M EUR\\
+	Archive costs      &     5 M EUR &        &  \\
+	Building costs     &     5 M EUR &        &  \\ \hline
+	Investment         &  38.5 M EUR &        &  \\ \hline
+	Compute power      &      1100 kW &   1.19 &  1309 kW\\
+	Network power      &        50 kW &        &  \\
+	Storage power      &       250 kW &    0.5 &  125 kW\\
+	Archive power      &        25 kW &        &  \\ \hline
+	Power consumption  &       1.2 MW &        &  \\ \hline
+\end{tabular}
+\caption{Projected costs for the Scenario Compute + Parallel File System + Tape; subscenario: half the storage. Note that this demonstrates the feedback between node count and network costs.}
+\label{tbl:costsforcomputepfstape}
+\end{table}
+
+
+\comment{
+\begin{table}
+\centering
+\small{
+\begin{tabular}{ |l|| c|c|c|c || c|c|c|c|c| }
+	\hline
+	                         & \multicolumn{4}{c||}{\textbf{Climate}} & \multicolumn{5}{c|}{\textbf{Weather}} \\ \hline
+	                         & CUC1 & CUC2 & CUC3 &       CUC4        & WUC1 & WUC2 & WUC3 & WUC4 &   WUC5   \\ \hline\hline
+	\textbf{Characteristics} &      &      &      &                   &      &      &      &      &  \\ \hline
+	Throughput               &      &      &      &                   &      &      &      &      &  \\ \hline
+	Latency                  &      &      &      &                   &      &      &      &      &  \\ \hline
+	Capacity                 &      &      &      &                   &      &      &      &      &  \\ \hline
+	Resilience               &      &      &      &                   &      &      &      &      &  \\ \hline\hline
+	\textbf{Cost}            &      &      &      &                   &      &      &      &      &  \\ \hline
+	Initial                  &      &      &      &                   &      &      &      &      &  \\ \hline
+	Energy                   &      &      &      &                   &      &      &      &      &  \\ \hline
+	Other                    &      &      &      &                   &      &      &      &      &  \\ \hline
+\end{tabular}
+}
+\caption{Benefits }
+\label{tbl:benefits for compute + pfs + tape}
+\end{table}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Compute + Object Storage (+ Tape)}
+\label{sec:compute + objects + tape}
+
+\begin{figure}[]
+	\centering
+	\includegraphics[scale=0.49]{dot/topo-compute+objects}
+	\caption{Topology for the case where object storage replaces the parallel file system}
+	\label{fig:topology compute + objects + tape}
+\end{figure}
+
+In this section we explore two questions:
+Object stores promise higher performance at lower cost than parallel file systems as commodity hardware can be used. What are the cost savings we can expect when switching to object stores.
+To exploit object stores applications will need to change to some extend how data is stored. In \Cref{sec:towards esd}
+we illustrate how this transition maybe made less disruptive to the community.
+The costs for this scenario in comparison to the baseline system (see \Cref{sec:DKRZ current}) is listed in \Cref{tbl:costs compute + objects + tape}.
+%\Cref{tbl:benefits compute + objects + tape} summarizes and rates the changes by their impact to the various use cases (see \Cref{sec:use cases}).
+\Cref{fig:topology compute + objects + tape} provides a quick visual overview of this architecture.
+
+
+
+\paragraph{Object Storage vs. Parallel File Systems}
+
+Lets assume usual idle storage costs are indeed in the order of 36.5 EUR / TB / year (\Cref{calc:PFS EUR/TB/Y}).
+HPC hard drives are usually more expensive as they come with additional guarantees.
+At the moment, an 8 TB disk will cost about 260 EUR, or 32.5 EUR per TB.
+Assuming a life time without failure of 5 years, that is 6.5 EUR per TB and year.
+In a typical server, there maybe slots for up to 80 hard drives at a cost of about 3000 EUR per server.
+For a configuration with 8 TB disks, this adds another 1 EUR per TB per year.
+Energy consumption of such a server (including disks) would be in the order of 400 Watts or 5 EUR per HDD and year (under active I/O, the system may actually consume a bit more energy, but let us neglect this here).
+
+Thus, overall an object storage server could host storage with a cost of 12.5 EUR per TB and year, slightly more expensive than tape with 12 EUR per TB and year.
+However, usually some kind of redundancy is needed, with declustered RAID-6 and a 8+2 configuration, 25\% of additional space is needed for redundancy. 
+But this is true for tape as well.
+
+Note that the object storage, however, does not take into account any software licensing costs\footnote{Assuming we use open source and free software such as Ceph.} or staff considerations as we have done for tape.
+So in practice, the costs for object storage is actually a bit higher.
+%Some vendors actually said object storage might cost about 1/2 of the original HPC storage, so the overall calculation seems to point in the right direction.
+
+%
+%\comment{
+%Normal idle storage costs so was wie: 36.5 EUR pro TByte / year
+%
+%HPC Platten, Object storage platten sind billiger.
+%Aktuell: 8 TByte Server Platte ca. 260 EUR, 32.5 EUR pro TByte in 5 Jahren => 6.5 EUR pro Jahr (falls nix kaputt geht).
+%Server für 80 Platten kostet 3000 EUR == 37.5 EUR pro Stellplatz == 7.5 EUR pro Jahr.
+%14.0 EUR pro Jahr
+%Man könnte zu Object store für den halben Preis kommen.
+%== 6500 Platten.
+%Kosten für Server selber bleiben gleich.
+%
+%=> 81 Server anstelle 130.
+%Falls jeder gleiche Leistung liefern würde, dann wäre es 81/130 = 60% der Originalleistung
+%Aber wir sagen mal
+%
+%Keine Redundanz hier!!!
+%10+2 => +20 Platten und Server
+%=> 7800 Platten, 98 Server => Leistung ist 75% der Originalleistung, aber billigkram => nur 1/2 Leistung angenommen => 37.5% der Leistung
+%
+%=> 75% der Storage Ressourcen benötig, Platten zu halbem Preis
+%
+%=> gerne auch mal konkret aussrechnen:
+%-- (98*3000+7800*260) = 2,3 MIO
+%=> Preis für aktuellen Object storage ist wenigstens 30% von dem Preis den wir früher bezahlt haben.
+%Manufacturing costs and software stuff, 3.75 Mio for the object storage feels OK.
+%=> Overall: lets assume half the price for the storage...
+%
+%
+%
+
+
+
+\paragraph{Replacement of tape with object storage}
+
+While would be certainly interesting to switch to a model where tape is replaced with object storage, there are some obstacles.
+Remember, the 67,000 tape slots (LTO-6) of DKRZ virtually provide as much space as 21,000 (8 TB) HDDs or 261 object storage servers (sth. like 27 racks of servers).
+From the overall energy consumption, this would take about 100 kW; the tape library requires less energy with about 2,000 Watts per SL8500 library\footnote{
+It is actually between 1.2 kW (idle) and 4.8 kW (active) according to Oracles Power Calculator \url{http://www.oracle.com/us/products/servers-storage/sun-power-calculators/}.}, but the additional HPSS servers and storage reduces the gap.
+Cost-wise the gap is not too high.
+
+One benefit of the tape archive is that it can be gradually upgraded by hosting different generations of tape in one library.
+This could be realized with object storage theoretically as well.
+Another benefit of tape is that  media fail rarely compared to even enterprise disks, allowing to reduce the required level of redundancy.
+Still, based of these calculations it seems to be appealing to consider means to either reduce the costs for the tape archives by applying more feasible models or to deploy price competetive object storage.
+
+
+
+\begin{table}
+\centering
+\begin{tabular}{|l|r|r|r|}
+	\hline
+	Characteristics    &       Value & Factor &  New value \\ \hline
+	Performance        &    3.1 PF/s &   1.19 &   3.7 PF/s \\
+	Nodes              &        2882 &   1.19 &       3430 \\
+	Node performance   &    1.0 TF/s &        &  \\
+	System memory      &      200 TB &        &  \\
+	Network links      &        3100 &        &  \\ \hline
+	Storage	capacity   &       52 PB &        &  \\
+	Storage	throughput &    700 GB/s &  0.375 &   262 GB/s \\
+	Storage servers    &         130 &   0.75    &         98 \\
+	Disk drives        &       10600 &   0.74  &       7800 \\ \hline
+	Archive	capacity   &      500 PB &        &  \\
+	Archive	throughput &     18 GB/s &        &  \\ \hline
+	Compute costs      & 15.75 M EUR &        &  \\
+	Network costs      &  5.25 M EUR &   0.98 & 5.15 M EUR \\
+	Storage costs      &   7.5 M EUR &    0.5 & 3.75 M EUR \\
+	Archive costs      &     5 M EUR &        &  \\
+	Building costs     &     5 M EUR &        &  \\ \hline
+	Investment         &  38.5 M EUR &        &  \\ \hline
+	Compute power      &     1100 kW &        &  \\
+	Network power      &       50 kW &        &  \\
+	Storage power      &      250 kW &   0.75 &     188 kW \\
+	Archive power      &       25 kW &        &  \\ \hline
+	Power consumption  &      1.2 MW &        &  \\ \hline
+\end{tabular}
+\caption{Projected costs for the Scenario Compute and Object Lets assume DKRZ still handles compute jobs on site, then this would require to
+	Storage; replace online storage with cheaper object storage}
+\label{tbl:costs compute + objects + tape}
+\end{table}
+
+
+\comment{
+\begin{table}
+\centering
+\begin{tabular}{|l|| c|c|c|c || c|c|c|c|c|}
+	\hline
+	                         & \multicolumn{4}{c| |}{Climate} & \multicolumn{5}{c|}{Weather} \\ \hline
+	                         & UC1 & UC2 & UC3 &     UC4      & UC1 & UC2 & UC3 & UC4 & UC5  \\ \hline\hline
+	\textbf{Characteristics} &     &     &     &              &     &     &     &     &  \\ \hline
+	Throughput               & -   &  -  &     &              &     &     &     &     &  \\ \hline
+	Latency                  & -   &  -  &     &              &     &     &     &     &  \\ \hline
+	User experience          & =   &  =  &     &      -       &     &     &     &     &  \\ \hline
+	Capacity                 & NA  & NA  &     &              &     &     &     &     &  \\ \hline
+	Resilience               & xx  &     &     &              &     &     &     &     & \\ \hline
+\end{tabular}
+
+\caption{}
+\label{tbl:benefits compute + objects + tape}
+\end{table}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Compute + Object Storage + Cloud}
+\label{sec:compute + objects + cloud}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.49]{dot/topo-compute+object+cloud}
+	\caption{Topology for the case with object storage and external cloud storage}
+	\label{fig:topology compute + objects + cloud}
+\end{figure}
+
+
+Another interesting scenario is to size the on site system to match the normal operations and use cloud resources when the available system do not suffice. There are two main perspectives to this approach: 1) side step for compute and avoid seldom used special purpose hardware 2) archive in the cloud with potentially superior data safety and availability.
+%The costs for this scenario in comparison to the baseline system (see \Cref{sec:DKRZ current}) is listed in \Cref{tbl:costs compute + objects + cloud}.
+%\Cref{tbl:benefits compute + objects + cloud} summarizes and rates the changes by their impact to the various climate and weather use cases (see \Cref{sec:use cases}).
+\Cref{fig:topology compute + objects + cloud} provides a quick visual overview of this architecture.
+
+%\Cref{fig:topology compute + objects + cloud + COST}
+
+
+
+\paragraph{Cloud currently not feasible for large scale archival}
+
+Many clouds services promise to provide better data protection and availability than conventional or self hosted solutions.
+For small to medium scale, infrequently accessed data this business case may indeed be true.
+Especially as cloud allows to scale throughput and capacity freely, albeit at the cost of a less predictable performance due ignorance about the underlying architecture.
+This scenario will consider cloud as an alternative to replace an in house tape archive for long-storage.
+
+Amazon Glacier is currently  one of the cheapest cloud storage options, and is priced at 0.4 cents per month, resulting in 48 \$ per TB/Year which compares poorly with the cost of on-site PFS calculated above, let alone tape.  However, even if some sort of special deal was possible which reduced the cost of storage to zero, Glacier retrieval also incurs costs.  Given retrieval costs currently at $0.003$\$/GB, this suggest retrieval costs alone of some multiple of (3\$/TB)  in the first year (although retrievals might fall in subsequent years), a number which itself could become comparable with on-site object storage!
+
+500 PB would cost nearly 25 M\$ per year,  before considering actually using the data!
+
+%	Table with different cloud providers:
+%	Glacier: 0.4 cents per month and gbyte => 48 \$ pro Terrabyte und Jahr
+%	Access costs of 9 cents per Gbyte ignored ...
+%
+%	Amazon standard: 2.3 cents
+%	276 \$
+%
+%	"Ingest" costs since HPC is at home, and storage in the cloud.
+%	Einmal zugriff auf 1 TB: 90 \$
+%
+%
+%	What happens if we move compute into the cloud:
+%
+%	https://pod.penguincomputing.com/pricing
+%
+%
+%
+%	core hr: \$0.08
+%	DKRZ produces core hours: 2882 nodes with 24 cores / 36 cores pro node
+%	Utilization von 0.9 für DKRZ. 22,721,688 core hours are produced.
+%	1.82 M Euro * 30 ca. 54.4 MIO EURO pro Jahr Compute da...
+%	ca. 10x kosten, delta faktor
+
+
+
+
+\comment{
+\begin{table}
+\centering
+\begin{tabular}{|l|| c|c|c|c || c|c|c|c|c|}
+	\hline
+	                         & \multicolumn{4}{c| |}{Climate} & \multicolumn{5}{c|}{Weather} \\ \hline
+	                         & UC1    & UC2 & UC3 &    UC4    & UC1 & UC2 & UC3 & UC4 & UC5  \\ \hline\hline
+	\textbf{Characteristics} &        &     &     &           &     &     &     &     &  \\ \hline
+	Throughput               & -      &  -  &     &           &     &     &     &     &  \\ \hline
+	Latency                  & --     &  -  &     &           &     &     &     &     &  \\
+	User experience          & =      &  =  &     &     -     &     &     &     &     &  \\ \hline
+	Capacity                 & NA     & NA  &     &           &     &     &     &     &  \\ \hline
+	Resilience               & 99.999 &     &     &           &     &     &     &     &  \\ \hline\hline
+	\textbf{Cost}            &        &     &     &           &     &     &     &     &  \\ \hline
+	Initial                  & =0     & =0  &     &           &     &     &     &     &  \\ \hline
+	Energy                   & =0     & =0  &     &           &     &     &     &     &  \\ \hline
+	On demand                & --     &     &     &           &     &     &     &     &  \\ \hline
+\end{tabular}
+\caption{}
+\label{tbl:benefits compute + objects + cloud}
+\end{table}
+}
+
+
+%\url{http://gaul.org/object-store-comparison/}
+%\url{https://oit.duke.edu/help/articles/pricing-%E2%80%93-storage}
+%
+%Szenario: Outsourcing von peak benötigter Leistung in die Cloud
+%
+%Annahme: 90% Compute Zeit reicht für 99% der Zeit
+%=> dannach ist das Cluster zu 100% ausgelastet IMMER.
+%1% der Zeit braucht 10% Compute extra.l
+%
+%Outsourcing in Cloud sinnvoll?
+%
+%- eigtl. transparent für user, d.h. selbes Betriebsystem, oder container und support im Scheduler für die Überlastsverschiebung
+%
+%90% des Preises für alles?
+%Aber 1% der Leistung kostet ja ca. 10% so viel => kostet gleichviel...
+%Plus Overhead für migration von Daten... Datenhaltung ist ja wucher siehe oben.
+%=> Nur ein Model für Compute Bound issues, idle data kills price...
+%
+%Kleinere Facility usw?
+%
+%2D Graph: Normal Usage % and percentage of overload in %.
+
+
+
+
+
+%\begin{table}
+%\centering
+%\begin{tabular}{|l|r|r|r|}
+%	\hline
+%	Characteristics    &        Value & Factor & New value \\ \hline
+%	Performance        &     3.1 PF/s &        &  \\
+%	Nodes              &         2882 &        &  \\
+%	Node performance   &     1.0 TF/s &        &  \\
+%	System memory      &       200 TB &        &  \\
+%	Network links      &         3100 &        &  \\ \hline
+%	Storage	capacity   &        52 PB &        &  \\
+%	Storage	throughput &     700 GB/s &        &  \\
+%	Storage servers    &          130 &        &  \\
+%	Disk drives        &        10600 &        &  \\ \hline
+%	Archive	capacity   &       500 PB &        &  \\
+%	Archive	throughput &      18 GB/s &        &  \\ \hline
+%	Compute costs      & 15.75 M\euro &        &  \\
+%	Network costs      &  5.25 M\euro &        &  \\
+%	Storage costs      &   7.5 M\euro &        &  \\
+%	Archive costs      &     5 M\euro &        &  \\
+%	Building costs     &     5 M\euro &        &  \\ \hline
+%	Investment         &  38.5 M\euro &        &  \\ \hline
+%	Compute power      &      1100 kW &        &  \\
+%	Network power      &        50 kW &        &  \\
+%	Storage power      &       250 kW &        &  \\
+%	Archive power      &        25 kW &        &  \\ \hline
+%	Power consumption  &       1.2 MW &        &  \\ \hline
+%\end{tabular}
+%\caption{Projected costs for the Scenario Compute + Parallel File System + Tape; subscenario: half the storage}
+%\label{tbl:costs compute + objects + cloud}
+%\end{table}
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Compute + NVRAM + Tape}
+\label{sec:compute + nvram + tape}
+
+\begin{figure}
+	\centering
+	\begin{subfigure}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[scale=0.49]{dot/topo-compute+nvram+tape}
+
+		\caption{Node-local NVRAM}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[scale=0.49]{dot/topo-compute+nvram+bb+tape}
+
+		\caption{Shared/Rack-based NVRAM}
+	\end{subfigure}
+
+
+	\caption{Possible integrations of NVRAM + Tape in a data centre.}
+	\label{fig:topology compute + nvram + tape}
+\end{figure}
+
+\Cref{fig:topology compute + nvram + tape} depicts how a simplified but typical data centre might look like.
+In this particular case also NVRAM is in cooperated and is installed near to compute nodes while other more traditional storage technologies such as object stores, PFS and long-term tape archives are more distant isolated subsystems.
+As the role of cloud computing in HPC storage and climate research is not clear yet we assume that there are areas where cloud solutions maybe the most cost-efficient solution.
+For data services it seems fair to consider international partnerships such as the ESGF a similar service as what cloud providers might offer.
+%The costs for this scenario in comparison to the baseline system (see \Cref{sec:DKRZ current}) is listed in \Cref{tbl:costs compute + nvram + tape}.
+%\Cref{tbl:benefits compute + nvram + tape} summarizes and rates the changes by their impact to the various use cases (see\Cref{sec:use cases}).
+%\Cref{fig:topology compute + nvram + tape} provides a quick visual overview of this architecture.
+
+
+%\todo{What do we want to calculate here without any sensible pricing informnation for say optane...}
+Cost estimates at this point are to speculative to perform an example calculations, as not viable or affordable NVRAM technology is widely available yet.
+Intel however started to ship the first Optane modules for testing\cite{agam_shah_intel_2017}.
+Instead, we look at different deployments models for NVRAM.
+
+\subsubsection{NVRAM distant to nodes e.g. in Metadata Servers}
+As long as NVRAM remains relatively expensive, it seems sensible to assume it only deployed in small quantities.
+Possible candidates maybe meta data systems, that currently sometimes struggle with SSD wear and Intel's Optane is advertised to not suffer from this problem. This way I/O operations such metadata updates or lookups may be speed up.
+
+\subsubsection{NVRAM distant to nodes e.g. in Burst Buffer}
+An alternative variant maybe the use NVRAM in burst buffers.
+This way not every nodes would need to be equipped with NVRAM thus potentially reducing the size of investments.
+In this scenario likely only a few selected applications will benefit.
+One example could be checkpoint restart applications that can then quickly drain their current state to continue simulation.
+
+\subsubsection{NVRAM close to nodes}
+Current architectures are not compatible to some NVRAM products such as Intels Optane.
+If new nodes are procured, choosing NVRAM becomes a choice.
+In principle a possible usage scenario for NVRAM maybe similar to burst buffers with only exception that the burst buffer distributed accross all the nodes and not it's own subsystem.
+
+
+
+
+\comment{
+\begin{table}
+	\centering
+	\begin{tabular}{|l|r|r|r|}
+		\hline
+		Characteristics    &        Value & Factor & New value \\ \hline
+		Performance        &     3.1 PF/s &        &  \\
+		Nodes              &         2882 &        &  \\
+		Node performance   &     1.0 TF/s &        &  \\
+		System memory      &       200 TB &        &  \\
+		Network links      &         3100 &        &  \\ \hline
+		Storage	capacity   &        52 PB &        &  \\
+		Storage	throughput &     700 GB/s &        &  \\
+		Storage servers    &          130 &        &  \\
+		Disk drives        &        10600 &        &  \\ \hline
+		Archive	capacity   &       500 PB &        &  \\
+		Archive	throughput &      18 GB/s &        &  \\ \hline
+		Compute costs      & 15.75 M\euro &        &  \\
+		Network costs      &  5.25 M\euro &        &  \\
+		Storage costs      &   7.5 M\euro &        &  \\
+		Archive costs      &     5 M\euro &        &  \\
+		Building costs     &     5 M\euro &        &  \\ \hline
+		Investment         &  38.5 M\euro &        &  \\ \hline
+		Compute power      &      1100 kW &        &  \\
+		Network power      &        50 kW &        &  \\
+		Storage power      &       250 kW &        &  \\
+		Archive power      &        25 kW &        &  \\ \hline
+		Power consumption  &       1.2 MW &        &  \\ \hline
+	\end{tabular}
+	\caption{Projected costs for the Scenario Compute and Object Storage; replace online storage with cheaper object storage}
+	\label{tbl:costs compute + nvram + tape}
+\end{table}
+}
+
+
+
+
+\comment{
+
+\begin{table}
+\centering
+\begin{tabular}{|l|| c|c|c|c || c|c|c|c|c|}
+	\hline
+	& \multicolumn{4}{c| |}{Climate} & \multicolumn{5}{c|}{Weather} \\ \hline
+	& UC1 & UC2 & UC3 &     UC4      & UC1 & UC2 & UC3 & UC4 & UC5  \\ \hline\hline
+	\textbf{Characteristics} &     &     &     &              &     &     &     &     &  \\ \hline
+	Throughput               &     &     &     &              &     &     &     &     &  \\ \hline
+	Latency                  &     &     &     &              &     &     &     &     &  \\ \hline
+	Capacity                 &     &     &     &              &     &     &     &     &  \\ \hline
+	Resilience               &     &     &     &              &     &     &     &     &  \\ \hline\hline
+	\textbf{Cost}            &     &     &     &              &     &     &     &     &  \\ \hline
+	Initial                  &     &     &     &              &     &     &     &     &  \\ \hline
+	Energy                   &     &     &     &              &     &     &     &     &  \\ \hline
+	Other                    &     &     &     &              &     &     &     &     &  \\ \hline
+\end{tabular}
+\caption{}
+\label{tbl:benefits compute + nvram + tape}
+\end{table}
+
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Optimal Usage of Available Resources}
+\label{sec:towards esd}
+
+% Utilizing Heterogeneous Storage Optimally
+Heterogeneous storage architectures provide the most cost efficient approach for storage systems to meet performance and capacity requirements for a group of applications. However, cost is not the only consideration: 
+energy constraints also prohibit extreme simplifications of the storage hierarchy at the moment.
+In the case of weather and climate systems we find usage scenarios that touch two extremes:
+\begin{itemize}
+\item
+On the one hand storage systems have to be able to cope with fast and bursty I/O as data is generated during simulations, and workflow evolution is likely to lead to ``in-flight'' selection/processing of data for further storage rather than the default ``store everything''. Simulation code, tools and also the infrastructure will thus need to adapt to allow for in situ data analysis.
+\item 
+On the other hand the storage systems used to archive data have to radically increase in capacity in terms of objects as well as size of objects.
+\end{itemize}
+At the same time data has to remain accessible for a reasonable amount of time as analysis tasks require to revisit data in sometimes unpredictable patterns. Utilising heterogeneous systems comes at the cost of managing the additional complexity introduced across the stack of hardware and software components.
+Many users are not experts in computer science and parallel programming and utilisation of HPC storage systems.
+In fact porting existing codes and optimising them for a new system often confirms what is commonly referred to as the parallel platform paradox: a lot of the time is spent in parallel simulation is focused on code maintenance and implementing new parallelisation instead of new physical explorations.
+
+\subsection{Fluid Computation and Active Storage}
+
+There exists many potential conceptual methods to embed computation into components storing data. For example:
+\begin{itemize}
+\item \textit{active memory} could perform simple arithmetic and logical operations in parallel across the stored data;
+\item \textit{active storage} could provide means of shipping compute tasks onto the storage devices (as is done in big data processing engines such as Hadoop).
+\item \textit{smart network adaptors} continue to embed more and more computation into the network infrastructure; for example, Mellanox increasingly provides interfaces to offload collective operations (e.g., of MPI) to the network interface card.
+\end{itemize}
+With the integration of NVRAM across the stack, compute nodes may become part of a shared storage system, likewise communication may provide efficient integration of storage such as NVMe. Overall, this blurs the perspective of components that serve only one purpose (storage, compute or  communication) leading to a more fluid definition of compute. Executing a complex compute and I/O workflow on a future systems will lead to the situation where parts of the involved computation will be performed across the system architecture.
+Without using these compute resources, the execution with be suboptimal.
+
+\subsection{Dynamic Memory Provisioning}
+
+This section discusses an orthogonal aspect to future system design, the dynamic provisioning of resources.
+An example is system memory.
+%There are now systems that offer pooled memory for cluster systems.
+Kove\textsuperscript{\textregistered}'s XPD\textsuperscript{\textregistered} offers pooled memory for cluster systems\cite{kove_about_2015}.
+The memory can be accessed via Infiniband and is asynchronously backed up to storage devices of the XPDs and considered to be non-volatile.
+It is a shared resource that can be utilized by any of the nodes.
+The system offers various APIs to access this memory such as treating it as a block device or by using a replacement of the memory allocation via \texttt{malloc()}.
+Applications using a special memory allocator can use the remote memory as an extension to the local memory without changing any code.
+This allows users to run applications with a very high memory footprint.
+Internally, the API will use the node local's memory as another cache for data (an L4 so to speak) and treat the pooled memory of the XPDs as backend.
+
+Using such a system can be attractive for a variety of reasons including procuring nodes with less memory, maintaining a homogeneous compute infrastructure. This also can have financial benefits as less memory is required in total
+reducing capital and operational expenditure.
+% it would be possible to reduce the amount of memory in nodes, e.g., by supplying one node type with a typical memory size instead of having variants of nodes with different sizes.
+The saved money could then be used for other purposes.
+Besides this benefit, such a shared memory system could be utilized for other purposes like a burst buffer or for rapid data exchange between processes that are autonomous.
+
+% https://www.dkrz.de/Nutzerportal/dokumentationen/de-mistral/de-configuration
+% Memory: 1404*64+110*128+1116*64+270*128+12*256 = 213 Terra
+
+\subsubsection{Example System Usage}
+
+To investigate this behaviour, the statistics for one year of jobs running between June 2015 to June 2016 have been provided to us from a 1500 node system with a climate workload. 
+
+The statistics include periodic observations of the \textit{resident set size (RSS)} and  \textit{virtual memory size (VM)} of a subset of jobs and uses this information to infer the maximum and average (mean) value for a job from all processes.
+The RSS of a process reveals the actual occupied memory space, the VM size the total memory requirement. 
+Note that the periodic sampling of the values leads to imprecision in the results, but overall, the values match the actual behaviour.
+
+Based on these values that are captured per task, the occupied memory for the nodes can be estimated: \[
+\mathrm{nodeMem} = \mathrm{perTaskMem} \cdot \mathrm{NTasks} / \mathrm{NNodes}.\]
+The \texttt{perTaskMem}\ can be either the mean or maximum of either RSS or VM. \texttt{NTasks} and \texttt{NNodes} is the number of tasks and nodes for running the job, respectively.
+Given a job consisting of 10 tasks, each likely to be using different memory, the resulting estimate for the nodal memory is pessimistic for the maximum value and optimistic for the mean (clearly memory is not equally distributed across all tasks and time) - so both values are valuable to estimate the typical memory usage of jobs.
+
+\Cref{fig:job-memory} shows the statistics for max RSS and max VM size by job.
+To create the graph, the jobs have been sorted by the occupied memory size.
+In \Cref{fig:rssMax}, it can be seen, for example, that roughly two million jobs needed an amount of memory per node that is just below 100 MiB.
+As expected, the VM size is higher than RSS but the overall behavior is similar.
+
+This information alone does not allow the estimation of the amount of memory needed on the cluster to execute the jobs; the runtime and the number of nodes also need to be taken into account.
+The two million jobs could run in a second while other jobs take days and, thus, determine the needed memory capacity.
+Similarly, a job occupying only one node is not so relevant as a job which runs on the complete cluster.
+A job's runtime and occupied node number can be used to normalize the runtime in terms of a job that would occupy the complete system:
+\[ \mathrm{machineTime} = \mathrm{runtime} \cdot \mathrm{NNodes} / 1500 nodes\]
+The machine time can be expressed in units such as node-hours.
+Using the machine time for a job, our graphs in \Cref{fig:job-memory} can be normalized to the fraction of actually served node-hours (the machine time) during the year.
+\Cref{fig:fractionMemConsumed} shows the maximum and average RSS size for the jobs based on the fraction of served node-hours.
+In essence, it is the percentage of provided CPU time that is used for those jobs.
+The vertical lines show the limits for 64 and 256\,GByte of memory.
+There are a few jobs that use swap or a node with 1 TByte of memory that is provided for testing.
+Again, the graph is sorted by the memory usage and then the cumulative memory usage for the fraction of served node-hours are computed.
+Indeed it becomes apparent, that only a small fraction of the system is used by the large number of jobs needed below 100\,MiB of memory.
+These jobs are typically small -- in terms of number of nodes -- or short running jobs.
+
+
+As the logarithmic x-axis of the graph makes it not trivial to understand the distribution of values, statistics have been created for typical main memory sizes or the percentage of job usage.
+The values in \Cref{tbl:memUsageStats} contain firstly information about a fixed system usage (\Cref{tbl:memUsageStats1}) and, secondly, a percentage of jobs that could be satisfied with a fixed amount of main memory (\Cref{tbl:memUsageStats2}).
+For example, jobs up to 10\% of the supercomputer's CPU time need a maximum RSS size of below 5000 MByte and, in average, only 1100 MByte would be needed for those jobs.
+
+
+
+\begin{figure}
+\begin{subfigure}[t]{0.49\textwidth}
+\includegraphics[width=\textwidth]{mem-stats/perNodeEstimateRSS}
+\caption{RSS max}
+\label{fig:rssMax}
+\end{subfigure}
+\begin{subfigure}[t]{0.49\textwidth}
+\includegraphics[width=\textwidth]{mem-stats/perNodeEstimateVM}
+\caption{VM max}
+\label{fig:vmMax}
+\end{subfigure}
+
+\caption{Job memory estimation per node}
+\label{fig:job-memory}
+\end{figure}
+
+
+
+
+
+\begin{figure}
+\begin{subfigure}[t]{0.49\textwidth}
+\includegraphics[width=\textwidth]{mem-stats/systemComputeFractionRSS}
+\caption{RSS max}
+\label{fig:fracRSSMax}
+\end{subfigure}
+\begin{subfigure}[t]{0.49\textwidth}
+\includegraphics[width=\textwidth]{mem-stats/systemComputeFractionRSSAVE}
+\caption{RSS average}
+\label{fig:fracRSSAvg}
+\end{subfigure}
+\caption{Fraction of served node-hours vs. the estimated memory consumption}
+\label{fig:fractionMemConsumed}
+\end{figure}
+
+
+
+\begin{table}
+
+\begin{subtable}[t]{0.49\textwidth}
+\begin{tabular}{r||r|r}
+\% & RSS Ave & RSS max \\
+\hline
+usage & in MByte & in MByte \\
+\hline
+\hline
+10 & 1,128 & 4,977 \\
+25 & 1,836 & 10,625 \\
+50 & 3,067 & 28,262 \\
+75 & 5,793 & 63,925 \\
+90 & 9,686 & 85,875 \\
+92 & 12,585 & 96,282 \\
+95 & 20,783 & 129,946 \\
+96 & 26,952 & 170,357 \\
+97 & 33,384 & 175,159 \\
+98 & 39,621 & 201,648 \\
+99 & 41,795 & 532,514 \\
+\end{tabular}
+\caption{Amount of memory utilized for the fraction of served node-hours}
+\label{tbl:memUsageStats1}
+\end{subtable}
+\begin{subtable}[t]{0.49\textwidth}
+\begin{tabular}{r||r|r}
+Memory & RSS Ave & RSS max \\
+\hline
+in GiB & in usage \%   & in usage \%\\
+\hline
+\hline
+1 & 8.8 & 2.5 \\
+2 & 29.0 & 3.6 \\
+4 & 66.7 & 7.1 \\
+8 & 86.3 & 16.9 \\
+16 & 94.4 & 36.8 \\
+32 & 96.9 & 54.3 \\
+64 & 100.0 & 75.1 \\
+128 & 100.0 & 94.9 \\
+256 & 100.0 & 98.5 \\
+512 & 100.0 & 98.5 \\
+1024 & 100.0 & 100.0 \\
+\end{tabular}
+\caption{Fraction of served node-hours that need a certain amount of memory}
+\label{tbl:memUsageStats2}
+\end{subtable}
+
+\caption{Memory usage statistics of one year system usage computed from the jobs' data}
+\label{tbl:memUsageStats}
+\end{table}
+
+
+
+\subsubsection{Example Scenario}
+
+In this example scenario, we take the specifications from half of the current DKRZ system: 1400 nodes with 64 GByte, 110 nodes with 128 GByte, 12 Nodes with 256 GByte and one with 1 TByte = 107.7 TByte memory in total.
+If we assume memory cost is 20\% of the compute nodes' costs\footnote{This assumption is motivated by the information reported from other supercomputers; also when looking at the current (2017) prices for a 32 GByte ECC DIMM (250 EUR): $107.7 \mbox{TByte} \cdot 250  EUR / 32 \mbox{GByte}  = 0.84 \mbox{M\, EUR}$.} and the first phase of the system cost was about half the full system, then 1.58 M EUR would be spent on memory.
+
+
+If we had the same job mix as that described in \Cref{tbl:memUsageStats} with 64 GByte of memory in a node, we could satisfy 99.8\% of the system's node time for RSS average and 75.1\% for RSS max without falling below memory requirements.  With 32 GByte 96.7\% of the node hours can be served based on RSS average and 54.3\% based on RSS max.
+
+Now assume we deploy only one type of node and dynamically provision memory beyond its size to the nodes as needed. If all jobs could be optimised to fit into 32 GByte memory, then we would have 1523 nodes with 32 GByte = 48.7 TByte memory (45.2\%). Based on the costs for the memory, 55\% could be saved (860 k EUR) - although this saving is not yet  balanced against the cost of the remote memory.
+
+Since some of the applications require more memory, the dynamic provisioning will supply additional memory.
+Assume we can dynamically allocate and deallocate the memory to fit between RSS max and RSS average based on the needs of the jobs. The question then would be: How much memory should be dynamically provisioned?
+Certainly less than the difference between the normal system and a low memory system (difference is 59 TByte).
+Say 10\% of this memory becomes dynamically provisionable = 6 TByte, an example configuration could be 
+to equip nodes with the following combination of memory: 32 GByte for 100 nodes (6.5\% of nodes) + 96 GByte for 25 nodes (1.6\% of nodes) + 200 GByte for two nodes (0.1\% of nodes). (Note also that some of the local memory on nodes would be necessary as L4 cache.).
+
+Again, assuming the same job mix, from the table, 3.1\% of node hours need an average RSS above 32\,GByte but below 64\,GByte. Thus, this combination could work in an optimistic scenario (equipping 6.5\% of nodes with the additional 32 GByte of memory). The costs of this additional 6 TByte for dynamic memory should not outweigh the saved money for the main memory to meet our goal of gaining an advantage over a traditional system with a fixed memory allocation.
+
+Besides potential monetary gains of dynamic provisioning, there are several soft factors in favour for this approach:
+\begin{itemize}
+\item The dynamic provisioning allows to allocate and assign arbitrary memory sizes to a node. It becomes possible to operate on a node with 50 GByte of memory, for example.
+\item The uniform node design reduces the conflicts in allocating nodes exclusively for jobs of a given size, and thus, potential unused nodes. This tends to increase the utilization of the overall cluster system.
+\item Available pooled memory can be used for other purposes, e.g., a shared global scratch space and in-memory burst-buffer system.
+This fast storage can be used to speedup post-processing of data and enables fast random access to extremely large data.
+\end{itemize}
+
+Such a scenario would lead to the following requirements for user workflows and system software:
+\begin{itemize}
+\item The dynamic memory must be easily provisionable to parallel jobs and potentially should be able to be freed to the pool when only needed for short runtime periods.
+\item Support for the job scheduler is necessary to indicate usage of the external resource and prevent oversubscription during the runtime.
+\item Users must understand the memory footprint of their applications.
+The system could support this by providing tools to analyze and optimize the utilized memory footprint.
+\end{itemize}
+
+A disadvantage of the approach would be the increased complexity to analyse performance bottlenecks. Such performance bottlenecks may be intractable with current models which already have problems with data movement and communication, problems which would probably arise with dynamic memory allocation too --- although the amount and impact are difficult to assess a priori. For these, and other reasons, it may be non-trivial to fully analyse the cost-benefits, but the example shows there are potentials for cost savings which we intend to analyse further in the future.
+%
+%\comment{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\subsection{Topo3: Site-global storage}
+%
+%%\includegraphics[width=\textwidth]{dot/topo-site-global-fs}
+%
+%a parallel application is started on supercomputer 1.
+%We assume it is a large parallel application (more than 100 nodes):
+%
+%
+%Is the storage bandwidth smaller than local NVRAM bandwidth?
+%
+%No: use the parallel file system (because it is faster).
+%
+%Yes:
+%Checkpoints: store checkpoint in NVRAM, assign always the same nodes for compute to allow restart from the same node, every z checkpoints make copy to the parallel file system (asynchronously to prevent resilience problem).
+%
+%Iteration data: store (temporarily) in NVRAM, drain over network to parallel file system using QoS of the network (not disturbing the communication of the application).
+%
+%
+%Do we know the further workflow? If people are not analyzing it for a while, we should probably put it on tape or object storage.
+%We may apply in situ stuff?
+%This also depends on the speed data is pumped in, as we must avoid to fill the NVRAM completely and stall the application to prevent data loss.
+%If the object storage fits well the access pattern (performance will be good), we can store large chunks already on object storage.
+%
+%
+%"running use-case 1"
+%
+%
+%thus.. running simulations?!
+%
+%Where is it run?
+%
+%
+%
+%
+%
+%}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\chapter{Refined Models}
+\label{sec:refined models}
+
+This  chapter describes how to model and simulate tape libraries using further refinements of concepts we have already introduced.
+
+Currently tape archival systems are often loosely integrated into the HPC storage infrastructure, but in the near and exascale term, burst buffers and HTC computing will also require integration with the archive.  
+Unfortunately, publicly available research on tape systems is scarce, leading to difficulties estimating and understanding costs, and in exploring new strategies and developing open software for tape systems. This is compounded by a lack
+of affordable systems, and hence a lack of availability for experimentation outside of large organisations - where operational concerns may also restrict experimentation (on what is an integral part of the durability delivery of their organisations).
+Lessening these problems by providing virtual storage silos should enable community-driven innovation and enable site operators to add features where they see fit while being able to verify strategies before deploying on production systems.
+
+Here we develop different models for the individual components in tape systems. The models are then implemented in a prototype simulation using discrete event simulation..
+\Cref{fig:tapesim model and software} illustrates some of the hardware and software components that are relevant to tape systems.
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.75\textwidth]{tapesim/svg/model+software}
+	\caption{Hardware and software components relevant to HSM and tape archives.}
+	\label{fig:tapesim model and software}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Hardware Models}
+
+
+One problem with computer systems is the complexity that unfolds because of the large number of possible combinations for hardware and software.
+Modeling hardware is particular cumbersome because in the real world the performance of a device emerges as a result of the laws of physics, but for a virtual model the dynamics have to be understood and abstracted.
+For standardized components it often is relatively easy to find a model that is adequately applicable for the whole class of of components.
+Composite components, such as the library topologies turn out to be harder to generalize in a simple way than expected.
+By mixing mostly 2D and a graph-based topology approaches good approximations of the library dynamics could be achieved.
+Another problem occurs with proprietary designs for which detailed information is hard to find.
+The same is true for benchmarks and a comprehensive catalogue of performance parameters.
+The network is an integral part of hierarchical storage systems and can be used to model and simulate even low-level components and communication.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Library Topology}
+
+To model the library hardware we start with a course grained graph based topology
+that connects individual components in combination with detailed models where
+the graph based approach appears insufficient.
+In some cases it can be easier and more efficient to choose a different model as is outlined in \Cref{sec:tapesim/2d topology}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Graph-based Model}
+\label{sec:tape_simple_graph}
+
+The coarse grained structure e.g. the way multiple library units are connected to form library complexes  with Pass-Through-Ports or Elevators is modeled using a graphs.
+By allowing numeric values but also callbacks, the individual components can use sophisticated models underneath e.g. to account for their current state.
+A vertex in the graph consequently is used for components and edges can be used to store distance or travel times from component to component.
+In principle, the approach is very flexible and arbitrary accurate depending on the level of detail.
+For highly detailed models, the approach can be tedious to configure and will be more expensive to compute.
+For lower levels of detail, errors may quickly accumulate.
+\Cref{fig:graph topology} illustrates the concept, and in this case mixes distances and times; this is just one of many ways to interpret edges and nodes in a graph based topology.
+Usually an implementation will receive times and distances by invoking a method to allowing more detailed models to hide behind an edge or vertex.
+In most systems, a robot can not pass another robot, the exact rulebook however should be handled in a separate component that prevents illegal actions.
+
+
+
+\begin{figure}[b]
+	\centering
+	\includegraphics[width=0.8\linewidth]{tapesim/graphviz/graph-topology.pdf} % BNL changed extension
+	\caption[Example: Graph Topology]{The graph based topology for coarse grained relationships including library complexes, Pass-Through-Ports and Elevators connecting multiple rails.}
+	\label{fig:graph topology}
+\end{figure}
+
+
+
+
+This model is attractive as we can utilize algorithms that are familiar from
+graph theory.
+The task of serving a tape that sits in \texttt{Slots-2} to \texttt{Drive-1} becomes the problem of finding the shortest path. %which is easily achieved using, e.g.,  Dijkstra's Shortest Path in $\mathcal{O}(|E|+|V|log|V|)$ or more generally the A*-Algorithm.
+%
+%Only positive weights are assumed.
+%Should negative weights be used for some reason one might consider using the Bellman-Ford algorithm instead.
+%
+%For large topologies with static distances, it may pay off to look into the \emph{all-pairs shortest path problem} to avoid needlessly recomputing the same paths over and over again.
+For two vertexes $v_i$ and $v_j$ and edges $e_{v_i, v_j}$ the time $T_G$ to get from $v_i$ to $v_j$ calculates in principle as follows. With 
+ $v_{robot}$ used to denote the maximum robot velocity, the time taken can be calculated:
+
+\begin{equation}
+\text{get\_time}(e_{v_i, v_j}\;\text{or}\;v) :=
+\begin{cases*}
+t & if $e_{v_i, v_j}$ or $v$ have time $t$ set \\
+\frac{\text{get\_distance}(v_i, v_j)}{v_{robot}} & if $e$ but no time is set \\
+0 & otherwise
+\end{cases*}
+\end{equation}
+
+Hence
+
+\begin{equation}
+T_{G}(v_i, v_j) = \sum^{\text{shortest\_path}(v_0, v_1)}_{v_{i}, v_{j}}
+\text{get\_time}(v_i) + \text{get\_time}(e_{v_i, v_j})
+\end{equation}
+
+
+
+\begin{figure} [h]
+	\centering
+	\includegraphics[width=\textwidth]{tapesim/svg/SL8500-minimal}
+	\caption{An example 1D model for the component mapping and robot movements}
+	\label{fig:sl8500}
+\end{figure}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{2D Topology Model}
+\label{sec:tapesim/2d topology}
+
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{tapesim/svg/2d-model}
+	\caption[Example: 2D Topology]{An example for a 2D topology model with a component mapping (in centimeter) coordinates and forbidden regions.}
+	\label{fig:2D topology}
+\end{figure}
+
+
+
+Sometimes projecting complete robot libraries into a two dimensional representation yields very good approximations.
+For the SL8500, this seems to be an efficient approach.
+The reasoning is that many significant movements that can be performed by the robots or the library are anyway at most two dimensional.
+
+A simplified 2D mapping of the components that are arranged in the U-shape is shown in \Cref{fig:sl8500}.
+The robots move along on 1 dimension but the elevator permits movements in the orthogonal dimension.
+Finding a path within a 2D model then becomes calculating the \emph{Euclidean-distance} between a number of points with a check if the robot is crossing a forbidden area or an obstacle, in which case
+additional measures have to be taken.
+Movements are usually decomposed into multiple linear movements, thus care must be taken when calculating distances and travel times.
+\Cref{fig:2D topology} illustrates another way to representing a library in just two dimensional space but considers now distances between the different components (slots, robots and drives).
+
+Logical components are resolved to coordinates by providing a mapping function for, e.g., slots and drives.
+Mounting a tape placed in \texttt{Slot-6,9} to \texttt{Drive 2} requires visiting multiple coordinates.
+Let  $T_{2D}(path)$ be the time it takes to traverse a $path \in \{(p_1, ..., p_n)\;|\;p_i \in (x,y); x,y \in \mathbb{R}\}$.
+Assuming different robot velocities $v_x$ and $v_y$ for each axis, the total travel time may be defined by the sum of the time traversing between two points $T_{2D}(p_i, p_j)$ and possibly occurring work and wait times $T_{wait/work}$:
+
+\begin{equation}
+T_{2D}(p_j, p_i) = max \left( \frac{|p_{ix} - p_{jx}|}{v_{x}}, \frac{|p_{iy} - p_{jy}|}{v_{y}} \right) 
+\end{equation}
+\begin{equation}
+T_{2D}(path) = \sum^{path}_{p_{i}, p_{j}}
+T_{2D}(p_i, p_j) + T_{wait/work}
+\end{equation}
+
+An easing function $e(|p_{id} - p_{jd}|, v_{max})$ can to be used before taking the maximum should gradual robot acceleration be taken into account.
+The exact times also depend on other robots, which reinforce the need for a component that guards the behaviour of the robot (as already noted in section\ref{sec:tape_simple_graph}).
+2D topologies can greatly reduce the burden to model, even on first sight, complex systems as such as a single SL8500.
+2D models are limited when library complexes are connected or more exotic parts (e.g., a high-density rotary drum) is used in the system.
+In such cases, hybrid approaches that mix graph-based and 2D models are promising to achieve good approximations at reasonable effort.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Software Models}
+
+Hardware devices and subsystems such as the library topology and the network are controlled by software and subject to complex workloads.  For a proof of concept prototype it often seemed sufficient to turn to ``naive" implementations, but
+with a modular model such as the one constructed here,  more sophisticated algorithms can be integrated into the virtual software stack.
+
+In particular, to stress the virtual tape library, a request object can be instantiated and submitted to the simulation.
+In addition to explicit submission it possible to register event providers to the simulation.
+As the simulation proceeds event providers are polled for future events until they indicate they have been drained.
+
+With this formalism, it is possible to create a workload provider to create requests on the fly according to a script, a probability distribution, or a trace file. In a similar fashion it would be possible to generate service workloads or component failures.
+
+We have implemented support for two important components: workload generation and resource scheduling, covered in \Cref{sec:refined/workloads} and \Cref{sec:refined/scheduling} respectively. 
+
+\subsection{Workload Generation}
+\label{sec:refined/workloads}
+
+We here concentrate on two main workload types: reads and writes induced by clients. For the experiments in this section workload traces were used, which is convenient to mimic real workloads although it would have been 
+  possible to generate workloads randomly or based on probabilities estimated
+  for future workloads.
+  
+In this model using workload provider, it is also possible implementing simple workload kernels as Python scripts which are registered with the simulation.
+\Cref{fig:request handling} illustrates the life cycle of writes (a) and reads (b).
+
+\paragraph{Write:}
+A write request is send by a client to an I/O server, which writes it to a shared cache.
+For the client the request is already served at this point.
+In a second phase an I/O server issues the actual write onto a tape.
+
+\paragraph{Read:}
+A client issues read requests to an I/O server.
+The I/O server checks if the file is in the shared cache.
+If that is the case, the I/O server can immedietly start serving the request.
+If the file is not already cached the library has to receive and mount the tape first.
+
+\begin{figure} [h]
+	\centering
+	\begin{subfigure}[t]{0.47\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{tapesim/svg/request_WRITE}
+
+		\vspace{0.6em}
+
+		\includegraphics[width=0.93\linewidth]{tapesim/plantuml/activity_write-fix}
+		\caption{Life-cycle Write}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.47\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{tapesim/svg/request_READ}
+
+		\vspace{0.5em}
+
+		\includegraphics[width=0.96\linewidth]{tapesim/plantuml/activity_read}
+
+		\caption{Life-cycle Read}
+	\end{subfigure}
+
+	\caption{Handling of read and write like requests for the HSM tape system.}
+	\label{fig:request handling}
+\end{figure}
+
+\subsection{Scheduling}
+\label{sec:refined/scheduling}
+
+To process the requests it is necessary to implement at least naive scheduling components.
+\Cref{fig:chained request queues} illustrates the various queues and resources that are involved in a HSM tape system.
+Requests arrive and are collected in an incoming queue.
+A scheduling components assigns work to available I/O nodes and en-queues the request for subsequent resources.
+An uncached read requests and data written only to the cache first requires a tape drive before performing tape I/O, which in turn has to wait for a robot to deliver and mount a tape.
+Data incoming from clients or tapes requires a network allocation as well as an I/O allocation.
+The shared cache has to distinguish between dirty data and data which can be displaced directly as space is required to handle incoming request.
+
+\begin{figure} [h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{tapesim/svg/chained-request-queues}
+	\caption{Key queues and resources in a cache fronted tape system.}
+	\label{fig:chained request queues}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Comparing actual System Monitoring to Simulation}
+
+
+For the evaluation of the simulator, workload traces of FTP traffic covering
+roughly a month of FTP traffic on the production archive of DKRZ were used
+to stress the virtual system. Different metrics available through the original
+monitoring system were collected within the simulation to reproduce the plots
+for comparison (see Figure \ref{fig:monitoring-real}
+%and Figure \ref{fig:monitoring-virtual}
+).
+The used trace in this case was chosen to also see how the virtual system recovers
+from a maintenance phase.
+
+
+\begin{figure}
+	\includegraphics[width=0.49\linewidth]{tapesim/manual/observed_hpss-rtmu_stage-201xxx.png}
+	\includegraphics[width=0.49\linewidth]{tapesim/manual/plot_verification-merged-size-match.pdf}
+	\caption{FTP activity and the number of stages observed by the monitoring of a real system (left) compared to a simulation run (right).}
+	\label{fig:monitoring-real}
+\end{figure}
+
+
+\subsection{Use-Case: Drive Count Variation and Quality of Service}
+
+By varying the number of drives (e.g. 30, 45, 60) we can verify if changes with
+expectable outcome are consistent with the simulation outcome. With more of
+these tests confidence in the simulation results increases and more experiments
+with more elaborate strategies can be pursued.
+A common question when dealing with tape systems concerns the number of tape
+drives to be used. For the use-case on drive count variation Figure \ref{fig:stages-waits}
+shows how the wait times and number of stages change depending on the configuration.
+
+
+\begin{figure}
+	\centering
+	\begin{subfigure}[t]{\textwidth}
+		\caption{30 Drives}
+		\includegraphics[width=0.49\linewidth]{tapesim/data/thesis/30-drives-all/generated_plots/plot_snapshot-stages-timeline-limited.pdf}
+		\includegraphics[width=0.49\linewidth]{tapesim/data/thesis/30-drives-all/generated_plots/plot_snapshot-waiting-timeline-limited.pdf}
+	\end{subfigure}
+	\begin{subfigure}[t]{\textwidth}
+		\caption{45 Drives}
+		\includegraphics[width=0.49\linewidth]{tapesim/data/thesis/45-drives-all/generated_plots/plot_snapshot-stages-timeline-limited.pdf}
+		\includegraphics[width=0.49\linewidth]{tapesim/data/thesis/45-drives-all/generated_plots/plot_snapshot-waiting-timeline-limited.pdf}
+	\end{subfigure}
+	\begin{subfigure}[t]{\textwidth}
+		\caption{60 Drives}
+		\includegraphics[width=0.49\linewidth]{tapesim/data/thesis/60-drives-all/generated_plots/plot_snapshot-stages-timeline-limited.pdf}
+		\includegraphics[width=0.49\linewidth]{tapesim/data/thesis/60-drives-all/generated_plots/plot_snapshot-waiting-timeline-limited.pdf}
+	\end{subfigure}
+
+	\caption{The number of stages (left) and the wait-time (right) for different drive counts.}
+	\label{fig:stages-waits}
+\end{figure}
+
+
+
+
+
+
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=0.5\linewidth]{tapesim/manual/plot_wait-times-cum-ALL.pdf}
+%	\caption{}
+%	\label{fig:qos}
+%\end{figure}
+
+
+
+\section{Summary for Refined Modeling}
+
+This case study provided insight into the simulation of large scale hierarchical storage systems, but also shows that turning to refined models with the current state of the art of available tools is a daunting exercise.
+Simulators are lacking ready to be used abstractions for high-level data centre components, as well as the necessary data describing post-processing/real-time workflows that would allow one to inspect system behaviour for comparison with the monitoring tools available with physical systems.
+
+Refined models prove to require a large initial effort and meticulous knowledge about the individual hardware components and their interactions during the development of the simulator.  This information needs to be supplemented by at least naive drivers and scheduling algorithms for all important parts of the software stack. 
+Finally, researchers (both model developers and model users) need to specify the performance metrics/characteristics they need or would like to know about and also the workloads they would like to use to stress the virtual system to evaluate run time behaviour. In the case of cost analysis, this also should include power consumption and initial hardware costs.
+
+It would be beneficial, if vendors would provide testable models of their components such that simulation could validate the expected behaviour for performance as resilience as intended by the vendor\footnote{This transition is already happening in the manufacturing business; some companies force their suppliers to ship models and CAD files to simplify the construction of larger systems.}.
+
+The case study also shows that while a broad range of problems needs to be addressed in a refined modeling approach, the resulting runtime performance can approximate the system performance of actual observed systems.
+As the system complexity seems destined to increase, the simulation of storage systems promises to deliver a better understanding and promote research for new domain specific architectures. This will become ever more important as vendors 
+ often lack the incentive to investigate specialized solutions, and it falls to data centres and research institutes to evaluate how hardware and software could be assembled to meet their bespoke requirements.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Conclusion}
+\label{sec:conclusion}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Summary}
+
+The report discusses the important issue of data handling for the weather and climate community.   It is necessary to understand both the short and long-term costs for the workloads associated with running, storing, and utilising data, in order to make educated procurements which deliver the best possible storage and performance with limited budgets - in the presence of rising demand for data storage and utilisation.
+
+\Cref{sec:introduction} introduced the background motivation for this work: performance issues and costs associated with data handling are consuming more time and money of ever growing portions of the environmental science community. As these costs grow, the importance of making cost effective procurements which meet performance expectations grow - and as noted in \Cref{sec:refined models}, it is not easy to access existing research, benchmarks, or real systems for data (or  experiment).
+
+% Data centre requirements:
+%
+
+\Cref{sec:dc_model} covered the functional responsibilities of data centres and how they provide researchers with virtual working environments to conduct their research.
+To provide the required services, data centres have overcome many technical challenges.
+As data centres provide a data lake of valuable data, the research community demands means for efficient I/O, data discovery and access tools that regularly exceed the capabilities of current technologies.
+
+
+% Related Work:
+%
+In \Cref{sec:related work}, relevant related work that pushes these limits is collected and discussed.
+The report looked at the evolution of data centres and various approaches concerned with data access that have been used in scientific contexts.
+We covered the trends in both climate and weather research as well as the development of storage technologies and, in particular, discussed the performance divergence of compute vs. storage.
+In this context, we also reviewed cloud technologies that have the potential to change the scientific computing landscape.
+The report also looked at the data centre perspective and vendor perceptions on the cost developments of disks, NAND and tape.
+It becomes obvious that a lot of potential still can be found in alternative software architectures for operating clusters and the workload programming.
+But a fundamental field of research remains to find convenience and efficient paradigms to program upcoming systems.
+
+
+%data centre evolution
+%	general
+%
+%	cloud srvice providesr
+%
+%	data acces and transfer
+%		hdf5
+%
+%trends for storage technologies
+%	performance
+%	cost
+%	Disk, Nand, Tape
+%
+%	HPSS RAIT
+%
+%	NAND technology roudmap
+%
+%	network
+%
+%
+%climate and weather developments
+%	exponential data growth
+
+%
+%	data distribution
+%
+%	cloud
+%
+%	energy efficient
+%
+%
+%software paradigms
+%	LFS
+%	Big data
+%	erasure codings
+%
+%	cloud
+%
+%	improvements ot checkpoint restart
+%
+%	namespace consolidation PGAS
+%
+%
+%Data transfer area
+
+
+
+% Cost modeling:
+%
+
+In \Cref{sec:modeling}, the report then describes high-level considerations for costs, performance and resilience considerations.
+A hierarchical graph-based approach is proposed allowing us to specify component and system characteristics and costs and visualize them.
+This also allows to add or remove complexity and detail as becomes necessary and open the possibility for automation.
+In the model, we also look at the core components that are usually found in data centres.
+Starting with the smallest components such as hard drives, that provide little tuning opportunities, the report moves on to discuss how derive the emergent performance and cost of small subsystems like individual compute and I/O nodes as well as of  larger subsystems like the network or a parallel file system.
+Separately from on site equipment considerations for the cloud are discussed.
+
+
+%unit components procured more or less as is.. only require to update with specs provided
+%for sub systems recalculate based on:
+%
+%considerations for core tehcnologies
+%dependency to compute
+%I/O nodes
+%and specific storage subsystems.
+%
+%Object Stores
+%Storage class media
+%
+%Tape
+%
+%cloud
+
+
+% Evaluation:
+%
+
+In \Cref{sec:evaluation}, we provided the characteristics for costs and performance of currently deployed systems.
+Starting from these systems as baseline, we explored changes to the system and the impact on cost, power consumption and performance applying coarse grained models.
+The discussed scenarios do not aim to quantify the costs accurately but instead provide a qualitative perspective on the chances various modifications of the system may imply.
+In that sense, they serve as blueprints for subsequent scenarios.
+For example, we discussed reducing the storage budget in favor of compute resources -- with the goal to not decrease scientific productivity, and conclude that this requires more intelligent scheduling and staging mechanisms.
+Researchers would likely need to drastically change their applications as well as their workflows.
+The report shows that the cost developments for the technologies are an important but unknown factor and that it is therefore advisable to push for more flexible infrastructures to make the integration of new technologies easier.
+One such technology, NVRAM, might shape future data centres radically, but the cost-benefits of this technology is difficult to quantify as the cost-prognostics of this technology does not exist.
+Another factor maybe an increased integration of cloud like service.
+Centralizing some resources such as (pooled) memory, introduces some opportunity, but the benefits are difficult to judge right now as we do not have all the data for the impact on the workload available right now.
+Still, the abstract models shed light on the available design space.
+
+
+% Refined Models.
+%
+While the high-level models can show certain cases for which a certain technology is useful, it cannot quantify the benefit for individual workloads as the dimension of time and the workload characteristics is abstracted.
+An approach for more detailed models is showcased in \Cref{sec:refined models}.
+Using discrete event simulation, it is possible to account for the workload behavior of a system.
+In particular, we introduced a simulation for hierarchical storage systems that integrate tape libraries and online storage.
+The case study demonstrates the overhead associated with fine grained models but also shows that it is possible to approximate the observed behavior in the actual system monitoring.
+It is then shown that by varying the configuration, we can make forecasts for impacts on the quality of service of an alternative system configuration.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Future Work}
+\label{further-work}
+
+This report has added to the understandings of costs and performance related to storage infrastructure, beginning with discussions of requirements, and moving through coarse and refined models. However, it leaves many avenues as yet unexplored, and the technology landscape is changing rapidly --- there is much yet do, including:
+\begin{itemize}
+	\item Refine models: include additional relevant parameters and consolidate models into interactive tools to directly support discussions of architecture changes and their impact.
+	For example, for our high-level scenarios one could enter the data centre characteristics and explore the changes on various characteristics with the changes in architecture.
+	\item Cataloging: Build a catalog of metrics for the components including failure rates and cost.
+	This is a community effort, because the wide range of products is obviously out of scope of a single organization.
+	\item Testing. The models have to be tested and improved along with actual procurement, to iteratively derive a toolchain to aid the decision making.
+	We have already seen many opportunities for abstractions while compiling this report.
+	\item Gathering more workload data: Refined models are promising and, given increasing hardware options, an imperative to pursue.
+	However, they require that centres have, and share, detailed understandings of user workloads and how they change in the future.
+	%The overhead to perform simulations can reduced significantly by developing with reuseable frameworks in mind.
+\end{itemize}
+
+\appendix
+\input{definitions.tex}
+
+\chapter{Abbreviations and Acronyms}
+\label{sec:abbrev}
+\setlongtables
+\scriptsize
+\begin{longtable}{|l|l|l|}
+  \hline
+  Abbr/acr.	&	Description	        		&	Context                         \\
+  \hline
+  ACID	&	Atomicity, Consistency, Isolation, Durability	&	Database                        \\
+  ACME        &	Accelerated Climate Modeling for Energy		&                                       \\
+  ADLER32     &	Simple checksum for file integrity		&                           Checksum    \\
+  AIP         &	Archival Information Package			&	OAIS                            \\
+  AMD         &	www.amd.com                                     &                                       \\
+  API         &	Application Programming Interface		&                                       \\
+  AR          &	Assessment Report       			&	IPCC                            \\
+  AWS         &	Amazon Web Services                             &                                       \\
+  BCC         &	Beijing Climate Center (bcc.cma.gov.cn)         &                                       \\
+  BCCR        &	Bjerknes Centre for Climate Research            &                                       \\
+  BER         &	Bit Error Rate                                  &                                       \\
+  BOINC       &	Berkeley Open Infrastructure for Network Computing      &                               \\
+  C14N        &         Canonical XML                                 &         W3C                           \\
+  C3S         &                                                       &                                       \\
+  CA          &                                                       &                                       \\
+  CAPEX       &	Capital expenditure				&	Finance                         \\
+  CASTOR      &	CERN Advanced Storage system                    &                                       \\
+  CCSDS       &                                                       &                                       \\
+  CCSM        &                                                       &                                       \\
+  CD          &                                                       &                                       \\
+  CDF         &                                                       &                                       \\
+  CDN         &       Content Distribution Network                    &                                       \\
+  CDO         &         Climate Data Operators                        &         MPI for Meteorology           \\
+  CEDA        &	Centre for Environmental Data Analysis          &                                       \\
+  CEPH        &	   Object storage system                              &                                       \\
+  CEPHFS      &       Filesystem interface to CEPH                    &       CEPH                            \\
+  CERN        &	Centre Europ\'eenne pour la Recherce Nucl\'eaire&                                       \\
+  CESM        &                                                       &                                       \\
+  CMCC        &         Centro Euro-Mediterraneo Sui Cambiamenti Climatici & \url{http://www.cmcc.it}                      \\
+  CMIP        &         Climate Model Intercomparison Project         &                                       \\
+  CMS         &	Compact Muon Solenoid	                        &                 CERN/WLCG             \\
+  CNRM        &                                                       &                                       \\
+  CO2         &         Carbon dioxide                                &         Chemistry/Environment         \\
+  CPU         &       Central Processing Unit                         &                                       \\
+  CRC         &         Cyclic Redundancy Check                       &         Checksum                      \\
+  CSIRO       &         Commonwealth Scientific and Industrial Research Organisation & \url{http://www.csiro.au}                  \\
+  CSP         &         Cloud Service Provider                        &                                       \\
+  CUC         &          Climate Use Case                       &               (this report)           \\
+  DARPA       &       Defense Advanced Research Projects Agency       &                                       \\
+  DCC         &         Digital Curation Centre                       &         \url{http://www.dcc.ac.uk}                 \\
+  DIMM        &         Dual In-Line Memory Module                    &         Memory                        \\
+  DKRZ        &         Deutsches Klima RechenZentrum                 &                                       \\
+  DLS         &       Diamond Light Source                            &                                       \\
+  DMTF        &         Data Management Task Force                    &                                       \\
+  DMZ         &       Demilitarized Zone \Cref{sec:dmz}               &                                       \\
+  DOI         &         Digital Object Identifier                     &                                       \\
+  DRAM        &         Dynamic RAM (opp. SRAM)                       &         Memory                        \\
+  DTA         &         Data Transfer Area (same as DTZ)              &                                       \\
+  DTZ         &         Data Transfer Zone (same as DTA)              &                                       \\
+  DWD         &         Deutscher Wetterdienst                        &         \url{http://www.dwd.de}                    \\
+  EB          &         Exabyte, or 1,000,000,000,000,000,000 bytes   &                                       \\
+  EC-EARTH    &                                                       &         \url{http://www.ec-earth.org} \\
+  ECC         &       Error Correcting Code                           &                                       \\
+  ECHAM       &         General circulation model from MPI (2nd def.) &                                       \\
+  ECMWF       &         European Centre for Medium Range Weather Forecasts &                                  \\
+  EO          &       Earth Observation                               &                                       \\
+  EOFS        &  European Open File System organization        &   \url{http://www.eofs.eu}                                    \\
+  ESA         &       European Space Agency                           &                                       \\
+  ESGF        &       Earth System Grid Federation                    &                                       \\
+  ESM         &                                                       &                                       \\
+  ESNET       &       Energy Sciences Network                         &                                       \\
+  ETSI        &         European Telecommunications Standards Institute &                                     \\
+  FLOPS       &       Floating Point Operations per Second            &                                       \\
+  FTP         &       File Transfer Protocol                          &       IETF, OGF                       \\
+  FTS         &       File Transfer Service                           &       WLCG                            \\
+  GCESS       &                                                       &                                       \\
+  GDPR        &         General Data Protection Regulation            &         European Union                \\
+  GEANT       &       www.geant.org                                   &                                       \\
+  GF          &         Gigaflops, or 1,000,000,000 FLOPS             &                                       \\
+  GFDL        &  Geophysical Fluid Dynamics Laboratory   &  \url{https://www.gfdl.noaa.gov}                                  \\
+  GISS        &                                                       &                                       \\
+  GPFS        &         General Parallel File System                  &         IBM                           \\
+  GPU         &         Graphics Processing Unit (cf. CPU)            &         Computing                     \\
+  GRIB        &         data format used in meteorology               &                                       \\
+  HDD         &         Hard drive (generic magnetic)                 &         Harddrive technology          \\
+  HDF         &       Hierarchical Data Format                        &                                       \\
+  HDF5        &       HDF version 5                                   &                                       \\
+  HDFS        &       Hadoop File System                              &                                       \\
+  HEP         &       High Energy Physics                             &                                       \\
+  HPC         &       High Performance Computing                      &                                       \\
+  HPSS        &         High Performance Storage System               &                                       \\
+  HSM         &       Hierarchical Storage Management                 &                                       \\
+  HTC         &       High Throughput Computing                       &                                       \\
+  HTTP        &       Hypertext Transfer Protocol                     &       IETF                            \\
+  IAP         &                                                       &                                       \\
+  IBM         &       www.ibm.com                                     &                                       \\
+% ICON        &                                                       &                                       \\
+  IEC         &         International Electrotechnical Commission     &                                       \\
+  IEEE	      &	Institute of Electrical And Electronics Engineers	&					\\
+  IETF        &       Internet Engineering Task Force                 &                                       \\
+  IGTF        &       Interoperable Global Trust Federation           &                                       \\
+  INGV        &         Istituto Nazionale di Geofisica e Vulcanologia&         \url{http://www.ingv.it}                   \\
+  INM         &                                                       &                                       \\
+  IOOPS       &       Input/Output Operations Per Second              &                                       \\
+  IPCC        &         Intergovernmental Panel on Climate Change     &                                       \\
+  IPSL        &         Institut Pierre Simon Laplace                 &                                       \\
+  ISO         &         International Organization for Standardization&                                       \\
+  IT          &       Information Technology                          &                                       \\
+  ITU         &       International Telecommunications Union          &                                       \\
+  JANET       &       UK NREN                                         &                                       \\
+  JASMIN      &       Compute service run by STFC                     &                                       \\
+  JSON        &         Javascript Object Notation                    &         IETF (RFC~7159)               \\
+  JWT         &       JSON Web Token                                  &       IETF                            \\
+  KMA         &                                                       &                                       \\
+  KW          &         Kilowatt                                      &                                       \\
+  L4          &         Level four (cache)                            &         Memory                        \\
+  LASG        &                                                       &                                       \\
+  LFS         &         Log Structured File Systems                   &                                       \\
+  LHC         &       Large Hadron Collider                           &       CERN                            \\
+  LHS         &         Left Hand Side                                &                                       \\
+  LLNL        &         Lawrence Livermore National Laboratory        &         US Department of Energy       \\
+  LOCKSS      &       Lots Of Copies Keeps Stuff Safe                 &                                       \\
+  LOTUS       &       Compute service run by STFC                     &                                       \\
+  MAN         &       Metropolitan Area Network                       &       Networking                      \\
+  MD4         &       Message Digest 4 (a checksum algorithm)         &         Checksum                      \\
+  MD5         &       Message Digest 5 (a checksum algorithm)         &         Checksum                      \\
+  MDPP        &                                                       &                                       \\
+  MICRO       &                                                       &                                       \\
+  MICROC      &                                                       &                                       \\
+  MIUB        &                                                       &                                       \\
+  MOHC        &                                                       &                                       \\
+  MPI         &  Message Passing Interface or Max Planck Institute &                                   \\
+% MPIESM      &                                                       &                                       \\
+  MRI         &                                                       &                                       \\
+  MTBF        &       Mean Time Between Failures                      &                                       \\
+  MTTF        &       Mean Time To Fail                               &                                       \\
+  MTTR        &         Mean Time To Recovery                         &                                       \\
+  MW          &         Megawatt                                      &                                       \\
+  NA          &         Not available                                 &                                       \\
+  NAND        &       Not-AND (NVM technology)                        &         Memory                        \\
+  NASA        &         National Aeronautics and Space Administration &  \url{http://www.nasa.gov}                  \\
+  NCAR        &         National Center for Atmospheric Research      &                                       \\
+  NCC         &                                                       &                                       \\
+  NCEP        &                                                       &                                       \\
+  NDN         &         Named Data Networks                           &                                       \\
+  NERSC       &         National Energy Research Scientific Computing Center & \url{http://www.nersc.gov}                  \\
+  NEX         &                                                       &                                       \\
+  NFS         &       Networked File System                           &                                       \\
+  NIMR        &                                                       &                                       \\
+  NOAA        &         National Oceanic and Atmospheric Administration & \url{http://www.noaa.gov}                          \\
+  NREN        &       National Research and Educational Network       &                                       \\
+  NUMA        &         Non-Uniform Memory Access                     &         Memory                        \\
+  NVM         &       Non-volatile memory                             &                                       \\
+  NVRAM       &       Non-volatile RAM                                &                                       \\
+  NWP         &       Numerical Weather Prediction                    &                                       \\
+  OAIS        &       Open Archival Information System                &                                       \\
+  OGC         &       Open Geospatial Consortium                      &       \url{http://www.opengeospatial.org}          \\
+  OGF         &       Open Grid Forum                                 &       \url{http://www.ogf.org}                     \\
+  ORNL        &       Oak Ridge National Laboratory                   &                                       \\
+  OS          &       Operating System                                &                                       \\
+  PB          &       Petabyte, or 1,000,000,000,000,000 bytes        &         Computing                     \\
+  PCI         &         Peripheral Component Interface                &         Computing                     \\
+  PF          &         Peta-FLOPS                                    &         Computing                     \\
+  PFLOPS      &       Peta-FLOPS, or 1,000,000,000,000,000 FLOPS      &         Computing                     \\
+  PFS         &         Parallel Filesystem                           &                                       \\
+  PGAS		&	Partitioned Global Address Space		&	Memory				\\
+  PI          &         Principal Investigator                        &         Project/research management   \\
+  POSIX       &         Portable Operating System Interface           &         IEEE                          \\
+  PUE         &       Power Utilisation Efficiency                    &       Data centre operations          \\
+  QA          &       Quality Assurance                               &                                       \\
+  RADOS       &       Library                                         &       CEPH                            \\
+  RADOSGW     &	RADOS gateway                                   &                                       \\
+  RAID        &       Redundant Array of Inexpensive Disks            &                                       \\
+  RAID0       &       RAID mode denoting striping \Cref{sec:modeling:perf}  &                                 \\
+  RAID1       &       RAID mode denoting mirroring  (\Cref{sec:modeling:perf}  &                              \\
+  RAIT        &      Redundant Array of Independent Tapes             &      HPSS                             \\
+  RAL         &      Rutherford Appleton Laboratory                   &                                       \\
+  RAM         &      Random Access Memory                             &                                       \\
+  RBD         &         RADOS Block Device                            &                                       \\
+  RDMA        &      Remote Dynamic Memory Access                     &                                       \\
+  REST        &       Representiational State Transfer                &       Web services programming        \\
+  RFC		&	Request For Comments				&	IETF				\\
+  RSS         &         Resident Set Size                             &                                       \\
+  S3          &       Simple Storage Service                          &                                       \\
+  SAN         &         Storage Area Network                          &                                       \\
+  SAS70       &         Statement on Auditing Standards               &         \url{http://www.aicpa.org}                 \\
+  SATA        &         Serial AT Attachment (HDD, cf.~PCI, SCSI)     &                                       \\
+  SCM         &         Storage Class Memory                          &         Memory                        \\
+  SCSI		&	Small Computer Systems Interface		&					\\
+  SIP         &       Submission Information Package                  &       OAIS                            \\
+  SL8500      &       Oracle tape library                             &       Oracle                          \\
+  SLA         &       Service Level Agreement                         &                                       \\
+  SLO         &       Service Level Objective                         &                                       \\
+  SMR         &         Shingled Magnetic Recording                   &         Harddrive technology          \\
+  SNIA        &       Storage Networking Industry Association         &       \url{http://www.snia.org}                    \\
+  SRAM        &         Static RAM                                    &         Memory                        \\
+  SRM         &         Storage Resource Manager                      &         OGF                           \\
+  SSAE16      &         Statement on Standards for Attestation Engagements & \url{http://www.aicpa.org}                    \\
+  SSD         &         Solid-State Disk                              &         Harddrive technology          \\
+  STFC        &       Science and Technology Facilities Council       &       UK research council             \\
+  SUSE        &         German Linux distribution/vendor              &                                       \\
+  T10KC       &       T10000 tape media, C ``generation''             &       Oracle                          \\
+  TB          &         Terabyte, or 1,000,000,000,000 bytes          &         Computing                     \\
+  TCO         &         Total Cost of Ownership                       &                                       \\
+  TF          &         Teraflops, or 1,000,000,000,000 FLOPS         &         Computing                     \\
+  UC         &          Use Case                                     &          Computing                    \\
+  UKMO        &         UK Meteorological Office                      &                                       \\
+  UPS         &       Uninterruptible Power Supply                    &                                       \\
+  VM          &       Virtual Machine                                 &                                       \\
+  W3C	      &		World Wide Web Consortium		      &		\url{http://www.w3.org}			\\
+  WLCG        &       World-Wide Large Hadron Collider Computing Grid &      CERN                             \\
+  WO          &	Write Only                                      &                                       \\
+  WORM        &       Write Once, Read Many                           &                                       \\
+  WORN        &       Write Once, Read Never                          &                                       \\
+  WORSE       &       Write Once, Read Seldom if Ever                 &                                       \\
+  WP          &       Work Package                                    &       EU projects                     \\
+  WUC         &         Weather (modelling) use case                  &         (this report)                 \\
+  XML         &       eXtensible Markup Language                      &         W3C                           \\
+  XPD         &      Express Disk                                                 &         \url{http://kove.net/xpd}           \\
+  ZFS         &       Filesystem originally from Sun Microsystems     &						\\
+  \hline
+  \caption{Abbreviations and Acronyms}
+  \label{tab:abbr}
+\end{longtable}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\acknowledgement
+
+
+%\nocite{*}
+
+%\bibliographystyle{alpha}
+\bibliography{bibliography}
+%\printbibliography
+
+\end{document}

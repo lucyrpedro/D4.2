@@ -1,0 +1,47 @@
+@startuml
+actor User
+control JobManager
+participant Nodes
+participant ESDM
+participant "Visualisation" as vis
+database Storage
+
+
+User -> JobManager: submit job(IN, OUT, VIS)
+JobManager -> Nodes
+
+== Initialization ==
+
+Nodes -> Storage: read IN=x
+Storage -> Nodes: return
+
+== Loop ==
+
+Nodes -> Nodes: compute
+activate Nodes
+
+Nodes -> ESDM: write async OUT=y
+activate ESDM
+ESDM -> Storage: write snapshot (async)
+ESDM -> ESDM: extract data for viewport
+ESDM -> vis: provide viewport data
+
+== Visualisation ==
+vis -> vis: render visualisation
+vis -> User: stream
+ESDM <- vis: return
+ESDM -> BB: (buffer data for number of timesteps?)
+ESDM -> Nodes: return
+
+deactivate ESDM
+
+Storage -> User: OUT files become visible
+
+...multiple iterations...
+
+== Finalize ==
+
+Storage -> User: All OUT files become visible to subsequent users.
+
+
+@enduml

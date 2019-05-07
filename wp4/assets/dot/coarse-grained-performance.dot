@@ -1,0 +1,68 @@
+digraph {
+	graph [fontname = "sans serif"];
+	node [fontname = "sans serif", shape=box, style="filled, rounded"];
+	edge [fontname = "sans serif", arrowhead=none];	
+
+	########
+	# NOTE!!
+	# Edge arrowheads are set to none to simulate undirected graph, but enforce component order ;)
+	########
+
+	root_switch [label="Switch", shape="octagon", fillcolor="orange"];
+	root_switch -> rack_switch1 [label="20GB/s"];
+	root_switch -> rack_switch2 [label="20GB/s"];
+
+
+
+subgraph cluster_rack1{
+		label="Rack 1";
+		style="rounded";
+
+
+		{rank = same;
+			rack_switch1 [label="Rack switch", shape="octagon", fillcolor="orange"];
+		}
+
+		rack_switch1 -> CN11 [label="10GB/s"];
+		rack_switch1 -> CN12 [label="10GB/s"];
+		rack_switch1 -> SS11 [label="15GB/s"];
+
+		
+		CN11 [label="Compute node\n memory: 10x 8 GB DIMMs\n cpu: 2 x 10 @ 2Ghz", fillcolor="white"];
+		CN12 [label="Compute node\n memory: 10x 8 GB DIMMs\n cpu: 2 x 10 @ 2Ghz", fillcolor="white"];
+
+		SS11 [label="Storage server", fillcolor="orchid"];
+		SS11 -> RAID1_0;
+	
+		{rank=same
+			RAID1_11 [label="RAID 1", fillcolor="orange"];
+			RAID1_12 [label="RAID 1", fillcolor="orange"];
+			RAID1_0 [label="RAID 0", fillcolor="orange"];
+			
+		}
+
+		RAID1_11 -> RAID1_0 [style=invis]
+		RAID1_0 -> RAID1_11;
+		RAID1_0 -> RAID1_12;
+		
+		HDD11 [label="HDD1\ncapacity: 4TB\n latency: 5ms", fillcolor="red"];
+		HDD12 [label="HDD2\ncapacity: 4TB\n latency: 5ms", fillcolor="red"];
+		HDD13 [label="HDD3\ncapacity: 4TB\n latency: 5ms", fillcolor="red"];
+		HDD14 [label="HDD4\ncapacity: 4TB\n latency: 5ms", fillcolor="red"];
+
+
+		RAID1_11 -> HDD11 [label="r: 200MB/s\nw: 100MB/s"];
+		RAID1_11 -> HDD12 [label="r: 200MB/s\nw: 100MB/s"];
+		RAID1_12 -> HDD13 [label="r: 200MB/s\nw: 100MB/s"];
+		RAID1_12 -> HDD14 [label="r: 200MB/s\nw: 100MB/s"];
+	
+			
+
+
+
+	}
+	
+	rack_switch2 [label="Rack switch", shape="octagon", fillcolor="orange"];
+
+
+}

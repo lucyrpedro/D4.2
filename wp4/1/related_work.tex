@@ -1,0 +1,407 @@
+\label{sec:related work}
+
+In the previous chapter we introduced the key requirements of weather
+and climate date centres. This section provides an overview of
+complementary elements of the data centre status quo and introduces related trends.
+
+\section{Data Centre Evolution}
+\label{sec:related work/data centre evolution}
+
+We may here look at the evolution of the data centre itself, or we may look at
+the evolution of the use of the data centre.  The former will focus on the data
+centre from its own perspective --- how does it provide services to its users,
+how do its services and features evolve with time, whereas the latter will look
+at how the users do the work that traditionally involves data centres: this work
+could, in principle, change to involve more distributed and collaborative
+working (\`la wikis or VREs), use of clouds for on-demand services, truly
+distributed computing \`a la BOINC, and of course desktop computing.
+Nevertheless, the principal focus of this document shall be the use of the data
+centre itself for high-end data storage and data processing, because, as we
+shall see, none of the other options can currently --- or in the near/medium
+future --- provide cost effective alternatives.
+
+
+% A bit of history plus recent and future.
+
+In looking at the evolution of data centres, it is useful to look at where the
+evolutionary pressure comes from. We have introduced some of those drivers in
+the introductory chapter, but there are others that come naturally, with growth
+in data storage requirements (and associated bandwidth requirements),
+accompanied by co-evolutionary technological advances -- increased storage
+densities, higher bandwidth networks, ``cloud'' computing.
+
+At the same time, we are seeing evolutionary drivers both in the commercial
+world --- the exabyte datacentres of Google, Facebook --- and those of the
+academic world where also HEP, astronomy, and biosciences have increasing needs
+of data ``solutions'' and are pushing for those needs to be met, often in
+different and incompatible ways due to differences in history and culture.  In a
+topological (or, more precisely, networkological) sense, data typically need to
+be close to the CPU that processes the data, so typically a data centre would
+provide ``its own'' compute infrastructure (e.g. in a commercial CSP, data
+access within the same regional data centre is free but may cost if data is
+accessed from another region.)  Another important networkological factor is the
+connections to research networks; for example both Amazon's and Microsoft's data
+centres in Ireland are peered with the JANET, the UK research network.
+Similarly, geographical and legal constraints can affect the placement of data,
+particularly if the data can contain personal information which is subject to
+data protection regulations or other national constraints.
+
+Beyond this, we have constraints arising from society and the environment:
+\begin{itemize}
+\item the costs of operating a data centre %(section~XXX)
+\item the ``greenness'' (power, cooling, CO2 emissions and other pollution, the environmental friendliness of the hardware in
+construction, delivery, operation, and disposal),
+\item physical security and access control,
+\item location (e.g. protection from natural disasters: flooding, earthquakes, etc.),
+\item space constraints (in particular, can it be extended),
+\item personnel security
+\end{itemize}
+
+Unsurprisingly, setting up a datacentre from scratch is a significant investment --- building, security, tape store,
+storage and compute nodes, power, cooling --- and it is necessary also to consider alternatives, namely:
+\begin{itemize}
+\item Use of (public, commercial) cloud data centres.
+\item Co-location --- use an existing (usually commercially operated) data centre.
+\item Shared data centre --- different research domains share the use of a data centre (one of the differences between
+  this option and co-location is that the boundaries are more flexible in the shared data centre, and resources can be
+  shared between users or be loaned from one user to another).
+\item In-house private resources --- the ``traditional'' university department approach where each department runs its own
+  storage and computational cluster.
+\end{itemize}
+
+In practice, a data centre ``solution'' could be a hybrid, combining several of
+the above resources (see~\Cref{sec:cloud}).  Building hybrids makes it even more
+important to have common interfaces based on open standards with interoperable
+implementations.
+
+In building the data centre itself, there are also several options, as we shall
+see in the section ``data centre implementation'', below.  Here, other factors
+come into play, too: the overall capacity of the data centre in terms of
+physical space, power, cooling, electricity supply and backup (UPS and
+generators).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Commercial CSPs and their Services}
+
+%\todo{references!}
+
+The large public cloud service provicers (CSP)s (see \Cref{sec:cloud}) (e.g.
+Google, Amazon, Azure, Rackspace) and social media networks (Google again,
+Facebook) run large data centres, and often develop their own technology or
+software to support them (e.g. Microsoft's Project Catapult, the Google File
+System), or to support the use and analysis of the data (e.g. Google's Drill).
+These data centres have been designed to be able to provide high resilience
+services --- with presence in different regions of the world and the ability to
+replicate data both between regions and also to provide multiple copies within a
+single data centre.  Users can choose the level of replication suitable to their
+data; obviously they also then pay for the service access.  Similarly, special
+use cases can be supported: a content distribution network may be optimised for rapid
+location-independent delivery of data to users, data analysis and ``mining''
+facilities, data traffic and network management, data ``market places,'' etc.
+
+For an academic data centre, it may be best to leave many of these additional
+features to the commercial CSPs and let users procure their own cloud resources
+as needed; it would then suffice to provide interfaces that let users move their
+data to/from commercial clouds, and perhaps also to provide data movers
+compatible with the more common commercial cloud interfaces (the latter requires
+that users are able and willing to delegate their access rights to the data
+mover.)  The usage model would then be that data would remain in the academic
+data centre, but users could, when they need these extra services, move the
+data, or ask to have the data moved, to the public cloud where the additional
+services could be provided.  For some research disciplines, certification of
+data centres becomes important --- this is particularly notable in
+bioinformatics, where users are not keen to pursue the details of the security
+implementations but know that they need the security, both physical and
+operationally.  In this case, relevant data centre certifications become
+helpful; such as [SSAE16] (formerly known as SAS70). Even if a full audit is not
+performed, the certification may serve as a useful checklist.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Recent and long-term trends for storage technologies}
+\label{sec:related work/trends storage}
+
+Various studies regularly revisit the technological progress in storage and
+compute resources. Vendors, customers and operators likewise are motivated to
+perform market analysis to align their spending and business strategy. A general
+trend is the increasing performance discrepancy between storage and compute
+hardware. \cite{julian_m._kunkel_exascale_2014} notes that processor speeds over
+a 10 year time frame increased by a factor of about 500 with disk capacities
+keeping up only slightly slower with a factor of 100. So while we have
+technologies with the necessary capacity to store most of the computed data, we
+lack the technology to store data at the same pace it is created. For example in
+the last 25 years, processors speeds improved by roughly a factor of a million.
+In the same time frame storage speeds only achieved a 1200x improvement. This discrepancy is exacerbated by the increasing archive intensity noted in section
+\ref{sec:scientific context}.
+
+Similarly others compared different storage technologies.
+\cite{fontana_impact_2013, decad_impact_2013} analyzed the cost development of
+NAND, disk and tape storage media from 2008 to 2012. The authors compared the
+units and petabytes shipped, the areal density in bits per inch as well as the
+generated revenue and dollar price per GB. HDDs are leading in terms of globally
+shipped PB and generated revenue. In terms of areal density HDDs continue to
+outperform NAND (second) and tape. But higher density tapes have been already
+demonstrated, promising capacities of up to 200TB per tape in the near future
+possibly surpassing NAND in areal density. Natural disaster or change in
+production facilities also had an observable impact on HDD sales e.g. following
+floods in 2011 in Thailand (also see our figure \ref{fig:kryder}). While disk
+and NAND benefit from economies of scale to a greater extent then tape, the
+authors note large investments that will be necessary to improve disk and NAND
+based storage capacities and performance.
+
+\cite{evangelos_eleftheriou_trends_2010} provides a view into IBMs development
+of storage technology over time and the effects of flash storage. the authors
+see tape as a important technology that is not quickly going to be obsolete, but
+may even increase in usage as more data is accumulated that will be accessed
+infrequently. The report also looks at storage class memory (SCM). In particular
+they expect that SCM should not exceed 3-5x the cost of enterprise HDDs. The
+document emphasizes that it remains unclear how problems with write endurance of
+NAND technologies and SSDs will progress as miniaturization continues.
+
+\cite{gupta_economic_2014} also noted the slow down of HDD areal density and compared disks and NAND for archival storage.
+The report concludes that SSDs are cost competitive due to their lower operating cost in comparison to disk for low latency applications where tape or optical media are no option.
+The authors note that NAND could adapted with better insulation for archival purpose, sacrificing IOOPS performance but increasing data retention times.
+
+An upcoming technology is RAIT, allowing striping data across multiple tapes with
+largely the same motivation as for RAID. With the standardization of tape media,
+the form factor limits the capacity for an otherwise arbitrary length storage
+technology. With increasing resolution of models, and similar problems in other
+domains, a single dataset eventually may not fit on a single storage medium. I
+this context \cite{hughes_hpss_2009} discusses the most important requirements
+and how RAIT is going to be implemented in HPSS.
+
+
+A white paper by Mellanox \cite{mellanox_building_2012} analyzed trends and
+feasibility of high performance network for storage applications. The report
+emphasizes the trend towards converged fabrics, and notes that fibre channel as
+it slowed to innovate is loosing relevance but that many of the attractive
+properties such as being a lossless fabric are adopted in other standards as
+well. The paper concludes that due to technologies such as Remote Dynamic Memory
+Access (RDMA) network technologies are not the major bottleneck.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Paradigms and Features in Software Solutions}
+
+New storage architecture require new algorithms, APIs and paradigms for convenient exploitation with respect to their application and characteristics.
+For a while efforts in this regard focused on the evolution and developments of ever more clever filesystems.
+But for durable storage, the filesystem needs to be mature and stable and to some extent backward compatible.
+Rapidly changing systems are a natural risk for data conversation especially under financial constraints.
+Therefore, it is not uncommon to find seemingly aged technologies still in use.
+
+As data volumes increased also storage systems became distributed. Widely adopted
+HPC solutions for parallel file systems and distributed object storage are
+discussed in \Cref{sec:related work/pfs and object stores}. Critical performance
+impacts are often traced back to one or both of contention points or resource
+locking.  For file systems in particular, the major contention issue is
+associated with metadata operations. In cluster environments where many clients
+might change a file at once this can quickly result to an unintended denial of
+service attackt on the metadata infrastructure stalling the system as a whole.
+
+In write heavy scenarios that rarely read or where read access occurs delayed Log Structured File Systems (LFS) perform well.
+Improvements to the general concept of LFS by using advanced data structures such as log-structure
+merge trees and distributed trees are explored by \cite{oneil_log-structured_1996} and \cite{ben_stopford_log_2015}.
+
+In expectation higher resolution climate models and big data workflows alternative storage models need to be explored.
+\cite{kaur_survey_2015} analysed the requirements of big data storage strategies, and how special purpose file systems such as HDFS aid the performance  of e.g. map-reduce operations.
+In this context also new paradigms to address data are discussed.
+Examples include models for Partitioned Global Address Space (PGAS) or Named Data Networks (NDN).
+\cite{olschanowsky_supporting_2014} explored how NDN might benefit climate applications in particular for object discovery, retrieval and subsetting.
+
+Other approaches focus on how to layout data or transform data before writing it to account for later reading patterns.
+\cite{lofstead_six_2011} analysed the characteristic climate/weather workloads in regard to applications making used of checkpoint restart mechanisms.
+The paper highlights the impact data organisation has on the I/O performance and calls for flexible data layout and placement strategies.
+\cite{yin_robot:_2013} analysed how to achieve high availability and data security without extensive over provisioning using erasure coding and deduplication. The approach is optimized for big data backup and also aims to reduce repair time.
+
+%Hybrid architectures
+%\cite{oikawa_accelerating_2015}
+%block storage and memeory
+%in particular in expectance of NVRAM
+%file access.. likely spanning
+%... current research in error correcting codes... minimising the transfers needed to rebuild.
+
+Virtualisation and cloud technologies are also a driving factor for new storage interfaces as discussed in \Cref{sec:related work/data centre evolution}.
+the possible impact of cloud on HPC simulation environments is considered by \cite{mancini_how_2015}.
+The authors stress two on first sight seemingly opposing problems:
+Traditional HPC solutions tend to become more and complicated and thus are harder to utilized and exploit.
+At the same time virtualisation technologies introduce additional performance overhead while reducing complexity and thus reduce the burden on application developers.
+The authors believe that the benefits for many users will outweight the cost and consequently expect to see increasing demand for ad-hoc provision of dynamic cluster environments. This is consistent with experience and expecation at STFC/CEDA.
+
+
+%Current trends in HPC and supercomputing centres.  Use of Lustre, HPSS, increasing use of ZFS.
+%
+%energy efficient procurement documen considerations
+%	what do they think?
+%
+%
+%Also needs a note on green computing (and ``green'' storage).  We don't want to melt the world calculating how we can avoid melting the world...
+
+
+%	\cite{_aa_procurement_2014.pdf_????}
+%
+
+% In regard to storage:
+% Cited from Darpa:
+% \begin{quote}
+% The Memory and Storage Challenge concerns the lack of currently available technology
+% to retain data at high enough capacities, and access it at high enough rates, to support the
+% desired application suites at the desired computational rate, and still fit within an acceptable
+% power envelope. This information storage challenge lies in both main memory (DRAM today)
+% and in secondary storage (rotating disks today).
+% \end{quote}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Prominent Storage Solutions and Products for HPC I/O}
+\label{sec:related work/pfs and object stores}
+
+This section introduces some of the most relevant storage products, configurations and software solutions. We do not cover tape systems here, since they will
+be the subject of other deliverables in ESIWACE.
+
+\subsection{Disk Storage}
+
+There are broadly five classes of disk storage systems (capable of high volume
+storage) which have relevance in weather and climate data centres:
+\begin{enumerate}
+    \item Parallel Filesystems such as Lustre (\Cref{sec:lustre}), Panasas, and GPFS.
+    \item Network Attached Storage which provides a particular protocol for access to
+    data stored using a range of underlying technologies.
+    \item Network Accessible Block Store Systems, suitable for use by hypervisors to provide disk systems to virtual systems,
+    \item Object Storage systems (with or without a standard API), and
+    \item Local disk (whether solid state or magnetic), used to provide
+    hyperconverged storage solutions such as HDFS, on real or virtual clusters.
+\end {enumerate}
+
+These classes are not mutually exclusive, and products may provide more than
+one of thes interfaces.  We do not describe all of these here, but simply describe
+three commonly deployed options.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Lustre}
+
+\begin{quote}
+\itshape
+The Lustre\textregistered file system is an open-source, parallel file system that supports many requirements of leadership class HPC simulation environments.
+\end{quote}
+(from the Lustre website, \url{http://lustre.org}).
+
+Lustre, like Panasas, provides a POSIX based parallel file system view of an underlying object store (which is itself not exposed, although some configuration parametes are made available). The POSIX view is so tightly integrated that
+many of the advantages of object stores (discussed below) cannot be exploited.
+
+More than half of the Top100 supercopmuters are currently relying on Lustre,in part for its performance charactersitics, and in part because of the the open licensing schema (the project aims to be vendor-neutral --- although some vendors provide enterprise features for paying customers that are not found in the community edition).
+
+Lustre was developed to support large namespace with millions of files per directory at high throughput, good metadata performance, and an overall capacity of up to 512 PB for files up to 32PB. Current lustre limits are likely to change as Lustre plans to transition to ZFS in the backend. Existing Lustre installations suffer
+issues associated with metadata contention, filesystem configuration, and dynamic
+scalability. The POSIX interface is seen as limiting.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Swift and Cinder (OpenStack)}
+
+Swift and Cinder are two storage solutions provided by the OpenStack (https://www.openstack.org) cloud project. OpenStack provides open source
+software can controls pools of heterogeneous compute and storage
+with appropriate network support.
+
+OpenStack enjoys support by various prominent institutions and companies which are relying on open stack to manage their cloud services.
+Originally initiated by NASA together with rackspace\textregistered, a wide variety of software and hardware vendors today are also committed to OpenStack including Dell, Hewlett Packard Enterprise, AMD, Intel and IBM. Many academic
+laboratories and institutions are deploying OpenStack too, including CERN
+who currently manage around 200K compute cores with OpenStack.
+
+OpenStack is effectively an umbrella project for a range of services, including
+storage. There are two particular services of relevance here:
+\begin{itemize}
+	\item Object Storage (Swift)
+	\item Block Storage (Cinder)
+	%\item OpenStack Image Service (Glance), Provision of VM images.
+	%\item File System (Manila)
+\end{itemize}
+Of these, Swift is the most interesting for high volume data in an exascale weather and climate data centre, because it provides as an object store it provides a route to very scalable high performance disk. However, while object stores provide
+high volume capability, it is not yet known whether they can match parallel
+file systems for performance through single (parallel) applications - although it is expected that they should be configurable (with the right hardware and software) to be competitive.
+
+Object store interfaces are problematic from a software point of view. While
+the Swift API is becoming a defacto standard alongside Amazon S3, there is
+little user software in the weather and climate community which can exploit these
+APIS - nearly all users expect POSIX interfaces. There are some solutions to
+this problem which avoid users rewriting software (see \Cref{sec:sw_solutions}).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Ceph}
+
+\begin{quote}
+	\itshape
+	Ceph is a distributed object store and file system designed to provide excellent performance, reliability and scalability.
+\end{quote}
+(from the Ceph project website, \url{https://ceph.com})
+
+The core technology provided by Cephs architecture is RADOS, an feature rich distributed object storage layer which espouses: reliability, autonomous, distributed (R, A, D)  object storage (O, S), hence RADOS.
+
+Ceph is an open source example of object store technologies which provide
+multiple interfaces: Clients can access data through POSIX complaint file
+system interfaces (CEPHFS), or use a S3 or Swift API, exploit a block storage interface, or use the native RADOS interface via Librados.
+
+Librados provides a low-level API to RADOS with bindings to many different programming languages.  Other interfaces have been built on librados by
+third parties, including a GridFTP interface developed at STFC.
+
+Ceph is used by a variety of organisations including CERN, Cisco, Fujitsu, Intel, Red Hat, SanDisk and SUSE.
+
+\section{Software Solutions}
+\label{sec:sw_solutions}
+
+\subsection{IP based interfaces}
+
+As already noted, object stores may provide scalable performant storage,
+but application interfaces are problematic, access to entire files
+would require caching them to a local POSIX file system, and partial file
+access is not supported by existing applications.
+
+The existing default expectation for users is that they can access data files
+vai a POSIX interface, that is, they can navigate around directories and files,
+and their software uses operating system native reads and writes to file system
+kernels. However, in recent years, internet protocols such as OpeNDAP
+(\url{https://www.opendap.org}) have demonstrated that good (if not great)
+performance can be achieved in many applications by navigating OPeNDAP
+catalogues such as Thredds
+(\url{https://www.unidata.ucar.edu/downloads/thredds/}) and exploiting network
+based access. This has been particularly successful where users have exploited
+the NetCDF OPeNDAP bindings (\url{https://goo.gl/lvRGmC}) --- from the
+perspective of their codes they simply open a remote file as if it were on the
+local filesystem. The NetCDF library converts their file access to OPeNDAP
+access in a manner which is transparent to the user.
+
+ESIWACE is investigating options in partnership with the HDF group, to
+add a native HDF internet service option further down the NetCDF stack,
+opening up an even wider variety of data to network access. This work
+is targeting object stores, and will address both application
+interfaces and performance. Accordingly, we need to consider object
+stores as credible storage options in weather and climate data centres,
+and address them in our cost modelling.
+
+\subsection{Data Transfer Area, aka Science DMZ}
+\label{sec:dmz}
+
+It has been repeatedly stated here that we expect workflows that cross
+institutions, and so we need to consider that users will see virtual data
+centres that aggregate services from multiple physical data centres. In most
+cases default network performance is not up to meeting transparency and
+performance expectations. To get the requisite transparency and performance,
+sites are now beginning toe exploit what is variously known as a ``Science
+DMZ'', or Data Transfer Area or Zone (DTA/DTZ).
+
+The basic idea is that Data Transfer Nodes are set up by different institutions,
+typically on top of a research network, with sufficient security that they can
+transfer data directly to each other, bypassing (or with only minimal interactions with)site firewalls, in order to achieve the highest
+possible performance. Four different things are required in a Science DMZ:
+\begin{enumerate}
+    \item transfer endpoints for each site (using dedicated systems),
+    \item  monitoring and performance measurement,
+    \item security, and
+    \item adequate underlying network infrastructure (typically with
+    direct interfaces to an NREN).
+\end{enumerate}
+In practice, security is implemented using X.509 certificates from
+the Interoperable Global Trust Federation (IGTF);  monitoring is both active
+(perfsonar for example) and passive (inspecting detailed transfer logs), and
+transfers are typically done with GridFTP in order to achieve sufficient
+security and good transfer performance (which has the added bonus that people can
+use Globus Online to transfer files.)   However, some DTAs can also implement
+secure performant links using shared ssh keys and rsync (as is done in one variant of the UK links between the ARCHER HPC platform in Edinburgh, and the JASMIN data analysis facility Oxfordshire  --- although GridFTP is also available there).

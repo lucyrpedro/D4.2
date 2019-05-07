@@ -1,0 +1,32 @@
+@startuml
+
+
+
+node App1 {
+	node Proc1 {
+	control "Application" as app
+	control "ESDM FUSE" as fuse1 
+	}
+	
+}
+
+node "ESDM HDF Creator" {
+	node Proc2 {
+	control "ESDM" as esdm2
+	control "Layout Reconstruction" as layout1
+	}
+}
+
+storage StorageSystem {
+note "No related active processes on Storage System?" as N1
+}
+
+
+app -> fuse1: uses
+
+fuse1 -> esdm2: may start creation
+
+
+
+
+@enduml

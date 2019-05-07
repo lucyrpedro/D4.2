@@ -1,0 +1,366 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newpage
+%\chapter{Model Implementation}
+%\label{sec:implementation}
+%
+%For this work package cost modeling is realised by implementing a number of loosely coupled tools such a %specialised python script or spreadsheets to model individual sub components in greater detail where operating %figures and key characteristics are not yet well understood.
+%
+%
+%
+%sheet magic
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\comment{
+\newpage
+\chapter{Use-Cases}
+
+\todo{Low priority we could spare this}
+\label{sec:use cases}
+
+In \Cref{sec:workflows}
+
+
+
+For each create a graph: Time series of phases of activities.
+Weather and climate forecasts work differently.
+
+
+
+As mentioned earlier, the data centre must support future climate models.  We thus need to consider the following use cases in our model:
+\begin{enumerate}
+	\item[UC1] data centres as working repositories, connecting to internal or external compute services, these services thus
+	include providing data for applications,
+	\item[UC2] providing space for storing (and archiving, when appropriate) output from applications (typically write-once and
+	append-only),
+	\item[UC3] providing temporary workspace, including space for checkpointing applications so they can survive failures
+	without a complete loss of work;
+	\item[UC4] providing data discovery and other metadata services,
+	\item[UC5] providing endpoints for data access and transfers,
+	\item[UC6] providing data archiving – long term storage, optionally combined with curation services.
+\end{enumerate}
+In particular, we are not considering backup and disaster recovery services, except insofar as they are required for the
+operations of the data centre itself.
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Applications from Earth System Modeling}
+
+characterstics of climate and weather applications
+
+snapshot, restart
+
+
+variety of netCDF versions arround
+
+only latest to build on hdf5, which is moving to a more widely used storage methodology
+
+
+storage backends
+
+
+
+weather:
+continues stream of fresh data -> storage  -> no overwriting what so ever
+simulation needs to read a lot of data     -> only reading
+simulations generates data periodically    -> no competing writes to same resource
+results are aggregated to compile weather report
+
+
+\todo{What would be a good mix of the most noteable model codes?}
+
+
+%\paragraph{Earth-System Models:}
+%
+%
+%Steve Easterbrook poster
+%
+%Unified model by METOFFICE
+%suitable for climate and weather
+%
+%NASA
+%has also its own model
+%
+%JAPAN
+%
+%
+%NCAR, CESM
+%
+%
+%MPIESM
+%
+%
+%ICON, Future of MPIESM?
+%MDPP (DWD physics)
+%ECHAM (climate physics)
+%
+%
+%CESM
+%GISS
+%GFDL
+%UVic
+%HadGEM2
+%MPI-ESM
+%IPSL
+%Lovelclim
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Modelled Workflows}
+
+
+\todo{Bryan: Weather and/vs. Climate workflows?}
+
+
+
+
+In the case of storage technologies we would like to address concerns such as the following:
+
+\begin{itemize}
+	\item User requires X performance, Y min-performance, Z storage capacity, W working set.
+
+\end{itemize}
+
+
+
+
+Up to now simulations in many areas and also in climate and weather applications
+are producing data first and analyze them later.
+
+
+
+
+Calculations in climate deal with non linear problems, where small parameter changes result in large differences in the results
+to compensate this climate researches usually have mulltiple runs, called essembles, and weigh the average
+
+complete decorrelation of the timeseries
+
+\cite{alexander_software_2015-1}
+
+
+
+
+
+
+Future?:
+in-situ / in-transit
+
+chances of in-situ analysis
+
+
+
+
+but harder to be used by climate researchers as community has certain workflows e..g with the CMIP
+
+
+for weather maybe, as real time concerns come in.. and there are examples where certain conditions may occur that are worth to look into in detail?
+How frequently are weather simulations consulted for disaster situations?
+
+
+
+
+
+
+\subsection{Assumptions}
+\label{sec:modeling/assumptions}
+
+In the previous chapters, we collected and illustrated the state of weather and climate research which is supported by data centres.
+
+The following list collects some of the most notable assumptions for the developed models:
+\begin{itemize}
+	\item
+	\item
+	\item
+\end{itemize}
+
+
+
+\begin{itemize}
+	\item Compute and I/O capabilities will continue to diverge.
+	\item Storage demand will increase exponentially.
+	\item Energy envelopes will remain relatively stable.
+	\item
+\end{itemize}
+
+
+We assume that free lunch is over
+
+But we also expect that we see improvements and relaxations e.g. for snapshot related workloads, as burst buffers find their way into the data centre.
+It appears, however, that this should be only considered a temporary fix that should not deter research in a more fundamental reorganisation of how we exploit storage technologies.
+
+
+	Peak I/O FLOPS vs Peak PFS I/O Bandwidth
+		exponential vs. constant (1 TB/s)
+			I/O constant due to power constraints?
+
+
+
+Ultimately we will need to also change how we run and develop simulations with exascale systems.
+Thus huge unused opportunities are likely to be found in smarter less ignorant hardware and software accross the stack but also in the ways users communicate their intentions and workflows to the system.
+
+
+
+\begin{itemize}
+\item ...
+\end{itemize}
+
+
+\Cref{sec:trends weather and climate} looked at challenges and upcoming trends of climate and weather research.
+\Cref{sec:trends storage} made similar considerations for upcoming technological innovations that impact future data centres.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\subsection{Climate}
+
+
+\subsubsection{CUC1: Writing Data from a Parallel Program}
+
+We have P processes utilizing PPN cores per node.
+Iterative program.
+Asynchronous communication and I/O ?
+Every I iterations, a subset of memory capacity $C_I$ should be persisted.
+After T iterations, the program terminates and writes $C_T$ capacity for a snapshot.
+This process may be repeated, restarting from a snapshot to simulate 100 or 1000 of years of climate.
+
+What people do right now:
+- store AND Keep every checkpoint, may be used for later analysis and for re-computation.
+- Some people only keep every 10th of a checkpoint (as the costs to recompute 9 other checkpoints is less than storing 10).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{CUC2: Post-Processing Data}
+
+A scientist reads a time series produces from multiple runs of the parallel program (see \ref{TODO}).
+He/she may want to read a subset of data points (i.e., an area of interest) across all time steps.
+
+
+UC: DWD Weather use cases; anfragen....
+
+
+Aus Use-Cases besteht unser Portfolie an Anwendungen die als Mix entsprechend die TCO Entscheidung oben mit beeinflussen.
+Gewichten des Mixes für die TCO berechnung: Je nach Mix unterschiedliche Architektur.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{CUC3: Post-Processing: Partial CDO}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{CUC4: Visualisation}
+
+\todo{are the challenges for climate visualisation different from weather?}
+
+
+vtk
+paraview
+
+
+of many variables available in a simulation only a view are read and visualised
+
+timeseries
+average e..g temperature anomaly
+
+expensive cloud visualisation..
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\subsection{Weather}
+
+
+
+\subsubsection{WUC1: Incoming Stream of Observations}
+
+satellites
+radar
+weather stations
+ships
+
+\subsubsection{WUC2: Pre-Processing}
+
+insufficient sampling makes preprocessing necessary so models can be intialised correctly
+
+
+\subsubsection{WUC3: Now Casting (0-6h)}
+
+directly inffered from satellite data and weather stations
+
+most importabtly extrapolation of radar echos
+
+usually for war nings
+
+
+
+
+\subsubsection{WUC4: Numeric Model Forecasts (0-10+ Days)}
+
+\begin{enumerate}
+	\item Read-Phase to intialise simulation
+	\item periodic snapshots (write) for time evolution
+\end{enumerate}
+
+
+\subsubsection{WUC5: Post-Processing}
+
+nowcasting:
+multi sensor integration
+classification
+ensembles
+impact models
+
+model:
+statistical interpretation
+model-combination
+
+
+
+generation of GRIB files as services to customers of weather forecasts
+
+
+\subsubsection{WUC6: Visualisation}
+
+of many variables available in a simulation only a view are read and visualised
+
+timeseries
+
+
+
+
+\subsection{Characteristics of Workload Mix}
+
+Wie kommt man von einzelworloads auf die Charakteristik?
+
+10\% der Anwendungen sind CUC1, 20\% WUC1, ...
+
+Relevant weil der Workload mix sich ja ändern könnte...
+
+\todo{Frage an Anwendungen stellen; wir nutzen das ja auch für unsere Ansage bzgl. nächstes DKRZ System, da existiert ein Papier}
+
+Beispiel DKRZ...
+20 GByte/s durchsatz ständig...
+
+
+
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage

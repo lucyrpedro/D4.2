@@ -1,0 +1,52 @@
+@startuml
+hide footbox
+
+Database "Storage Backend"
+Database "Metadata Backend"
+
+"HDF5 VOL" -> "ESD (Plugin)" : H5Tcommit
+activate "ESD (Plugin)"
+
+"ESD (Plugin)" -> "ESD (Plugin)": H5Tencode
+
+"ESD (Plugin)" -> "ESD" : esd_h5_type_commit
+
+activate "ESD"
+"ESD" -> "ESD Datatype" : esd_type_encode
+
+activate "ESD Datatype"
+note right
+Add the HDF5 encoded type into
+an ESD envelope marking it as
+HDF5 binary format
+end note
+
+"ESD Datatype" -> "ESD Datatype" : encode type
+"ESD Datatype" --> "ESD" : return
+deactivate "ESD Datatype"
+
+"ESD" -> "ESD Layout" : esd_layout_init(obj)
+activate "ESD Layout"
+
+note right 
+the layout component initialises 
+the type object interface, this 
+includes the operation table to 
+access the storage backends and 
+the storage backend identifier
+end note
+
+"ESD Layout" -> "Metadata Backend" : add obj reference
+"ESD Layout" -> "ESD Layout" : init(obj)
+"ESD Layout" --> "ESD" : return
+deactivate "ESD Layout"
+
+"ESD" -> "Storage Backend" : obj->write
+
+"ESD" --> "ESD (Plugin)" : return
+deactivate "ESD"
+
+"ESD (Plugin)" --> "HDF5 VOL" : return
+
+deactivate "ESD (Plugin)"
+@enduml

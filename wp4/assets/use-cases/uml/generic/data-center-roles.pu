@@ -1,0 +1,27 @@
+@startuml
+!include skinparams.iuml
+left to right direction
+
+: Scientific Data Manager : as dm
+: Priviliged user\n(Data owner) : as user1
+: Unpriviliged user: as user2
+: Administrator : as admin
+
+dm --> (manages scientific objects)
+dm --> (exports/imports data)
+dm --> (makes/restores backups)
+dm --> (changes data policies)
+dm --> (monitors project-specific \nstorage usage and performance)
+
+admin --> (manages services)
+admin --> (configures ESDM)
+admin --> (provides performance \ncharacteristiscs of storage)
+admin --> (monitors system health\n and performance)
+
+user1 --> (creates data / becomes owner)
+user1 --> (manages permissions)
+user1 --> (manipulates data)
+
+user2 --> (accesses data)
+
+@enduml

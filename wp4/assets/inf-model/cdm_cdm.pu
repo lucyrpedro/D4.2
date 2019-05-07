@@ -1,0 +1,19 @@
+@startuml
+title __Data Model Relationships__
+skinparam noteBackgroundColor beige
+skinparam noteBorderColor black
+skinparam class {
+    BackgroundColor AliceBlue
+    BorderColor Black
+    ArrowColor Black
+    AttributeIconSize 0
+}
+    hide members
+    hide methods
+        CDM_Dataset .> LDM_Container: implemented using
+        CDM_Dataset -[Hidden]- CDM_Variable
+        CDM_Variable .> LDM_Variable  : same as
+        CDM_Variable -[Hidden]- CDM_Domain
+        CDM_Domain .> LDM_Domain : described by
+
+@enduml

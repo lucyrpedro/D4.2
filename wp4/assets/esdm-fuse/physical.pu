@@ -1,0 +1,45 @@
+@startuml
+
+package StorageSystem {
+	class "ESDM Related Files" as ESDMFiles
+	class "ESDM Temporary HDF5 File" as HDF5Cache
+}
+
+
+package Node {
+
+	class FUSE
+
+	package ApplicationProc {
+		class ESDMFUSE
+		class Application
+	}
+}
+
+
+
+package Compute {
+	class Scheduler
+	class "ESDM HDF5 Creator" as HDF5Creator 
+}
+
+
+
+
+Scheduler -> HDF5Creator: starts
+Scheduler -> Application: starts
+
+HDF5Creator -> HDF5Cache: creates
+HDF5Creator -> ESDMFiles: uses
+
+ESDMFUSE -> HDF5Cache: reads from/writes to
+
+Application -> FUSE: makes read/write calls
+FUSE -> ESDMFUSE: redirects calls to middleware
+
+
+ESDMFUSE --> HDF5Creator: may start
+
+
+
+@enduml

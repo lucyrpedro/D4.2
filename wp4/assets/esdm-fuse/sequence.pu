@@ -1,0 +1,42 @@
+@startuml
+
+participant "Legacy Application" as app
+participant "ESDM FUSE" as fuse
+participant "ESDM Scheduler" as scheduler
+participant ESDM
+
+participant "HDF5 API" as hdf5
+
+participant "ESDM Backend" as backend
+database Storage as storage
+
+
+
+app -> fuse
+fuse -> fuse: check cached
+
+fuse -> scheduler
+scheduler -> ESDM: reconstruct domain A
+ESDM -> backend: receive data
+ESDM -> backend: receive data
+ESDM -> hdf5: write dataset A
+hdf5 -> storage
+hdf5 -> ESDM: return
+
+scheduler -> ESDM: reconstruct domain B
+ESDM -> backend: receive data
+ESDM -> backend: receive data
+ESDM -> hdf5: write dataset B
+hdf5 -> storage
+hdf5 -> ESDM: return
+
+scheduler <- ESDM: return
+fuse <- scheduler: return
+
+app -> fuse: read/write
+fuse -> storage: read/write from cached file
+fuse <- storage: return
+app <- fuse: return
+
+
+@enduml

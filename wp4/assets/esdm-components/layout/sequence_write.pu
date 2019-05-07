@@ -1,0 +1,20 @@
+@startuml
+
+participant Process
+participant ESDM
+participant ESDMBackend
+participant Storage
+database Device1
+database Device2
+
+Process -> ESDM: write
+ESDM -> Storage: identify devices
+ESDM <- Storage: return devices
+ESDM -> ESDM: determine mapping
+ESDM -> ESDMBackend: invoke backends
+ESDMBackend -> Device1: drain to device
+ESDMBackend -> Device2: drain to device
+ESDM -> ESDMBackend: return
+ESDM -> ESDM: Update Metadata
+
+@enduml

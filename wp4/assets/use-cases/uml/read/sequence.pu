@@ -1,0 +1,23 @@
+@startuml
+
+participant Process
+participant ESDM
+participant ESDMBackend
+participant Storage
+database Device1
+database Device2
+
+Process -> ESDM: 1. read
+ESDM -> ESDM: 2. identify targets
+ESDM -> ESDMBackend: invoke backends
+ESDMBackend -> Storage: 2. resolve targets to devices
+ESDMBackend <- Storage: return targets
+ESDMBackend -> Device1: 3. read from device
+ESDMBackend <- Device1: return
+ESDMBackend -> Device2: read from device
+ESDMBackend <- Device2: return
+ESDM <- ESDMBackend: return
+ESDM -> ESDM: 4. Reconstruct Subdomain
+Process <- ESDM: return
+
+@enduml

@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.1 r15371"
+   sodipodi:docname="layers-esdm.svg">
+  <defs
+     id="defs2">
+    <linearGradient
+       id="linearGradient912">
+      <stop
+         style="stop-color:#f3f3f3;stop-opacity:1.0000000;"
+         offset="0.0000000"
+         id="stop913" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1.0000000;"
+         offset="0.37650406"
+         id="stop855" />
+      <stop
+         style="stop-color:#e6ffff;stop-opacity:1.0000000;"
+         offset="1.0000000"
+         id="stop914" />
+    </linearGradient>
+    <radialGradient
+       xlink:href="#linearGradient912"
+       id="radialGradient915" />
+    <linearGradient
+       y2="6.8029929"
+       y1="20.936059"
+       xlink:href="#linearGradient912"
+       x2="-8.2562678"
+       x1="17.050463"
+       id="linearGradient854"
+       gradientTransform="matrix(1.2337695,0,0,0.6455896,94.03547,1.5707237)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="759.6781"
+     inkscape:cy="762.58775"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g4568"
+     showgrid="false"
+     inkscape:window-width="1360"
+     inkscape:window-height="704"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     showguides="false" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g5116">
+      <g
+         id="g4677">
+        <rect
+           rx="1.3566236"
+           style="fill:#c0504d;fill-opacity:1;stroke:none;stroke-width:0.52916664;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4601-3"
+           width="55.628403"
+           height="11.384057"
+           x="125.56188"
+           y="46.760876"
+           ry="1.4013312" />
+        <flowRoot
+           transform="translate(2.1381562,1.3309752)"
+           id="flowRoot4567"
+           style="color:#000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555534px;line-height:125%;font-family:arial;-inkscape-font-specification:'arial, Bold';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4569"><use
+               height="100%"
+               width="100%"
+               id="use4571"
+               xlink:href="#rect4601-3"
+               y="0"
+               x="0" /></flowRegion><flowPara
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:arial;-inkscape-font-specification:arial;fill:#ffffff"
+             id="flowPara4573">Application</flowPara></flowRoot>      </g>
+      <g
+         id="g4689"
+         transform="translate(0,12.971561)">
+        <rect
+           ry="1.4013312"
+           y="46.760876"
+           x="125.56188"
+           height="11.384057"
+           width="55.628403"
+           id="rect4679"
+           style="fill:#bf6f4f;fill-opacity:1;stroke:none;stroke-width:0.52916664;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           rx="1.3566236" />
+        <flowRoot
+           xml:space="preserve"
+           style="color:#000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555534px;line-height:125%;font-family:arial;-inkscape-font-specification:'arial, Bold';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="flowRoot4687"
+           transform="translate(2.1381562,1.3309752)"><flowRegion
+             id="flowRegion4683"><use
+               x="0"
+               y="0"
+               xlink:href="#rect4601-3"
+               id="use4681"
+               width="100%"
+               height="100%" /></flowRegion><flowPara
+             id="flowPara4685"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:arial;-inkscape-font-specification:arial;fill:#ffffff">NetCDF</flowPara></flowRoot>      </g>
+      <g
+         transform="translate(0,25.943133)"
+         id="g4701">
+        <rect
+           rx="1.3566236"
+           style="fill:#be8d52;fill-opacity:1;stroke:none;stroke-width:0.52916664;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4691"
+           width="55.628403"
+           height="16.620914"
+           x="125.56188"
+           y="46.760876"
+           ry="2.0459671" />
+        <flowRoot
+           transform="translate(2.1381562,1.3309752)"
+           id="flowRoot4699"
+           style="color:#000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555534px;line-height:125%;font-family:arial;-inkscape-font-specification:'arial, Bold';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4695"><use
+               height="100%"
+               width="100%"
+               id="use4693"
+               xlink:href="#rect4601-3"
+               y="0"
+               x="0" /></flowRegion><flowPara
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:arial;-inkscape-font-specification:arial;fill:#ffffff"
+             id="flowPara4697">HDF5</flowPara></flowRoot>      </g>
+      <g
+         id="g4713"
+         transform="matrix(0.74223326,0,0,0.74223326,20.02886,60.328832)"
+         style="stroke-width:1.34728539">
+        <rect
+           ry="1.4013312"
+           y="58.253464"
+           x="94.291344"
+           height="11.384057"
+           width="55.628403"
+           id="rect4703"
+           style="fill:#bda954;fill-opacity:1;stroke:none;stroke-width:0.71293849;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           rx="1.3566236" />
+        <flowRoot
+           xml:space="preserve"
+           style="color:#000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555534px;line-height:125%;font-family:arial;-inkscape-font-specification:'arial, Bold';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.35646924px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="flowRoot4711"
+           transform="translate(-29.132379,12.823565)"><flowRegion
+             id="flowRegion4707"
+             style="stroke-width:0.35646924px"><use
+               x="0"
+               y="0"
+               xlink:href="#rect4601-3"
+               id="use4705"
+               width="100%"
+               height="100%"
+               style="stroke-width:0.35646924px" /></flowRegion><flowPara
+             id="flowPara4709"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:arial;-inkscape-font-specification:arial;fill:#ffffff;stroke-width:0.35646924px">Lustre</flowPara></flowRoot>      </g>
+      <g
+         transform="matrix(0.74223326,0,0,0.74223326,-3.181171,78.486934)"
+         id="g4725"
+         style="stroke-width:1.34728539">
+        <rect
+           rx="1.3566236"
+           style="fill:#b5bc57;fill-opacity:1;stroke:none;stroke-width:0.71293849;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4715"
+           width="55.628403"
+           height="11.384057"
+           x="125.56188"
+           y="46.760876"
+           ry="1.4013312" />
+        <flowRoot
+           transform="translate(2.1381562,1.3309752)"
+           id="flowRoot4723"
+           style="color:#000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555534px;line-height:125%;font-family:arial;-inkscape-font-specification:'arial, Bold';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.35646924px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4719"
+             style="stroke-width:0.35646924px"><use
+               height="100%"
+               width="100%"
+               id="use4717"
+               xlink:href="#rect4601-3"
+               y="0"
+               x="0"
+               style="stroke-width:0.35646924px" /></flowRegion><flowPara
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:arial;-inkscape-font-specification:arial;fill:#ffffff;stroke-width:0.35646924px"
+             id="flowPara4721">File system</flowPara></flowRoot>      </g>
+      <g
+         id="g4737"
+         transform="matrix(0.74223326,0,0,0.74223326,-3.181171,88.114854)"
+         style="stroke-width:1.34728539">
+        <rect
+           ry="1.4013312"
+           y="46.760876"
+           x="125.56188"
+           height="11.384057"
+           width="55.628403"
+           id="rect4727"
+           style="fill:#9bbb59;fill-opacity:0.94117647;stroke:none;stroke-width:0.71293849;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           rx="1.3566236" />
+        <flowRoot
+           xml:space="preserve"
+           style="color:#000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555534px;line-height:125%;font-family:arial;-inkscape-font-specification:'arial, Bold';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.35646924px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="flowRoot4735"
+           transform="translate(2.1381562,1.3309752)"><flowRegion
+             id="flowRegion4731"
+             style="stroke-width:0.35646924px"><use
+               x="0"
+               y="0"
+               xlink:href="#rect4601-3"
+               id="use4729"
+               width="100%"
+               height="100%"
+               style="stroke-width:0.35646924px" /></flowRegion><flowPara
+             id="flowPara4733"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:arial;-inkscape-font-specification:arial;fill:#ffffff;stroke-width:0.35646924px">Block device</flowPara></flowRoot>      </g>
+      <g
+         transform="translate(1.0583333,37.327189)"
+         id="g4701-3">
+        <flowRoot
+           transform="translate(1.0798228,-3.9606917)"
+           id="flowRoot4699-7"
+           style="color:#000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555534px;line-height:125%;font-family:arial;-inkscape-font-specification:'arial, Bold';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4695-5"><use
+               height="100%"
+               width="100%"
+               id="use4693-3"
+               xlink:href="#rect4601-3"
+               y="0"
+               x="0" /></flowRegion><flowPara
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93888903px;font-family:arial;-inkscape-font-specification:arial;fill:#ffffff"
+             id="flowPara4697-5">ESDM VOL  Plugin</flowPara></flowRoot>      </g>
+      <g
+         transform="matrix(0.74223326,0,0,0.74223326,63.281932,60.328832)"
+         id="g4583"
+         style="stroke-width:1.34728539">
+        <rect
+           rx="1.3566236"
+           style="fill:#bda954;fill-opacity:1;stroke:none;stroke-width:0.71293849;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4573"
+           width="55.628403"
+           height="11.384057"
+           x="94.291344"
+           y="58.253464"
+           ry="1.4013312" />
+        <flowRoot
+           transform="translate(-29.132379,12.823565)"
+           id="flowRoot4581"
+           style="color:#000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555534px;line-height:125%;font-family:arial;-inkscape-font-specification:'arial, Bold';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.35646924px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4577"
+             style="stroke-width:0.35646924px"><use
+               height="100%"
+               width="100%"
+               id="use4575"
+               xlink:href="#rect4601-3"
+               y="0"
+               x="0"
+               style="stroke-width:0.35646924px" /></flowRegion><flowPara
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:arial;-inkscape-font-specification:arial;fill:#ffffff;stroke-width:0.35646924px"
+             id="flowPara4579">Object storage</flowPara></flowRoot>      </g>
+      <g
+         transform="matrix(0.74223326,0,0,0.74223326,40.071899,78.486934)"
+         id="g4609"
+         style="stroke-width:1.34728539">
+        <rect
+           rx="1.3566236"
+           style="fill:#9bbb59;fill-opacity:0.94117647;stroke:none;stroke-width:0.71293849;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4599"
+           width="55.628403"
+           height="11.384057"
+           x="125.56188"
+           y="46.760876"
+           ry="1.4013312" />
+        <flowRoot
+           transform="translate(2.1381562,1.3309752)"
+           id="flowRoot4607"
+           style="color:#000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555534px;line-height:125%;font-family:arial;-inkscape-font-specification:'arial, Bold';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.35646924px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4603"
+             style="stroke-width:0.35646924px"><use
+               height="100%"
+               width="100%"
+               id="use4601"
+               xlink:href="#rect4601-3"
+               y="0"
+               x="0"
+               style="stroke-width:0.35646924px" /></flowRegion><flowPara
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:arial;-inkscape-font-specification:arial;fill:#ffffff;stroke-width:0.35646924px"
+             id="flowPara4605">Block device</flowPara></flowRoot>      </g>
+      <g
+         id="g4621"
+         transform="matrix(0.74223326,0,0,0.74223326,106.14225,50.439859)"
+         style="stroke-width:1.34728539">
+        <rect
+           ry="1.4013312"
+           y="71.576729"
+           x="94.291344"
+           height="11.384057"
+           width="55.628403"
+           id="rect4611"
+           style="fill:#bd79ff;fill-opacity:1;stroke:none;stroke-width:0.71293849;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           rx="1.3566236" />
+        <flowRoot
+           xml:space="preserve"
+           style="color:#000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555534px;line-height:125%;font-family:arial;-inkscape-font-specification:'arial, Bold';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.35646924px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="flowRoot4619"
+           transform="translate(-29.132379,26.146833)"><flowRegion
+             id="flowRegion4615"
+             style="stroke-width:0.35646924px"><use
+               x="0"
+               y="0"
+               xlink:href="#rect4601-3"
+               id="use4613"
+               width="100%"
+               height="100%"
+               style="stroke-width:0.35646924px" /></flowRegion><flowPara
+             id="flowPara4617"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:arial;-inkscape-font-specification:arial;fill:#ffffff;stroke-width:0.35646924px">MongoDB</flowPara></flowRoot>      </g>
+      <g
+         id="g4633"
+         transform="matrix(0.74223326,0,0,0.74223326,82.932201,78.486934)"
+         style="stroke-width:1.34728539">
+        <rect
+           ry="1.4013312"
+           y="46.760876"
+           x="125.56188"
+           height="11.384057"
+           width="55.628403"
+           id="rect4623"
+           style="fill:#9bbb59;fill-opacity:0.94117647;stroke:none;stroke-width:0.71293849;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           rx="1.3566236" />
+        <flowRoot
+           xml:space="preserve"
+           style="color:#000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555534px;line-height:125%;font-family:arial;-inkscape-font-specification:'arial, Bold';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.35646924px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           id="flowRoot4631"
+           transform="translate(2.1381562,1.3309752)"><flowRegion
+             id="flowRegion4627"
+             style="stroke-width:0.35646924px"><use
+               x="0"
+               y="0"
+               xlink:href="#rect4601-3"
+               id="use4625"
+               width="100%"
+               height="100%"
+               style="stroke-width:0.35646924px" /></flowRegion><flowPara
+             id="flowPara4629"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:arial;-inkscape-font-specification:arial;fill:#ffffff;stroke-width:0.35646924px">Block device</flowPara></flowRoot>      </g>
+      <g
+         transform="translate(0,43.707557)"
+         id="g4568">
+        <rect
+           rx="1.3566236"
+           style="fill:#009bae;fill-opacity:1;stroke:none;stroke-width:0.52916664;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4558"
+           width="55.628403"
+           height="11.384057"
+           x="125.56188"
+           y="46.760876"
+           ry="1.4013312" />
+        <flowRoot
+           transform="translate(2.1381562,1.3309752)"
+           id="flowRoot4566"
+           style="color:#000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05555534px;line-height:125%;font-family:arial;-inkscape-font-specification:'arial, Bold';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4562"><use
+               height="100%"
+               width="100%"
+               id="use4560"
+               xlink:href="#rect4601-3"
+               y="0"
+               x="0" /></flowRegion><flowPara
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:arial;-inkscape-font-specification:arial;fill:#ffffff"
+             id="flowPara4564">ESDM</flowPara></flowRoot>      </g>
+    </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4827"
+       style="fill:#000000;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;color:#000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10.66666667px;line-height:125%;font-family:arial;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill-opacity:1;fill-rule:nonzero;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;filter-blend-mode:normal;filter-gaussianBlur-deviation:0;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate;-inkscape-font-specification:'arial, Bold'"><flowRegion
+         id="flowRegion4829"><rect
+           id="rect4831"
+           width="16.162441"
+           height="11.111678"
+           x="543.4621"
+           y="152.77324" /></flowRegion><flowPara
+         id="flowPara4833" /></flowRoot>  </g>
+</svg>

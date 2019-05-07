@@ -1,0 +1,93 @@
+graph changed {
+  graph [fontname = "sans serif"];
+  node [fontname = "sans serif", shape=box, style="filled, rounded"];
+  edge [fontname = "sans serif"];
+
+  {rank = same;
+  	"Compute nodes" [fillcolor="cornflowerblue"];
+  }
+
+  {rank = same;
+  	"Memory" [fillcolor="white"];
+  }
+  "Compute nodes" -- "Memory";
+
+
+
+
+
+  subgraph cluster_computer1 {
+    label = "Compute (Phase 2)";
+    graph[style=dotted];
+
+    {rank = same;
+    "Compute nodes 1" [label="Compute nodes", fillcolor="cornflowerblue"];
+    }
+    {rank = same;
+    "Memory 1" [label="Memory", fillcolor="white"];
+    "NVRAM 1"  [label="NVRAM", fillcolor="white"];
+    }
+    "Compute nodes 1" -- "Memory 1";
+    "Compute nodes 1" -- "NVRAM 1";
+
+    "Network 1" [shape="octagon", label="Network", fillcolor="orange"];
+    "Network 1" -- "Compute nodes 1";
+  }
+
+  subgraph cluster_computer2 {
+    label = "Compute (Phase 2)";
+    graph[style=dotted];
+
+    {rank = same;
+    "Compute nodes 2" [label="Compute nodes", fillcolor="cornflowerblue"];
+    }
+    {rank = same;
+    "Memory 2" [label="Memory", fillcolor="white"];
+    }
+    "Compute nodes 2" -- "Memory 2";
+
+    "Network 2" [shape="octagon",  label="Network", fillcolor="orange"];
+    "Network 2" -- "Compute nodes 2";
+  }
+
+  subgraph cluster_computer3 {
+    label = "Compute (Visualisation)";
+    graph[style=dotted];
+
+    {rank = same;
+    "Compute nodes 3" [label="Compute nodes", fillcolor="cornflowerblue"];
+    }
+    {rank = same;
+    white"Memory 3" [label="Memory", fillcolor="white"];
+    }
+    "Compute nodes 3" -- "Memory 3";
+    "Compute nodes 3" -- "GPU/Manycore";
+
+    "Network 3" [shape="octagon",  label="Network", fillcolor="orange"];
+    "Network 3" -- "Compute nodes 3";
+  }
+
+
+  {rank = same;
+	  "Lustre 1" [fillcolor="orchid"];
+	  "Lustre 2" [fillcolor="orchid"];
+
+	  "HPSS" [fillcolor="lightcyan"];
+  }
+
+
+  "HPSS" -- "GPFS (5PB)";
+  "HPSS" -- "SL8500 x 8";
+
+  {rank = same;
+    "Network" [shape="octagon", fillcolor="orange"];
+    "Cloud"  [shape="egg", fillcolor="orange"];
+  }
+
+  "Network" -- "Compute nodes";
+  "Network" -- "Compute (Visualisation)";
+  "Network" -- "Cloud";
+  "Network" -- "HPSS";
+  "Network" -- "Lustre 1";
+  "Network" -- "Lustre 2";
+}

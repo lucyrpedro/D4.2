@@ -1,0 +1,428 @@
+\chapter{Definitions}
+\label{sec:definitions}
+\vspace{2em}
+
+This appendix collects and introduces important concepts and components as they find application in weather and climate related compute and storage infrastructures.
+
+%hardware: disks, disk enclosures, servers, network,  ... tape, tape drive, tape library ... RAID,  .. etc
+%software: parallel file system, object store, libraries, parts of the OS
+
+\section{Data centre}
+
+\paragraph{Data centre:}
+A special purpose facility to accommodate compute, network and storage hardware to provide IT services from a centralized place under efficient and secure operation.
+Most data centres arrange hardware to be grouped when contributing to a similar purpose.
+One will commonly find buildings, floors or rooms partitioned into areas dedicated for compute resources, temporary storage (usually disk based but increasingly NAND) and storage for archival (e.g., tape libraries).
+Modern data centres often have special requirements such as heavy duty structural analysis of the building, (emergency) power supply, ventilation and increasingly plumbing arrangements for liquid-based cooling infrastructure.
+For many data centres also additional security systems and access control are a factor.
+
+Therefore, the costs for constructing and maintaining the infrastructure for a data centre are considerable.
+One of the options for implementing a data centre is to co-locate it (renting space in a shared data centre), or have it hosted by a third party.  This obviously reduces the costs (at least the CAPEX) of the initial procurement of the data centre.
+
+\paragraph{Public Data centres}
+
+A public data centre, is funded my the government, i.e., tax money of the citizens.
+It usually serves scientific services, i.e., research or is highly relevant such as a data centre dedicated to compute the weather forecast.
+
+\paragraph{Commercial Data centres and Services}
+
+Commercial cloud service providers (CSPs) can provide services very easily at the lower end of the scale; higher end services (with large data volumes and/or large scale CPU requirements, or requiring specialized services) tend to require specialized negotiations with the CSP, for example on costs and availability of resources.  Possibly, a separate SLA is required.
+
+As discussed in section~\Cref{sec:cloud}, the use of CSPs is useful for precisely what clouds were designed for --- namely, on-demand resources.  For example, a common usage pattern seen in research data centres is a spike in demand from a particular user community the week before their conference, and a cloud service is ideal for that type of usage pattern.  It follows that data centre interfaces and protocols should be designed in a way to allow for hybrid models, data centre/cloud.  This, in turn, would give end users of the service the ability to bring ``their own'' compute in the cloud.
+
+Another commercial option is to rent a container data centre --- the physical kind, with computing nodes inside the container; it is put in the car park and powered up and networked.  There is no maintenance on it directly; once enough nodes have died, the container is drained of data, powered down, and replaced.
+
+In a typical data centre we can find the following components:
+
+\paragraph{Compute nodes:}
+The most powerful compute systems today are so called cluster computers.
+Many smaller compute units, called nodes are connected in a computer network to collectively run a simulation, perform data analysis or create visualizations.
+Depending on the task, compute nodes can create massive amounts of data.
+Climate applications are periodically stored to more permanent storage systems as computer failures are power outages result in loss of any data residing in the nodes memory.
+
+
+\paragraph{Network:}
+The network is used to connect the compute nodes as well as other subsystems, in particular storage infrastructure.
+It is common to find high-speed and low-latency interconnects such as Infiniband to be used to connect individual nodes while
+more affordable network technologies are used to communicate with the other subsystems. Storage systems are often attached
+using FibreChannel protocol. Low-cost Ethernet technologies also has a stable appearance, as the standard keeps innovating.
+Lately Intel is promoting its proprietary Omnipath interconnect. As a response, the Gen-Z consortium\footnote{\url{http://genzconsortium.org/}} formed, which is a joint
+effort to develop a open, non-proprietary and royalty free standard.
+
+\paragraph{Storage layers}
+A typical I/O path for applications running in data centres is shown in \Cref{tab:storage layers}.
+Applications run on compute nodes and perform I/O operations that traverse an internal network,
+which may use additional gateway nodes in the I/O path to process the data.
+Finally, I/O requests are processed by I/O servers and data is stored on block devices connected via Storage Area Networks (SAN) or directly connected to the I/O servers.
+
+\begin{table}[]
+	\small
+	\centering
+
+	\bgroup
+	\def\arraystretch{1.5}%  1 is the default, change whatever you need
+	\begin{tabular}{ | c | }
+		\hline
+		Compute Nodes and Main Memory\\ \hline
+		Internal System Networks\\ \hline
+		I/O Gateways\\ \hline
+		External System Networks\\ \hline
+		I/O Servers \\ \hline
+		SAN and RAID Enclosures\\
+		\hline
+	\end{tabular}
+	\egroup
+
+	\caption{Different layers of hardware involved in storage systems.}
+	\label{tab:storage layers}
+\end{table}
+
+
+\paragraph{Storage system:}
+As compute nodes often employ low performance storage or volatile memory, additional storage systems are required for permanent storage requirements but also useful to provide a globally shared data storage to organize generated data.
+A wide variety of different storage technologies is available each with different performance characteristics.
+
+
+\paragraph{Parallel (Distributed) File System:}
+Just a like normal file systems, parallel file systems provide a hierarchical organization schema providing directories and files to organize data as well as metadata to further describe these such as creation, access and modified timestamps as well as access control via a user and group attributes.
+HPC applications often implicitly cause a lot of unwanted metadata I/O requests overwhelming the storage system, e.g., when many compute nodes need to read a fraction of a file before a simulation run starts.
+File systems are convenient from a user perspective but imply a performance overhead in HPC applications.
+While modern operating systems are capable to cope with file system semantics that relax guarantees provided by POSIX, many I/O requests are still made through APIs which assume POSIX semantics.
+% TODO: Das ist bewertend
+
+
+\paragraph{Object Storage:}
+Object stores achieve high performance and are very scalable by avoiding many metadata requests associated with traditional file systems.
+Instead of a hierarchical tree to organize files and directories, a flat organization schema is used and only objects with a unique identifier are allowed.
+Similar to modern parallel file systems it is possible to stripe data associated with object across multiple so called object storage targets.
+
+
+
+\paragraph{Burst Buffer:} Featuring fast throughput for random small I/O workloads albeit limited capacity storage that can consume many writes.
+This can be especially attractive for draining snapshots quickly away from compute instead of writing directly to much slower PFS.
+Todays burst buffers usually employ SSDs or RAM in combination with uninterrupted power supply.
+Non-volatile storage technologies may also change how close to compute system we deploy burst buffers.
+
+
+
+\paragraph{Tape archive:}
+For many decades, magnetic tape has been the dominant technology to archive vast amounts of data for being very affordable.
+Tape archives are enabled by robotized library systems to automatically receive requested data.
+Especially considering the total cost (TCO) tape is attractive as it features competitive performance for sequential access while maintaining a very low energy footprint.
+Tape archives usually work only for larger organizations as floor space and initial investments for the robot system and special tape drives are required.
+The tapes as a storage medium in contrast are very cheap, are well understood in terms of data retention time and very robust to physical damage.
+Special precautions such as oxygen reduced air can be taken into account as the plastic of tape is flammable.
+
+
+\paragraph{Hierarchical storage:}
+Hierarchical storage utilizes different storage technology and transfers data between them:
+Modern computer system employ a wide variety of different storage technologies that come with different properties.
+In general, low latency memory tends to be more expensive, and is consequently not providing high capacities, while
+higher latency memory is cheap and available at much higher capacities.
+%Another approach to cache data in HPC systems is to use tasks dedicated to keep data and synchronization between the computing tasks.
+In HPC systems, data can then be cached in (expensive) fast storage devices (e.g., SSDs), slower disks (e.g., HDDs, distributed file systems), and ultimately in tape libraries.
+
+% TODO FIGURE: hierachy triangle here
+
+It follows that there is a need to be able to move data between hierarchies: data that needs to be available must be fetched and cached in fast cache (whether disk or memory), particularly if it is accessed by several different tasks at the same time, in which case it may make sense to have multiple copies of it available.
+Conversely, data that has not been accessed recently must be cleared out of the faster cache, and \emph{migrated} to slower cache -- unless it is available already in a slower layer.
+Hierarchical Storage Management (HSM) has been around for decades (30-40 years) and even if we are adding more layers, the technology and algorithms are well understood --- it remains to ascertain whether future access patterns will require any additional developments. % We expect to cover this topic in further detail in \todo{D4.4? Or in this deliverable?}
+
+
+\paragraph{RAID:} Redundant array of inexpensive/independent disks (RAID) combines multiple physical disks to a logical storage device
+to increase performance and/or data redundancy swell as the availability when hardware failures occur. RAID can be realized either in hardware
+by using so called RAID-controllers or in software, where hardware solutions are less flexible but feature better performance. Different operation modes,
+so called RAID levels and combinations of these levels are employed, with the RAID-6 and RAID-1+0 being the most relevant in modern data centres.
+Several non-standard RAID configurations are used by e.g. by ZFS, Hadoop or BeeGFS.
+ZFS is becoming a popular choice for RAID control for Lustre\,\cite{richreport_lustre_2013}.
+
+
+\section{Typical I/O Optimization Strategies}
+\label{sec:defio}
+
+\paragraph{Caching:}
+To keep access times to data low, a mechanism called caching is used throughout the storage stack.
+Caching generally adds additional complexity as cache coherence and displacement strategies have to be adapted to fit the applications.
+In distributed environments, the synchronization of cache is expensive.
+
+\paragraph{Read-ahead:}
+As large continuous accesses usually result in greater throughput, most modern storage and operating system employ a technique called read-ahead which reads more data into the faster storage tier than was actually requested.
+Requests to data that is found in the read-ahead window will return much faster because no I/O on the slow storage device is required anymore.
+
+\paragraph{Write-behind:}
+Write behind stores changes to data in a cache and completes the modifying I/O operations before these changes are flushed back to the storage devices / remote servers.
+Instead of writing and waiting for the changes to become visible to all processes and durable, multiple writes are delayed and then written asynchronously.
+Write behind can be applied on the storage hierarchy to batch operations or already on the client side in the distributed environment.
+In many scenarios, the performance of application and memory accesses can dramatically increase when it is not necessary that changes become visible to other participating processes immediately or durable on the storage.
+
+\paragraph{Compression:}
+% \todo{Compactify.. some points are made twice} - restructured - JJ
+
+Compression transforms data into a (hopefully) more compact representation which is more efficient to store and
+transfer.  Compression is more worth-while for data which contains redundant information or ``spaces'' -- a text file,
+as a simple example, contains words; there are 26 letters in English but a byte can store 256 values and words contain
+lots of redundancies, so text compresses very well.
+
+%Compression allows data centres to make most of the available raw storage capacity as the original data representation may contain redundant information.
+
+Note that compression can also lead to inefficiencies, primarily in four respects.  First, compression needs compute
+resources; and higher levels of compression generally requires more (typically compression is more compute intensive
+than the decompression).  Many different compression algorithms exists each with different characteristics for
+compression ratio, compression speed, and decompression speed.  Secondly, data that is already compressed does not compress well upon further
+compression --- in fact, it may expand.  Thirdly, compressing data may
+prevent random access to it, as in general the whole file has to be uncompressed before it can be searched or the
+relevant offsets into the file can be reached.  Compressing data on tape is always
+safe in this respect because the file is always read sequentially; similarly compressing a file for transfer of the
+whole file is also safe.
+
+%In principle it is possible to find a optimal representation for every sequence of data by using Huffman Codings \cite{huffman_method_1952} on the complete sequence of data.
+%Most tape libraries will transparently compress data as it is written to tape, in order to maximize the
+%efficiency of the tape storage\footnote{Indeed, many vendors of tape libraries will \emph{assume} compression in their promotional material, so the tape library that is advertised in the glossy brochures with an exabyte capacity may only hold 400 PB, because the vendors assume a ratio of 2.5:1.}.
+
+
+\paragraph{Erasure Coding:} (EC)
+\label{para:erasure_codes}
+is a technique for data protection in which data is broken into fragments, expanded and encoded with redundant data pieces and stored across a set of different locations or storage media. The goal of erasure coding is to enable data that becomes corrupted to be reconstructed by using information about the data that is stored elsewhere. It works by creating a mathematical function to describe each
+fragment so that they can be checked for accuracy and recovered if one is lost. 
+
+
+\paragraph{Deduplication:}
+In many storage scenarios, e.g., backups, the same or similar data is stored multiple times.
+Instead of keeping multiple physical copies of the same data multiple logical copies (of much smaller size) are stored
+thus making more effective use of the storage system.
+Checksums can be used to effectively detect duplicates.
+Of course, science data (as opposed to software or libraries) does not in general deduplicate well, as data is usually
+original and unique, and is in fact often duplicated on purpose (to achieve durability or availability goals.)
+
+
+\section{Metrics}
+
+This section introduces relevant metrics related to cost, energy, network, storage and compute performance as well as  quality of server in regards to availability and reliability.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Cost related Metrics}
+
+\paragraph{TCO:}
+Total cost of ownership (TCO) is an estimate for total direct and indirect costs associated with operating a data centre or a service.
+For a data centre, this includes besides hardware acquisition also wear parts, energy, staff as well as rent and facilities.
+
+
+\paragraph{PUE:}
+The Power Usage Efficiency (PUE) is a measure for the energy efficient usage for a computer data centre. Specifically, the amount of energy used by the IT equipment in relation to infrastructure energy such as cooling.
+PUE is the ratio of the total amount of energy consumed\footnote{Throughout the deliverable the term energy consumed is used synonymously to energy usage, albeit energy is not consumed but actually transformed.}  by the data centre facility to the energy supplied to its IT equipment.
+A PUE of 1 means that all energy supplied by the data centre is consumed by the IT equipment.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Component Metrics}
+
+
+
+\paragraph{Energy consumption:}
+The energy used by the component for its regular operation.
+In principal, a value can be assigned to each individual components
+When referring to systems with multiple components this usually is the sum of energy consumed by its components.
+In practice, measuring the energy usage of individual components is difficult, as sensory equipment in data centres to probe for energy consumption is lacking.
+
+Green computing is important, and instead of looking at processing per time, one would look at processing per
+Watt.  For data storage, it is essential that data consume no power if it is not accessed. % \todo{JJ: Maybe reference CMS work (although it is HEP)?}
+
+\paragraph{Compute performance:}
+By far the most common metric when referring to compute performance is floating-point operations per second (FLOPS) which is also the determining factor for the ranking of the Top500 list of supercomputers.
+From a practical point of view, this metric does not carry a lot of information as it is merely the peak performance of a system where actual system utilization largely depends on the application.
+
+
+\paragraph{Network throughput:} The amount of data in bits (sometimes also in bytes) that is being transferred within
+a certain time (usually per second).
+
+
+\paragraph{Network latency:}
+Multiple slightly different interpretations are used in different contexts.
+With the most commonly used being half the round-trip delay time (e.g. obtained using the \texttt{ping} utility) which usually is the sum of time it takes to send a packet to the location and back to the source.
+In some applications it is favorable to define it as the time it takes from sending a message to the desired destination (especially in one-way communication).
+
+
+\paragraph{Storage media count:}
+The number of storage devices (tapes, disks, etc.).
+
+
+\paragraph{Storage capacity:} The amount of data that can be stored.
+Depending to the context this refers to the capacity of a single media unit (e.g. a disk, a tape) or refers to the sum of multiple storage systems working together.
+The effective capacity refers to the capacity available to the users as redundancy (RAID levels) or compression may change the available capacity.
+
+
+\paragraph{Storage throughput:}
+The aggregated (peak) performance when reading/writing data to a storage system.
+It can be measured for one client accessing the storage or the aggregate throughput of all client nodes accessing a shared storage.
+As with the other metrics storage throughput may either refer to the medias throughput or to the aggregate throughput of a storage (sub)system.
+
+\paragraph{Storage density:}
+The storage density is defined as storage capacity per block device, server or floor space -- based on the context.
+In practical terms, data has to be stored somewhere, and it makes sense to look at the physical size of the device against the capacity of the storage.
+
+\paragraph{Storage latency:} Usually the time it takes to complete an I/O operation. From an application point of view, the latency includes any wait times occurring in lower level.
+
+Note the need to distinguish \emph{write} latency (the time it takes for data to become durable on a medium, and thus be secure in case of a power outage) with access latency (the time it takes for the data to be ready for reading) and the time it actually takes to read the data once it is ready for reading.  Archival (tier~3) storage typically uses tape in order to get the highest durability and perhaps storage density, but has an access latency of perhaps 10 minutes, or much more in a particularly busy tape library\footnote{See also D4.4 which will cover tape in much more detail, including this problem}.  Conversely, very fast storage (tier~0) is available to cache data close to a cluster (see Burst Buffer), but is also much more expensive by volume, so it would not be cost effective to store data only in the fastest memory.  See also Hierarchical Storage.
+
+
+\paragraph{Storage operations/s:}
+The number of operations the storage can perform per second; often also referred to as IOOPS.
+As data usually is segmented into smaller units.
+Can be understood in the context of metadata operations to define how many metadata operations (e.g., file / objects can be created per second).
+
+\paragraph{Access density:}
+A useful metric for a storage device is to look at the ratio of the bandwidth of the device over the storage capacity of the device.  In other words, it provides a fundamental measure of how quickly the device could (under ideal conditions) be filled/drained (read/write I/O rates could be different from each other).  Broadly speaking, it is the trend of decreasing access density which underpins the need for burst buffers and other tier~0 and tier~1 storage.  As a trend, we see access densities decrease for both tape and HDDs, but the decrease is less pronounced for tape and more for HDD\footnote{Another approach to deal with decreasing access density is to read/write to several devices in parallel (e.g.\ striping, RAID, block storage); this is the topic of D4.4.}.
+
+
+\paragraph{Efficiency:}
+The proportion of actually achieved performance divided by the theoretically possible performance (throughput, latency, ops/s).
+
+\paragraph{Performance utilization:}
+Fraction of time the component has work to do in Percent.
+
+
+\paragraph{Capacity utilization:}
+Fraction of stored data volume divided by the capacity in Percent.
+
+
+\paragraph{User wait time:}
+The wallclock time a user has to wait for the completion of compute or I/O job.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Feature/Algorithmic metrics}
+Some important properties and characteristics for different data storage related algorithms.
+
+
+\paragraph{Data reduction ratio:}
+For different data reduction techniques such as compression and deduplication it is common to provide data reduction ratios:
+$$\texttt{data reduction ratio} = \frac{\texttt{original size}}{\texttt{reduced size}}$$
+%$$\texttt{compression ratio} = \frac{\texttt{uncompressed size}}{\texttt{compressed size}}$$
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Fault-Tolerance}
+\label{sec:fault_tol}
+
+Data on storage media and storage systems faces existential threats:
+Physical components by nature have limited life-time.
+Beside component level failures, a disaster may strike, or accidental, reckless, or willful damage may occur.
+Depending on the service, also high-availability concerns in addition to data safety can be relevant.
+To mitigate the risk of data loss, storage systems are equipped with special features, e.g. RAID systems and wear-leveling for SSDs, and data centres utilizes strategies to face these challenges (backup strategy, disaster recovery, off-site backups, snapshots).
+Of course, there is an enormous volume of models in failure and survivability, not just for storage media but for
+everything, and a data centre model could usefully build on some of this work.
+
+\subsubsection{Failure metrics}
+
+Technical systems tend to fail occasionally. For large systems with a lot of
+components, failures become certain and, e.g. wear parts, have to be taken into account.
+Depending on the hardware/software features different failure metrics are relevant.
+
+\paragraph{Mean-time-between failure (MTBF):}
+The average time that passes between two failures occur.  In general it is understood that the device can recover or be
+repaired and start delivering services again; thus, the times between failures are the lengths of the continuous
+intervals during which the device is delivering its service, and the MTBF is the average of these lengths.
+
+The mean may not be the best way to assess failures as failures of devices in practical may follow a ``bathtub'' curve;
+the measure is more useful as a unified measure of a device consisting of several sub-components, such as a disk array.
+The array is seen as failed if (say) one disk has failed, and recovered when the disk has been replaced and the array
+rebuilt.
+
+
+%$$ MTBF =\frac{\sum{(\text{downtime} - \text{uptime}_{}}n $$
+
+\paragraph{Mean-time to fail (MTTF):}
+The MTTF is the expectation of the time it takes before a given device fails.  In practice, one measures a large number
+of identical devices that may fail, and if they fail independently of each other, one can then take the average of
+this number as an approximation of the MTTF.
+
+\paragraph{Availability:}
+The time or fraction a system fulfills its duty and can be accessed for its intended purpose.
+The availability of a system is usually denoted as a percentage calculated by
+dividing the uptime of a system over the year by the length of the year.
+
+For a data centre, availability of data is a measure of the accessibility of the data, whether, at any given time, a
+client can request the data and obtain it within a given time window which usually includes the access latency (e.g. if
+data needs to be fetched from tape), see section~\Cref{sec:fault_tol}.  Typical reasons for data to be not available
+include that networks have gone down or have insufficient bandwidth available to move the data, the data centre is
+unable to cope with its load in general or demand for the data in particular, or a malicious attacker is attacking the
+data centre access endpoints (denial of service).  Indeed, availability is one of the three fundamental data security
+objectives (the other two being integrity and confidentiality).
+
+Note that networks are typically outside the control of the data centre, so data may be unavailable through no fault of
+the data centre operator.  In our data centre model, data availability requires the availability of the networks, the
+data centre infrastructure, potentially metadata services, and of the data itself.
+
+Note also that availability, as measured of a fraction of uptime over a long period of time, may be irrelevant to the
+user.  If the availability of a given file is $0.99999=1-10^{-5}$, meaning it is unavailable for at most five minutes in
+a year -- but that may be of little comfort to the customer who needs the data during that instance of downtime.
+Moreover, the network to the data centre may be unavailable, which is outside the scope of the data centre's target
+availability.
+
+
+\paragraph{Reliability:}
+Reliability of storage media is an important metric, though the meaning is ambiguous and different interpretations exist.
+Often it is not useful to compare different storage technologies by reliability alone. Tape for example tends to be very reliability but the benefit vanishes as data recall times on tapes are in many cases prohibitive for the application.
+Some useful metrics to measure reliability involves Bit Error Rates (BER) either until or over a certain time/number of operations.
+E.g., how many terabytes could be written before the storage media shows failures.
+
+
+\paragraph{Fixity:}
+Fixity defines the notion that data does not change and in particular is not deleted or lost.
+Efforts to ensure fixity have to incorporate several sources of changes to data:
+\begin{itemize}
+	\item Data is modified by authorized users (e.g. updates by the owner of the data) --- this is the exception for many data sources; the general model is ``write once'' or ``append only''
+	\item Data is modified accidentally by authorized users.
+	\item Data is modified unintentionally by unauthorized users, or intentionally by malicious adversaries.
+	\item Data is modified unintentionally in flight --- typical examples include bit flips, or more commonly truncated data.
+	\item Data is modified unintentionally at rest --- sometimes known as ``bit rot,'' this category includes data that:
+  \begin{itemize}
+	  \item cannot be read back (data is lost), possibly temporarily, possibly recoverably;
+	  \item is read back with (detected) errors (e.g. media error, possibly a partial read);
+	  \item or is read back with undetected errors.
+  \end{itemize}
+\end{itemize}
+Archives can implement fixity through a variety of means; in our case the simplest is checksums, and for
+the purposes of managing climate data, that should be sufficient.
+In regards to unintentional data loss or modification, see also Durability in the following paragraph.
+
+\paragraph{Durability:}
+% can paragraphs be indexed?
+
+Durability is a measure of the probability of not losing data.
+%: typically it is implemented by keeping multiple copies of
+%files or objects (LOCKSS – Lots Of Copies Keeps Stuff Safe), either within the data centre (locally redundant) or
+%elsewhere (geo-redundant).  At the same time, multiple copies can improve access to popular data, if the copies are all
+%available.
+
+%Durability describes the behavior of the system
+When data is modified (intentionally),
+%Once the operations that manipulate data return,
+a durable system guarantees that the changes are persistent and can be reconstructed in case of a power outage or unexpected system failure
+-- this is the 'D' of the database ``ACID,'' where the durability of a transaction is defined as ``the effects of a
+successfully completed transaction are permanently recorded in the database and must not be lost because of a subsequent
+failure.'' \cite{connolly}.
+
+%Of course the data centre can only replicate the data once it has got it: if durability is desired in the database
+Logically extending this property, it follows that long-running applications must also checkpoint data regularly in
+order to not lose it, in case of a failure.  While this is
+beyond the scope of this report, we shall revisit this in the Future section.
+
+
+%Thus a user to such a system is sure that his/her changes are recorded.
+
+In terms of a data archive, the definition is slightly different:
+Informally, Durability can be considered the likelihood that data is not lost or modified over a given period of time, particularly over the period of time for which data has to be retained for policy or archival reasons.  Apart from unintentional or accidental modifications of data (which is a question of Fixity, q.v.), durability focuses on the ability of the data centre itself to retain data in a recoverable form.  A data centre will typically provide storage of different durability goals (as they will have different costs, and one would obviously not pay for high durability for data that does not need it).  Typical means of mitigation include providing storage on different media in order to mitigate against media errors; error correction (ECC), making multiple copies (LOCKSS), replication to other data centres, etc.
+
+In building these durability models, the data centre will factor in the characteristics of the media types, the BER, and the longevity, as well as the cost effectiveness.
+As we shall see, tape currently, and for the
+foreseeable future, provides the best durability characteristics of any media; however, similar goals could be achieved on other media through strategies such as ECC and LOCKSS.
+
+\paragraph{Bit Error Rate (BER)}
+
+The bit error rate in data transfers is generally the rate at which individual bits transfered are received wrongly. As bits can be only 0 or 1, an error can flip a bit, insert an extra bit, or delete a bit.
+As a measure of the reliability of data storage, the error rate are mainly bit flips, as bits can't just spuriously appear or disappear, save for data being unreadable.  The BER is often given as an indication of the number of bits ``needed'' for a bit error to be expected.  The current state of the art is $10^{14}$ for desktop SATA drives (so for every 100 TB, we can expect a single bit error), $10^{15}$ for enterprise drives (one bit error in a PB), and $10^{19}$ for enterprise tape (a bit error every 10 exabytes).
+
+%I/O in the context of computational science..
+%analysis workflows involving subsetting, resampling or averaging

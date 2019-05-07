@@ -1,0 +1,44 @@
+@startuml
+
+package StorageSystem {
+	class "Storage \nConfiguration" as storageconfig
+	class "Fragments\nor Metadata" as data
+}
+
+
+package ApplicationProc {
+class Application
+class HDF5
+class "HDF5 VOL Plugin" as vol
+
+class MPI
+
+interface "ESDM API" as ESDMAPI
+
+class Scheduler
+class Layout
+
+
+}
+
+
+
+
+Application -> HDF5: read/write data
+HDF5 -down-> vol: handle with to VOL Plugin
+
+
+Application -down-> MPI: may use
+HDF5 -down-> MPI: may use
+vol -left-> MPI: may use
+
+
+vol <-> ESDMAPI
+ESDMAPI <-> Scheduler
+Scheduler <-> Layout
+
+
+
+
+
+@enduml

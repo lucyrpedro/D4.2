@@ -1,0 +1,150 @@
+# This file provides an over-view of the major human and system
+# actors and their use case interactions with the ESDM
+
+@startuml
+
+!include skinparams.iuml
+
+' ACTORS follow  =======
+
+' base "classes" for actors
+
+: Demon : as demon <<process>>
+: Scientist\nrunning\nsimulation(s) : as simulator
+: Scientist\nanalysing\ndata : as analyst
+: Data Manager : as manager
+: ESD Storage Manager : as esd_manager
+: Scientific Data Manager : as sci_manager
+: Scheduler\nmanaging\njob(s) : as scheduler <<process>>
+: Data Shuffler : as shuffler <<process>>
+: ESD Demon : as esd_demon <<process>>
+: Simulation : as simulation <<process>>
+: Data Using\nApplication : as data_app <<process>>
+: Application : as app <<process>>
+: Ingest/Extract\nUtility : as gridftp <<process>>
+: Remote\nData App : as remote_app <<process>>
+: Local\nData App : as local_app <<process>>
+: Volume Manager : as volman <<process>>
+
+left to right direction
+
+sci_manager --|> manager
+esd_manager --|> manager
+
+data_app --|> app
+simulation --|> app
+local_app --|> data_app
+remote_app --|> data_app
+
+scheduler --|> demon
+esd_demon --|> demon
+shuffler --|> esd_demon
+gridftp --|> esd_demon
+GridFTP <<process>>
+GridFTP --|> gridftp
+CP_ESD <<process>>
+CP_ESD --|> gridftp
+
+(runs and monitors) <<out-of-scope>>
+simulator -- (runs and monitors)
+simulator -- (configures for ESD)
+(runs and monitors) -- simulation
+(configures for ESD) -- app
+
+(reads and WRITES data) <<via-HDF>>
+(READS and writes data) <<via-HDF>>
+(WRITES data) <<direct>>
+(READS data) <<direct>>
+(STREAMING\noutbound) <<direct>>
+
+
+simulation -- (reads and WRITES data)
+simulation -- (WRITES data)
+data_app -- (READS and writes data)
+data_app -- (READS data)
+
+(creates and runs) <<out-of-scope>>
+analyst -- (creates and runs)
+(creates and runs) -- data_app
+analyst -- (configures for ESD)
+
+(migrates data;\nREADS and WRITES) <<direct>>
+shuffler -- (migrates data;\nREADS and WRITES)
+
+
+gridftp -- (ESDM Ingestion)
+gridftp -- (ESDM Extraction)
+(ESDM Extraction) -- (STREAMING\noutbound)
+(ESDM Ingestion) -- (WRITES data)
+(READS data) .> (WRITES data) : in-flight\nuse-caes\ndependency
+
+esd_manager -- (manages bytes in\nand performance of\nESD storage system)
+manager -- (monitors)
+manager -- (make/restore backups)
+(make/restore backups) -- gridftp
+(monitors) -- esd_demon
+
+sci_manager -- (manages information\nin ESD storage system)
+manager -- (ingests/extracts data)
+(ingests/extracts data) -- gridftp
+manager -- (alters data placement)
+(alters data placement) -- volman: (2) change configuration
+(alters data placement) -- volman: (1) manually invokes
+volman -- shuffler
+volman  -- (Manages caching & space)
+
+
+@enduml
+
+@startuml
+!include skinparams.iuml
+
+: Scientific Data Manager : as sci_manager
+(manages information\nin ESD storage system) as manage_info
+(query metadata) <<direct>>
+(query metadata) --|> manage_info
+( "query/list variables\nand variable attributes" ) as qv <<direct>>
+qv --|> (query metadata)
+(query/list data sizes) as qs <<direct>>
+qs --|> (query metadata)
+(check data/metadata\nintegrity) --|> manage_info
+(update metadata) --|> manage_info
+(manually alter\ndata placement) --|> manage_info
+sci_manager -- manage_info
+: Catalogue and Web Pages : as info_system <<process>>
+info_system -- (query metadata)
+@enduml
+
+@startuml
+
+!include skinparams.iuml
+
+usecase io <<deployment>> as "ESD Interface
+===
+reads and writes data"
+(READs and WRITEs data) as RW <<direct>>
+RW --|> io
+(High performance READ) as hpR<<direct>>
+hpR  <-- RW
+(High performance WRITE) as hpW <<direct>>
+hpW  <-- RW
+(READs and WRITEs) as RWhdf <<via-HDF>>
+io <|-- RWhdf
+(High performance WRITE) as hdfW <<via-HDF>>
+(High performance READ) as hdfR <<via-HDF>>
+RWhdf <|-- hdfR
+RWhdf <|-- hdfW
+
+(R/W Storage) as RWS <<deployment>>
+(R/W Data) as RWD <<deployment>>
+(R/W Metadata) as RWM <<deployment>>
+io -> RWS
+RWD --|> RWS
+RWS <|-- RWM
+( query metaadata ) as qm <<direct>>
+qm -> io
+
+
+
+
+@enduml

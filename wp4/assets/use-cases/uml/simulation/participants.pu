@@ -1,0 +1,55 @@
+@startuml
+
+
+node "Node" {
+  Application - Library
+  Application - MPI
+  Application - ESDM
+  Library - ESDM
+  ESDM - MPI
+}
+
+
+package "Some Group" {
+    "ESDM Fragment" as fragment
+
+    DomainDescription - ContainerFormat
+    ContainerFormat - Index
+    Index - fragment
+    ContainerFormat - fragment
+}
+
+
+database StorageBackend {
+
+
+  folder "Namespace" {
+    [Directories and Files]
+  }
+  frame "Config" {
+    [Topology]
+    [Options]
+  }
+}
+
+
+database Target1 {
+
+}
+database Target2 {
+
+}
+
+
+ESDM - DomainDescription
+
+ESDMShard - StorageBackend
+
+
+
+StorageBackend - Target1
+StorageBackend - Target2
+
+
+
+@enduml

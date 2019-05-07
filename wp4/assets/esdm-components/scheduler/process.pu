@@ -1,0 +1,34 @@
+@startuml
+
+node App1 {
+	node Proc1 {
+	control "Application (computing)" as app1
+	control "ESDM: Scheduler" as sched1
+	control "Pending layout decision\n for incoming request" as req11
+	control "Request handled \n by Backend2" as req12
+	control "Request handled\n by Backend1" as req13
+	}
+
+	node Proc2 {
+	control "Application (waiting)" as app2
+	control "ESDM: Scheduler" as sched2
+	control "Pending request\n to Backend1" as req21
+	control "Request handled\n by Backend2" as req22
+	}
+	
+}
+
+
+app1 -> sched1: async I/O request
+
+sched1 -d-> req11
+sched1 -d-> req12
+sched1 -d-> req13
+
+app2 -> sched2: sync I/O request
+
+sched2 -d-> req21
+sched2 -d-> req22
+
+
+@enduml

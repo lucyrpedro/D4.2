@@ -1,0 +1,29 @@
+@startuml
+
+participant Process
+participant ESDM
+
+participant "Site Configuration" as siteconfig
+participant "Performance Model" as PM
+
+participant ESDMBackend1
+participant ESDMBackend2
+
+Process -> ESDM: init
+ESDM -> siteconfig: read configuration
+ESDM <- siteconfig: return
+
+ESDM -> ESDM: discover backends
+
+ESDM -> ESDMBackend1: init(partial site config)
+ESDM -> ESDMBackend2: init(partial site config)
+...
+ESDM <- ESDMBackend1: return status
+ESDM <- ESDMBackend2: return status
+
+
+ESDM -> PM: announce available backends
+
+
+
+@enduml

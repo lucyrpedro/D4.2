@@ -1,0 +1,28 @@
+@startuml
+
+node App1 {
+	node Proc1 {
+	control "ESDM" as esdm1
+	control "ESDM Backend1 PM" as perf1
+	control "ESDM Backend2 PM" as perf2
+	control "Layout Reconstruction" as layout1
+	}
+
+	node Proc2 {
+	control "ESDM" as esdm2
+	control "ESDM Backend3 PM" as perf3
+	control "Layout Reconstruction" as layout2
+	}	
+}
+
+esdm1 -->  perf1: get estimate
+esdm1 -->  perf2: get estimate
+esdm1 -->  perf3: get estimate?
+esdm2 -->  perf3: get estimate?
+
+
+storage StorageSystem {
+note "No related active processes on Storage System?" as N1
+}
+
+@enduml

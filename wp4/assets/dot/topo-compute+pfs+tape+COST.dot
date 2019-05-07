@@ -1,0 +1,32 @@
+graph changed {
+  graph [fontname = "sans serif"];
+  node [fontname = "sans serif", shape=box, style="filled, rounded", fillcolor="white"];
+  edge [fontname = "sans serif"];
+
+
+  {rank = same;
+    compute [label="Compute Nodes\n3.1 PFLOPS/s\nEUR 15.75M", fillcolor="cornflowerblue"];
+  }
+
+  {rank = same;
+    memory [label="Memory\n200TB"fillcolor="white"];
+  }
+  compute -- memory;
+
+
+
+  {rank = same;
+    pfs [label="Parallel File System\n52 PB @ 700 GB/s\n130 Servers\nEUR 7.5M", fillcolor="orchid"];
+    archive [label="Tape Archive\n500 PB @ 18 GB/s\nEUR 5M", fillcolor="lightcyan"];
+  }
+
+
+  {rank = same;
+    network [label="Network\nEUR 5.25M\n", shape="octagon", fillcolor="orange"];
+  }
+
+
+  network -- archive;
+  network -- compute;
+  network -- pfs;
+}

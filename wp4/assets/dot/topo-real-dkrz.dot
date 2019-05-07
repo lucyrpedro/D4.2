@@ -1,0 +1,128 @@
+graph changed {
+  graph [fontname = "sans serif"];
+  node [fontname = "sans serif", shape=box, style="filled, rounded", fillcolor="white"];
+  edge [fontname = "sans serif"];
+
+
+  subgraph cluster_computer1 {
+    label = "Compute (Phase 1)";
+    style="dotted, rounded";
+
+    {rank = same;
+    "Compute nodes 1" [label="1404 Nodes 2x 12-core\n Intel Xeon E5-2680 v3\n(Haswell)@ 2.5GHz", fillcolor="cornflowerblue"];
+    "Compute nodes 1 2" [label="110 Nodes 2x 12-core\n Intel Xeon E5-2680 v3\n(Haswell)@ 2.5GHz", fillcolor="cornflowerblue"];
+    }
+    {rank = same;
+    "Memory 1" [label="Memory\n64 GB", fillcolor="white"];
+    "Memory 1 2" [label="Memory\n128 GB", fillcolor="white"];
+    }
+    "Compute nodes 1" -- "Memory 1";
+    "Compute nodes 1 2" -- "Memory 1 2";
+
+    "Network 1" [shape="octagon", label="Network", fillcolor="orange"];
+    "Network 1" -- "Compute nodes 1";
+    "Network 1" -- "Compute nodes 1 2";
+  }
+
+
+  subgraph cluster_computer2 {
+    label = "Compute (Phase 2)";
+    style="dotted, rounded";
+
+    {rank = same;
+    "Compute nodes 2" [label="1116 Nodes 2x 18-core\nIntel Xeon E5-2695 v4 \n(Broadwell)@ 2.1GHz", fillcolor="cornflowerblue"];
+    "Compute nodes 2 2" [label="270 Nodes 2x 18-core\nIntel Xeon E5-2695 v4 \n(Broadwell)@ 2.1GHz", fillcolor="cornflowerblue"];
+    }
+    {rank = same;
+    "Memory 2" [label="Memory\n64 GB", fillcolor="white"];
+    "Memory 2 2" [label="Memory\n128 GB", fillcolor="white"];
+    }
+    "Compute nodes 2" -- "Memory 2";
+    "Compute nodes 2 2" -- "Memory 2 2";
+
+    "Network 2" [shape="octagon",  label="Network", fillcolor="orange"];
+    "Network 2" -- "Compute nodes 2";
+    "Network 2" -- "Compute nodes 2 2";
+  }
+
+
+  subgraph cluster_computer3 {
+    label = "Compute (Visualisation)";
+    style="dotted, rounded";
+
+    {rank = same;
+    "Compute nodes 3" [label="12 Nodes 2x 12-core\nIntel Xeon E5-2680 v3\n(Haswell)@ 2.5GHz", fillcolor="cornflowerblue"];
+    }
+    {rank = same;
+    "Memory 3" [label="Memory\n256 GB", fillcolor="white"];
+    "GPU" [fillcolor="white", label="2x GPU\n Nvidea Tesla K80"]
+    }
+
+
+    "Compute nodes 3" -- "Memory 3";
+    "Compute nodes 3" -- "GPU";
+
+    "Network 3" [shape="octagon",  label="Network", fillcolor="orange"];
+    "Network 3" -- "Compute nodes 3";
+  }
+
+
+
+  subgraph cluster_pfs1 {
+    label="Parallel File System (Phase 1)";
+    style="dotted, rounded";
+    
+    lustre1 [label="Lustre 1\nClusterStor 9000, ClusterStor L300\n21 PB @ 160(r), 157(w) GiB/s\n80.000 IOOPS/s", fillcolor="orchid"];
+    lustre1 -- pfs1_ssd;
+    lustre1 -- pfs1_hdd;
+
+   pfs1_hdd [label="5084x HDDs"];
+   pfs1_ssd [label="124x SSDs"];
+
+  }
+
+
+  subgraph cluster_pfs2 {
+    label = "Parallel File System (Phase 2)";
+    style="dotted, rounded";
+
+    lustre2 [label="Lustre 2\nClusterStor L300\n31 PB @ 215(r), 290(w) GiB/s\n290.000 IOOPS/s", fillcolor="orchid"];
+    lustre2 -- pfs2_ssd;
+    lustre2 -- pfs2_hdd;
+
+   pfs2_hdd [label="5576x HDDs"];
+   pfs2_ssd [label="136x SSDs"];
+
+  }
+
+
+  subgraph cluster_archive {
+    label = "Long-term Archive";
+    style="dotted, rounded";
+
+    "HPSS" [fillcolor="lightcyan"];
+    gpfs [label="GPFS (5PB)", fillcolor="white"]
+    library [label="8 x SL8500\n70,000 tapes in total\n8x robots each", fillcolor="white"]
+
+    tape_drives [label="104 Tape Drives\nLTO4 to LTO7"];
+
+    library -- tape_drives;
+
+    "HPSS" -- gpfs;
+    "HPSS" -- library;
+
+  }
+
+
+
+  {rank = same;
+    "Network" [shape="octagon", fillcolor="orange", label="Network: Infiniband FDR\n Mellanox SX6536\n 5.9 GByte/s +  2.7 μs"];
+  }
+
+  "Network" -- "HPSS";
+  "Network" -- lustre1;
+  "Network" -- lustre2;
+  "Network" -- "Network 1";
+  "Network" -- "Network 2";
+  "Network" -- "Network 3";
+}

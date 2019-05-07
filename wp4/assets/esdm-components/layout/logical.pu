@@ -1,0 +1,48 @@
+@startuml
+
+package "Application" {
+	class Application
+}
+
+package "ESDM" {
+	interface "ESDM API" as API
+	class Scheduler
+	class Layout
+	class "Performance Model" as PM
+	class "Site Configuration" as siteconfig
+}
+
+package "ESDM Backends 2" {
+	class "Backend Handler" as Backend1
+	class "Backend Specific Performance Model" as PMBackend1
+	Backend1 -> PMBackend1
+}
+
+package "ESDM Backend 1" {
+	class "Backend Handler" as Backend2
+	class "Backend Specific Performance Model" as PMBackend2
+	Backend2 -> PMBackend2
+}
+
+
+Application -> API
+API -> Scheduler
+Scheduler -> Layout
+Layout -> PM
+
+PM -> siteconfig
+note top
+Performance model passes parts of site config
+to backends which compute performance models
+for their specific configurations.
+end note
+
+PM -> Backend1
+PM -> Backend2
+
+
+
+
+
+
+@enduml

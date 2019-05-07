@@ -1,0 +1,27 @@
+graph changed {
+  graph [fontname = "sans serif"];
+  node [fontname = "sans serif", shape=box, style="filled, rounded"];
+  edge [fontname = "sans serif"];
+
+  {rank = same;
+    compute [label="Compute Nodes", fillcolor="cornflowerblue"];
+  }
+
+  {rank = same;
+    memory [label="Memory", fillcolor="white"];
+  }
+  compute -- memory;
+
+  {rank = same;
+    "Object store" [fillcolor="orchid"];
+        archive [label="Tape Archive", fillcolor="lightcyan"];
+  }
+
+  {rank = same;
+    "Network" [shape="octagon", fillcolor="orange"];
+  }
+
+  Network -- archive;
+  Network -- compute;
+  Network -- "Object store";
+}

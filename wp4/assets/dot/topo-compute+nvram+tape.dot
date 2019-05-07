@@ -1,0 +1,31 @@
+graph changed {
+  graph [fontname = "sans serif"];
+  node [fontname = "sans serif", shape=box];
+  node [fontname = "sans serif", shape=box, style="filled, rounded", fillcolor="white"];
+  edge [fontname = "sans serif"];
+
+  {rank = same;
+  "Compute nodes" [fillcolor="cornflowerblue"];
+  }
+  {rank = same;
+  "Memory" [shape="rectangle", fillcolor="white"];
+  "NVRAM"  [shape="rectangle", fillcolor="white"];
+  }
+  "Compute nodes" -- "Memory";
+  "Compute nodes" -- "NVRAM";
+
+  {rank = same;
+
+
+
+  "Tape archive" [fillcolor="lightcyan"];
+  }
+
+  {rank = same;
+    "Network" [shape="octagon", fillcolor="orange"];
+  }
+
+  "Network" -- "Tape archive";
+  "Network" -- "Compute nodes";
+
+}

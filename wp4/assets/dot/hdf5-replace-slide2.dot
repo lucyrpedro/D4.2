@@ -1,0 +1,63 @@
+graph changed {
+  graph [fontname = "sans serif"];
+  node [fontname = "sans serif", shape=box];
+  edge [fontname = "sans serif"];
+
+  subgraph cluster {
+    label = "HDF5"
+    graph[style=dotted];
+
+
+    VOL; # Which layout to choose: see H5Dlayout.c, do IO in: H5Dio.c ; H5Dread()
+
+    label="HDF5";
+  }
+
+ subgraph cluster_esd {
+
+    "Layout component";
+    "Site configuration" [shape="ellipse",style="dotted",style="filled"];
+
+    "Site configuration" -- "Layout component";
+
+    VOL -- "Layout component";
+
+    "Layout component" -- "POSIX-IO driver";
+    "Layout component" -- "Object Driver (SG)";
+    "Layout component" -- "Object Driver (O)"
+
+    label="ESD";
+    graph[style=dotted];
+
+  subgraph cluster_posix {
+
+    label="POSIX (Lustre)";
+    color=honeydew1;
+    style=filled;
+
+       "POSIX-IO driver" -- "POSIX-IO";
+
+       "POSIX-IO" -- "Lustre";
+
+      }
+
+  subgraph cluster_seagate {
+    label="Seagate";
+    color=honeydew1;
+    style=filled;
+
+        "Object Driver (SG)" -- "Object Interface (SG)";
+        "Object Interface (SG)" -- "Object (SG)";
+     }
+
+  subgraph cluster_other {
+    graph[style=dotted];
+    label="Other";
+
+        "Object Driver (O)" -- "Object Interface (O)";
+        "Object Interface (O)" -- "Object (O)";
+     }
+
+ 
+}
+}

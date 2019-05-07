@@ -1,0 +1,64 @@
+graph changed {
+	graph [fontname = "sans serif"];
+	node [fontname = "sans serif", shape=box];
+	node [fontname = "sans serif", shape=box, style="filled, rounded", fillcolor="4", colorscheme="piyg7"];
+	edge [fontname = "sans serif"];
+
+
+	machine [label="Node", fillcolor=""];
+
+
+	{
+		rank=same;
+
+		compute [label="Processing Units", fillcolor=""];
+		memory [label="Memory", fillcolor=""];
+		storage [label="Storage", fillcolor=""];
+		network [label="Network", fillcolor=""];
+	}
+
+	machine -- compute;
+	machine -- memory;
+	machine -- network;
+	machine -- storage;
+	
+
+
+	raid [label="RAID", fillcolor=""];
+
+
+	{
+		rank=same;
+
+		cpu [label="CPUs", fillcolor=""];
+		acc [label="Accelerators\nGPUs, Manycore, FPGAs", fillcolor=""];
+
+		dimm [label="DIMMs", fillcolor=""];
+
+		hdd [label="HDDs", fillcolor=""];
+		ssd [label="SSDs", fillcolor=""];
+		nvram [label="NVRAM", fillcolor=""];
+
+		nic [label="NICs", fillcolor=""];
+	}
+
+	compute -- cpu;
+	compute -- acc;
+
+	memory -- dimm;
+	memory -- nvram;
+
+	storage -- raid;
+	raid -- nvram [style="dashed"];
+	raid -- hdd;
+	raid -- ssd;
+
+	storage -- nvram;
+	storage -- hdd;
+	storage -- ssd;
+
+
+	network -- nic;
+
+
+}

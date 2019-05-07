@@ -1,0 +1,50 @@
+@startuml
+
+node App1 {
+	node Proc1 {
+	control "Application" as app1
+	control "Application using MPI" as app_mpi1
+	control "HDF5/NetCDF" as hdf51
+	control "HDF5/NetCDF using MPI" as hdf5_mpi1
+	control "HDF5 VOL Plugin" as vol1
+	control "VOL Plugin using MPI" as vol_mpi1
+	control "ESDM" as esdm1
+	}
+
+	node Proc2 {
+	control "Application" as app2
+	control "Application using MPI" as app_mpi2
+	control "HDF5/NetCDF" as hdf52
+	control "HDF5/NetCDF using MPI" as hdf5_mpi2
+	control "HDF5 VOL Plugin" as vol2
+	control "VOL Plugin using MPI" as vol_mpi2
+	control "ESDM" as esdm2
+	}
+}
+
+
+
+app1 -left-> app_mpi1
+app1 -down-> hdf51
+hdf51 -left-> hdf5_mpi1
+hdf51 -down-> vol1
+vol1 -left-> vol_mpi1
+vol1 <-down-> esdm1: ESDM must use \nHDF5 VOL Plugin for MPI
+
+
+
+
+
+app2 -> app_mpi2
+app2 -down-> hdf52
+hdf52 -> hdf5_mpi2
+hdf52 -down-> vol2
+vol2 -> vol_mpi2
+vol2 <-down-> esdm2: ESDM must use HDF5  \nVOL Plugin for MPI
+
+
+
+vol_mpi1 <-> vol_mpi2: ESDM VOL processes may  \ncoordinate using MPI
+
+
+@enduml

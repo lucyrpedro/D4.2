@@ -1,0 +1,57 @@
+digraph changed {
+  graph [fontname = "sans serif"];
+  node [fontname = "sans serif", shape=box, style="filled, rounded"];
+  edge [fontname = "sans serif"];
+
+  dsps [label="Data center power supply\navail: 99.999%\nmtbf: 150 days\nmttr: 1 min", shape="rectangle", fillcolor="yellow"];
+  dsps -> rusv;
+
+  ds [label="Switch\navail: 99.9999%\nmttr: 1 day", shape="octagon", fillcolor="orange"];
+  ds -> rs ;
+
+  dsps -> ds ;
+
+
+  subgraph cluster_rack1{
+
+  label="Rack 1";
+
+  {rank = same;
+    CN [label="Compute node\n", fillcolor="white"];
+    SS [label="Storage server", fillcolor="orchid"];
+  }
+
+  rusv [label="Rack UPS\navail: 99.999999%\n+20min", fillcolor="yellow"];
+  rusv -> rps;
+  rps [label="Rack power supply", fillcolor="yellow"];
+
+  {rank = same;
+    RAID [label="RAID\n+: 1+0", fillcolor="orange"];
+  }
+
+  {rank = same;
+    HDD1 [label="HDD1\nmtbf: 10 y", fillcolor="red"];
+    HDD2 [label="HDD2\nmtbf: 10 y", fillcolor="red"];
+    HDD3 [label="HDD3\nmtbf: 10 y", fillcolor="red"];
+    HDD4 [label="HDD4\nmtbf: 10 y", fillcolor="red"];
+  }
+
+  {rank = same;
+    rs [label="Rack switch", shape="octagon", fillcolor="orange"];
+  }
+
+  RAID -> SS;
+
+  HDD1 -> RAID;
+  HDD2 -> RAID;
+  HDD3 -> RAID;
+  HDD4 -> RAID;
+
+  rs -> CN;
+  rs -> SS;
+  rps -> rs;
+  rps -> SS;
+  rps -> CN;
+  }
+
+}

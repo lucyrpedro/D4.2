@@ -1,0 +1,69 @@
+@startuml
+
+
+package ApplicationProc {
+	class Application
+        class Library
+	class ESDM
+	class Scheduler
+	class Layout
+	class "Performance Model" as Performance
+	class "ESDM Backend" as Backend
+}
+
+package Daemon {
+	class Daemon
+	class "ESDM" as ESDMDaemon
+	class "Scheduler" as SchedulerDaemon
+	class "Layout" as LayoutDaemon
+	class "Performance Model" as PerformanceDaemon
+	class "ESDM Backend" as BackendDaemon
+}
+
+
+
+
+class "Site Configuration" as SiteConfig
+
+
+
+package StorageSystem {
+	class "Storage Configuration" as StorageConfig
+	interface "Storage Interface" as StorageInterface
+}
+
+
+
+Application -> Library
+Library -> ESDM
+Application -> ESDM
+ESDM -> Scheduler
+Scheduler -d-> Layout
+Layout -> Performance
+ESDM -d-> Performance
+ESDM -d-> Backend
+
+Daemon -> ESDMDaemon
+
+
+ESDMDaemon -> SchedulerDaemon
+SchedulerDaemon -d-> LayoutDaemon
+LayoutDaemon -> PerformanceDaemon
+ESDMDaemon -d-> PerformanceDaemon
+ESDMDaemon -d-> BackendDaemon
+
+
+Performance -> SiteConfig
+PerformanceDaemon -> SiteConfig
+Backend -> SiteConfig
+BackendDaemon -> SiteConfig
+
+
+Backend -> StorageInterface
+BackendDaemon -> StorageInterface
+
+SiteConfig -d-> StorageConfig
+
+
+
+@enduml

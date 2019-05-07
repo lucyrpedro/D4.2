@@ -1,0 +1,30 @@
+@startuml
+hide footbox
+
+actor "User"
+Database "Storage Backend"
+Database "Metadata Backend"
+
+"User" -> "ESD" : esd_type_commit
+activate "ESD"
+
+"ESD" -> "ESD Datatype" : esd_type_encode
+activate "ESD Datatype"
+
+"ESD Datatype" -> "ESD Datatype" : encode type
+"ESD Datatype" --> "ESD" : return
+deactivate "ESD Datatype"
+
+"ESD" -> "ESD Layout" : esd_layout_init(obj)
+activate "ESD Layout"
+
+"ESD Layout" -> "Metadata Backend" : add obj reference
+"ESD Layout" -> "ESD Layout" : init(obj)
+"ESD Layout" --> "ESD" : return
+deactivate "ESD Layout"
+
+"ESD" -> "Storage Backend" : obj->write
+"ESD" --> "User" : return
+deactivate "ESD"
+
+@enduml

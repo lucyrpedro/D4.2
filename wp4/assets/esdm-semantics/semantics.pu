@@ -1,0 +1,63 @@
+@startuml
+/' title __Epoch__ '/
+skinparam noteBackgroundColor beige
+skinparam noteBorderColor black
+skinparam class {
+    BackgroundColor AliceBlue
+    BorderColor Black
+    ArrowColor Black
+    AttributeIconSize 0
+}
+
+
+package APIs {
+
+
+        class "ESDM_API" as esdm_api {
+		+esdm_open(uri, mode)
+               	+esdm_close(context)
+
+		+esdm_read(context, buf, domain_description)
+		+esdm_write(context, buf, domain_description)
+		+esdm_read_async(context, buf, domain_description)
+		+esdm_write_async(context, buf, domain_description)
+		
+		+esdm_update_metadata(context, metadata)	
+
+		+esdm_lock(context)
+		+esdm_unlock(context)
+        }
+
+        class "ESDM_API_CONTAINER" as esdm_api_container {
+		+esdm_container_create(uri)
+		+esdm_container_open(uri, mode)
+		+esdm_container_list_variables(container)
+		+esdm_container_get_metadata(container)
+		+esdm_container_update_metadata(container, metadata)
+		+...()
+        }
+
+        class "ESDM_API_DOMAIN" as esdm_api_domain {
+		+esdm_domain_create(dim1, dim2, ...)
+		+esdm_domain_update_metadata(domain, metadata)
+		+...()
+        }
+
+        class "ESDM_API_VARIABLE" as esdm_api_variable {
+		+esdm_variable_create(name, domain)
+		+esdm_variable_open(uri, mode)
+		+esdm_variable_update_metadata(domain, metadata)
+		+...()
+        }
+
+
+        class "ESDM_API_LL" as esdm_api_ll {
+		+esdmll_variable_list_fragments(container)
+		+esdmll_variable_add_fragment(fragment)
+		+esdmll_variable_remove_fragment(fragmentID)
+		+esdmll_fragment_list_replicas(fragment)
+		+...()
+        }
+}
+
+@enduml

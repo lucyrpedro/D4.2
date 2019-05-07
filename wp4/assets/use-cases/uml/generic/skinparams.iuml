@@ -1,0 +1,14 @@
+skinparam usecase {
+    BackgroundColor<<direct>> LightCyan
+    Bordercolor<<direct>> Blue
+    BackgroundColor<<via-HDF>> Bisque
+    BorderColor<<via-HDF>> Brown
+    BackgroundColor<<out-of-scope>> LightGray
+    BorderColor<<out-of-scope>> Black
+    BackgroundColor<<deployment>> DarkKhaki
+    BorderColor<<deployment>> Green
+}
+skinparam note {
+    BackgroundColor AliceBlue
+    BorderColor Black
+}

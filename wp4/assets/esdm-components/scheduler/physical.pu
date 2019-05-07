@@ -1,0 +1,28 @@
+@startuml
+
+
+
+package ApplicationProc {
+	class Application
+	class ESDM
+	class Scheduler
+	class Layout
+}
+
+
+
+package StorageSystem {
+ 	class StorageConfiguration
+}
+
+
+
+Application -> ESDM
+ESDM -> Scheduler
+Scheduler -> Layout
+
+
+
+
+
+@enduml

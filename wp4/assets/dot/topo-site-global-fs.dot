@@ -1,0 +1,60 @@
+graph changed {
+  graph [fontname = "sans serif"];
+  node [fontname = "sans serif", shape=box, style="filled, rounded"];
+  edge [fontname = "sans serif"];
+
+  subgraph cluster_computer1 {
+    label = "Supercomputer 1";
+    graph[style=dotted];
+
+    {rank = same;
+    "Compute nodes 1" [label="Compute nodes", fillcolor="cornflowerblue"];
+    }
+    {rank = same;
+    "Memory 1" [label="Memory", fillcolor="white"];
+    "NVRAM 1"  [label="NVRAM", fillcolor="white"];
+    }
+    "Compute nodes 1" -- "Memory 1";
+    "Compute nodes 1" -- "NVRAM 1";
+
+    "Network 1" [shape="octagon", label="Network", fillcolor="orange"];
+    "Network 1" -- "Compute nodes 1";
+  }
+
+  subgraph cluster_computer2 {
+    label = "Supercomputer 2";
+    graph[style=dotted];
+
+    {rank = same;
+    "Compute nodes 2" [label="Compute nodes", fillcolor="cornflowerblue"];
+    }
+    {rank = same;
+    "Memory 2" [label="Memory", fillcolor="white"];
+    }
+    "Compute nodes 2" -- "Memory 2";
+
+    "Network 2" [shape="octagon",  label="Network", fillcolor="orange"];
+    "Network 2" -- "Compute nodes 2";
+  }
+
+
+  {rank = same;
+
+  "Object store" [fillcolor="orchid"];
+  "Parallel file system" [fillcolor="orchid"];
+
+  "Tape archive" [fillcolor="lightcyan"];
+  }
+
+  {rank = same;
+    "Network" [shape="octagon", fillcolor="orange"];
+    "Cloud"  [shape="egg", fillcolor="orange"];
+  }
+
+  "Network" -- "Cloud";
+  "Network" -- "Tape archive";
+  "Network" -- "Network 1";
+  "Network" -- "Network 2";
+  "Network" -- "Parallel file system";
+  "Network" -- "Object store";
+}

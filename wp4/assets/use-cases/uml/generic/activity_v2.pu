@@ -1,0 +1,49 @@
+@startuml
+skinparam note {
+    BackgroundColor AliceBlue
+    BorderColor Black
+}
+|User|
+start
+:User submits job;
+:Job starts;
+:Job log open;
+|Application|
+:Application reads\nInitialisation Data;
+:Application configures\nESDM hint (for write);
+|ESDM|
+:ESDM decides on\nstorage backend\nand layout;
+|Application|
+while (iterating)
+:Application computes\nintermediate result;
+:Application writes\nintermediate result;
+|ESDM|
+:ESDM queues write\nto storage;
+:Data **may** be\nflagged available\nto other\napplications;
+floating note right
+Is this the
+job of the
+middleware or
+a demon?
+endnote
+endwhile
+|Application|
+:Application finalizes;
+|Application|
+split
+|User|
+:Job log closed;
+:Job completes;
+split again
+|Application|
+:Application Terminates;
+split again
+|ESDM|
+:ESDM checks\nwrite queue\nempty;
+:ESDM cleans up;
+:ESDM flags\ndata available;
+:ESDM process ends;
+endsplit
+|User|
+stop
+@enduml

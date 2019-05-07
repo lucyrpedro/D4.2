@@ -1,0 +1,46 @@
+@startuml
+actor User
+control JobManager
+participant "Process/Application" as Nodes
+participant ESDM
+control "Analysis Cluster" as bigdata
+database "Storage System" as storage
+
+User -> JobManager: submit job(IN, OUT)
+JobManager -> Nodes
+
+== Initialization ==
+
+Nodes -> ESDM: read IN=x
+ESDM -> storage: read 
+ESDM <- storage: return 
+Nodes <- ESDM: return
+
+== Loop ==
+
+Nodes -> Nodes: compute
+activate Nodes
+
+Nodes -> ESDM: write async OUT=y
+activate ESDM
+ESDM -> bigdata: make available
+bigdata -> bigdata: perform analysis
+bigdata -> ESDM: return result
+ESDM -> Nodes: return
+
+...multiple iterations...
+
+== Trigger activated ==
+
+ESDM -> User: notify?
+ESDM -> storage: start writing snapshots?
+ESDM -> bigdata: perform additional analyis?
+
+== Finalise == 
+
+deactivate ESDM
+
+
+storage -> User: OUT files become visible
+
+@enduml

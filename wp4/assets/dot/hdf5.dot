@@ -1,0 +1,65 @@
+graph changed {
+  graph [fontname = "sans serif"];
+  node [fontname = "sans serif", shape=box];
+  edge [fontname = "sans serif"];
+
+  Application1 -- NetCDF4 ;
+
+  Application2 -- GRIB;
+
+  GRIB -- "Datatype H5T";
+
+  NetCDF4 -- "Datatype H5T";
+  #NetCDF4 -- "HDF5-High-level H5[FSGDA]*";
+
+  subgraph cluster {
+    graph[style=dotted];
+
+
+
+    "Datatype H5T";
+    #"Caches H5*C"; # Which layout to choose: see H5Dlayout.c, do IO in: H5Dio.c ; H5Dread()
+    VFL;
+    "MPIIO Driver";
+
+    "HDF5-High-level H5[FSGDA]*" -- "Datatype H5T";
+
+    Chunking;
+    Filters;
+
+    Chunking -- Filters; # H5Dchunk.c => see pline
+    Chunking -- VFL;
+
+    Chunking -- ChunkCache; # H5Dchunk.c
+
+    ChunkCache -- VFL;
+
+    "Datatype H5T" -- "Caches H5*C";
+    "Caches H5*C" -- Chunking;
+    "Caches H5*C" -- Contiguous; # H5Dcontig.c, H5D_layout_ops_t
+    "Caches H5*C" -- Compact; # H5Dcompact.c, H5D_layout_ops_t
+    "Caches H5*C" -- "External File List"; # H5Defl.c, H5D_layout_ops_t
+    "External File List" -- Contiguous; # H5D_layout_ops_t
+
+    VFL -- "MPIIO Driver";
+    Contiguous -- VFL;
+
+    label="HDF5";
+
+    "Mero Object Driver";
+  }
+
+  "MPIIO Driver" -- "MPIIO";
+  "MPIIO" -- "POSIX-IO";
+  "POSIX-IO" -- "Lustre";
+
+  subgraph cluster_seagate {
+    graph[style=dotted];
+    label="Seagate";
+
+    "Mero Object Driver" -- "Clovis";
+    "Clovis" -- "Mero Object";
+  }
+
+  "Caches H5*C" -- "Mero Object Driver";
+}

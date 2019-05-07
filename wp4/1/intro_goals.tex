@@ -1,0 +1,20 @@
+\section{Structure of this Deliverable} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+With the given context: growing data volumes, changing costs, new technologies, and relatively poorly available data on cost and performance, this deliverable aims to put in place the fundamentals for a more systematic approach at understanding the cost associated with storage systems. - with some of the practical work on scalability deferred to later ESIWACE deliverables. Here we concentrate on providing the building blocks for
+\begin{enumerate}
+	\item Coarse grained models suitable for quick estimates of cost and performance changes (models  ignorant of the actual runtime performance and temporal considerations).
+	\item Detailed models and simulations that allow to evaluation of the potential and actual cost of operational facilities, including energy usage and quality of service (based on workload traces and temporal knowledge).
+	\item Helping decide on future directions of research, e.g.\ by identifying obstacles to achieving the scalability required.
+\end{enumerate}
+
+
+\noindent The remainder of this document will be structured as follows:\\
+\Cref{sec:dc_model} describes the overall data centre model, focusing on the functional architecture.
+%\Cref{sec:services} goes into further detail on the data centre services, relevant to modelling individual services.
+\Cref{sec:related work} presents related work and other efforts trying to improve the state of storage technologies and cost estimation in general.
+In \Cref{sec:modeling} we introduce a modeling methodology to account for cost, performance and resilience of storage in data centres.
+%\Cref{sec:use cases} presents a number common use cases in climate and weather applications which we will use to gauge how they are impacted by alternative storage architectures.
+In \Cref{sec:evaluation} we will evaluate the costs and possible benefits when changing the architectures for a fixed budged.
+\Cref{sec:conclusion} summarizes the findings and discusses future work.
+We provide two appendices: a set of definitions, and a set of acronyms.

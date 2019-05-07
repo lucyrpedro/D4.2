@@ -1,0 +1,72 @@
+# This set of use cases to highlight the CEDA use interaction with ESiWACE
+@startuml
+!include skinparams.iuml
+start
+:configure simulation;
+partition model {
+    :write via IO-Server;
+    if (XIOS?) then
+       -> yes;
+       :NetCDF output;
+    else
+       :UM IO-Server;
+       note right: Legacy\nTrack
+       if (PP?) then
+           -> yes;
+           :pp-output;
+       else
+           :NetCDF output;
+       endif
+    endif
+}
+partition system {
+    if (platform) then
+        -> ARCHER;
+        :write to lustre;
+        if (RDF?) then
+           -> yes;
+           :copy files to RDF\n(GPFS);
+        endif
+    else
+        -> NEXCS;
+        :write to GPFS;
+    endif
+}
+:copy files to JASMIN;
+note right: (Push or Pull)
+:GridFTP;
+@enduml
+@startuml
+!include skinparams.iuml
+:GridFTP;
+partition jasmin {
+    if (XFC?) then
+       -> yes;
+       :write into XFC\ndisk cache;
+       :reshape for tape;
+    else
+       -> no;
+       :write to GWS;
+       floating note left: "Optionally\ndata is\nreformatted\nat some\npoint"
+       :write to Elastic Tape;
+       :read from Elastic Tape;
+    endif
+    :read from PanFS storage;
+    if (wrong order|compressed|\nwrong chunking) then
+        -> yes;
+        :reshape|uncompress|\nre/de-chunk data;
+    endif
+    if (IaaS)
+        floating note left: Infrastructure\nas a service\nuses OPeNDAP\nto access data\nor Paas/Batch\nwith access to\nfilesystem.
+        -> cloud;
+        :ingest into\nOPenDAP server;
+
+        :read from\nOPeNDAP client;
+    endif
+    :read from NetCDF library;
+    :analyse;
+    :write NetCDF data locally;
+}
+:bring data home?;
+end
+@enduml

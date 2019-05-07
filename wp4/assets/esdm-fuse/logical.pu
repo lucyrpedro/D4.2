@@ -1,0 +1,30 @@
+@startuml
+
+: Scientist : as scientist
+: Application : as app
+: ESDM FUSE : as esdm
+: ESDM HDF5 Creator : as esdmhdf5
+: Scheduler : as scheduler
+
+
+scientist --> (Job): submits
+
+scheduler --> (Job): analyses
+scheduler --> esdmhdf5: informs
+scheduler --> app: starts
+
+esdm --> (ESDM FUSE Configuration) : exposes files according to
+esdmhdf5 --> (HDF5 File): creates
+
+
+
+
+esdm --> (HDF5 File): reads/writes
+
+
+app --> esdm: reads/writes
+
+
+
+
+@enduml

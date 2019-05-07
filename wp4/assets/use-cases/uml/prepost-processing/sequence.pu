@@ -1,0 +1,39 @@
+@startuml
+actor User
+control JobManager
+participant Process
+participant ESDM
+database StorageSystem
+
+
+User -> JobManager: 1. submit post/preprocessing job(IN1, IN2, ..., OUT)
+JobManager -> Process: 2. start job
+
+== Initialization ==
+
+Process -> StorageSystem: 3a. read IN=x
+StorageSystem -> Process: return
+
+== Loop ==
+
+Process -> Process: 3b. perform transformation or analysis
+activate Process
+
+Process -> ESDM: 4. write async OUT=y
+activate ESDM
+ESDM -> StorageSystem: write
+ESDM -> StorageSystem: write
+ESDM -> Process: return
+
+deactivate ESDM
+
+
+
+...possibly multiple iterations for different timesteps ...
+
+== Finalize ==
+
+StorageSystem -> User: OUT files become visible
+
+
+@enduml

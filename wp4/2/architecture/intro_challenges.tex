@@ -1,0 +1,63 @@
+
+
+There are three broad data related challenges that weather and climate workflows need to deal with, which can be summarized as needing to handle
+\begin{enumerate}
+\item the velocity of high volume data being produced in simulations, 
+\item the economic and performant persistence of high volume data, and
+\item high volume data analysis workflows with satisfactory time-to-solution.
+\end{enumerate}
+
+Currently these three challenges are being addressed independently by all major centres,
+the aim here is to provide a middleware architecture that can go some way to providing economic performance portability across different environments.
+
+There are some common underlying characteristics of the problem:
+\begin{enumerate}
+\item \textbf{I/O intensity (volume and velocity)}.
+Multiple input data sources can be used in any one workflow, and the volume and rate of output can vary drastically depending on the problem at hand. In weather and climate use-cases,
+\begin{itemize}
+\item during simulation, input checkpoint data needs to be distributed from data sources to all nodes and high volume output is likely to come from multiple nodes (although not necessarily all) using domain decomposition and MPI.
+\item during analysis, existing workflows primarily use time-decomposition to achieve parallelisation which has implications for input data storage, and output data organisation --- but at least is easy to understand. More complex parallelisation strategies for analysis are being investigated and may mix multiple modes of parallelisation (and hence routes to and from storage).
+\end{itemize}
+
+\item \textbf{Diversity of data formats and middleware}.
+In an effort to allow for easier exchange and inter-comparison of models and observations, data libraries for standardized data description and optimized I/O such as NetCDF, HDF5 and GRIB were developed but many more legacy formats exist.
+Many I/O optimizations used in common libraries do not adequately reflect current data intensive system architectures, as they are maintained from
+domain scientists and not computer scientists.
+
+\item \textbf{Code portability}. Code is long-living, it can potentially live
+for decades --- with some modules moving like DNA down through generations of new code. Historically such modules and parent codes have been optimised for specific supercomputers  and I/O architectures but with increasingly complex systems this approach is not feasible.
+\item \textbf{Sharing of data between many stakeholders}.
+Many new stakeholders are using data on multiple different systems.
+As a consequence the underlying data systems need to support that multi-disciplinary research through shared, interoperable interfaces, based on open standards, allowing different disciplines to customise their own workflows over the top.
+
+\item \textbf{Time criticality and reliability}. Weather and climate applications
+often need to be completed in specific time windows to be useful, and all
+data must be reliably stored and moved --- there can be no question of
+data being corrupted in transit or in the storage.
+
+\end{enumerate}
+
+There are some conclusions one can draw from these general challenges:
+Data systems needs to scale in such a way as to support expected data volume and velocity with cost-effective
+and acceptable data access latency and data durability --- and do so using mechanisms which are portable across time and underlying storage architectures.
+So the goals of any solution should be to be:
+\begin{enumerate}
+\item Performant --- coping with volume/velocity and delivering adequate bandwidth and latency.
+\item Cost-Effective --- affordable in both financial and environmental terms  at exascale.
+\item Reliable --- storage is durable, data-corruption in transit is detected and corrected.
+\item Transparent --- hiding specifics of the storage landscape and not \textit{\textbf{requiring}} users to change parameters specifically to a given system.
+\item Portable --- should work in different environments.
+\item Standards based --- using interfaces, formats and standards which maximise re-usability.
+\end{enumerate}
+
+It is clear that some of these goals are contradictory:
+performance, transparency, and portability are not necessarily simultaneously achievable,
+but we should aim to maximise these.
+It is also clear that a storage system may not be able to deliver these goals for all possible underlying data formats.
+
+There are two more important objectives that do not reflect the domain, but reflect the desire for any solution to be maintainable and actually used.
+To that end, reflecting the characteristics of software which is widely deployed, solutions should also:
+\begin{enumerate}[resume]
+\item be easily maintainable and exploiting as much as possible other libraries and components (as opposed to implementing all capabilities internally), and
+\item involve open-source software with an open-development cycle.
+\end{enumerate}

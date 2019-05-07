@@ -1,0 +1,31 @@
+\subsection{The Highly Scalable Data Storage Project}
+
+% Intro paragraph describing the project aims
+The HDF group in \dots
+\todo{Update the description of the HSDS project}
+
+We here repeat some of the requirements and assumptions from that project,
+recognising that because we desire that the ESD is as compatible with the HSDS system as possible, most of these assumptions and requirements apply to the ESD
+system as well.
+
+\paragraph{Key Object Storage Assumptions}. The HSDS project makes the following assumptions about objects and the interactions with the object storage system:
+\begin{enumerate}
+    \item Files and Objects: Files are shared into objects.
+    \item Key size: Object keys are limited to 1024 characters.
+    \item Key names: The first 3-4 characters of the keys should be randomly distributed (to avoid request rate limits due to a single storage system be targeted for systems such as AWS where key names influence object location).
+    \item Object size needs to follow the ``goldilocks principle'' needing to be not too small, and not too large: dealing with too many small objects would be prohibitively expensive in a public cloud and the use of very large objects ($>$ 100 MB) would introduce excessive latency.
+    \item Updates to a storage object will be complete (i.e. the entire object will be overwritten), atomic (i.e. last writer wins), and either succeed or fail --- and in the latter case there should be no update to the object.
+    \item Partial reads could be possible, though.
+    \item The object storage system will not provide support for ``transactions'' (i.e. the ``all or nothing'' update of two or more objects).
+    \item The storage system will not be read-write consistent.
+    \item Metadata associated with each object will be at least 1024 bytes long.
+    \item All objects managed by any service instance will exist in one ``bucket'' for which that service will need read-write authority.
+\end{enumerate}
+
+With these assumptions, we might expect that the HSDS (and hence ESD services) would need to perform a number of data management functions that are not provided by the underlying object storage paradigm:
+\begin{enumerate} [resume]
+    \item Listing of files, and file permissions, will need to be managed by a service (listing keys will generally be inefficient (and would not work well with randomly distributed keys), and file permissions are notions that belong in HSDS/ESD metadata space, not in the storage system).
+    \item The reverse lookup between an object and the parent file will need to be explicilty managed by a service (an object will not itself know of its parent).
+    \item All object creation and update needs to be managed through a service interface. Object retrieval may be either via a service which aggregates objects on the server side, or via a client which aggregates objects after interrogating a service to find appropriate objects.
+\end{enumerate}
+These functions are naturally provided by traditional (POSIX) file systems.

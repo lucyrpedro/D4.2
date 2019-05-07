@@ -1,0 +1,25 @@
+graph changed {
+  graph [fontname = "sans serif"];
+  node [fontname = "sans serif", shape=box];
+  node [fontname = "sans serif", shape=box, style="filled, rounded", fillcolor="white"];
+  edge [fontname = "sans serif"];
+
+  {rank = same;
+ 	CN [label="Compute node", fillcolor="cornflowerblue"];
+  }
+
+
+  {rank = same;
+	"Processing Units" [fillcolor="cornflowerblue"];
+ 	"NVRAM"  [shape="rectangle", fillcolor="white"];
+  }
+  CN -- "Memory: DIMMs";
+
+
+  {rank = same;
+    nic1 [label="Network: NICs", shape="octagon", fillcolor="orange"];
+  }
+
+  CN -- nic1;
+
+}

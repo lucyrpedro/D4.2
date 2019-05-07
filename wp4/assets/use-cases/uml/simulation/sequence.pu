@@ -1,0 +1,37 @@
+@startuml
+actor User
+control JobManager
+participant Nodes
+participant ESDM
+participant StorageSystem
+database Storage1
+database Storage2
+
+User -> JobManager: submit job(IN, OUT)
+JobManager -> Nodes
+
+== Initialization ==
+
+Nodes -> StorageSystem: read IN=x
+StorageSystem -> Nodes: return
+
+== Loop ==
+
+Nodes -> Nodes: compute
+activate Nodes
+
+Nodes -> ESDM: write async OUT=y
+activate ESDM
+ESDM -> Storage1: write
+ESDM -> Storage2: write
+ESDM -> Nodes: return
+
+deactivate ESDM
+
+StorageSystem -> User: OUT files become visible
+
+...multiple iterations...
+
+
+
+@enduml

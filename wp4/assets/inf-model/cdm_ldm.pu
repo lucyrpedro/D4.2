@@ -1,0 +1,127 @@
+@startuml
+title __Conceptual and Logical Data Models__
+skinparam noteBackgroundColor beige
+skinparam noteBorderColor black
+skinparam class {
+    BackgroundColor AliceBlue
+    BorderColor Black
+    ArrowColor Black
+    AttributeIconSize 0
+}
+package Conceptual_Data_Model {
+    class "CDM_Dataset" as dataset {
+    +metadata
+    }
+    class "CDM_Variable" as variable {
+    +metadata
+    }
+    class "CDM_Dimension" as dimension
+    class "CDM_Coordinates" as coordinates {
+    +metadata
+    }
+    class "Domain" as domain <<(A, white)abstract>>
+    class "Cell" as cell << (A,white) abstract>>
+    dataset "0..*" o--> "1..*" variable
+    variable -> domain : defined over
+    variable *--> "1..*" dimension
+    domain --> "1..*" dimension : spanned by
+    dimension "1" --> "1" coordinates
+    cell .> coordinates : implied or\ndefined by
+}
+
+package Logical_Data_Model {
+        class "LDM_Variable" as lvariable {
+           +name: String
+           +sealed: Boolean
+           +metadata: LDM_Metadata [1]
+           +create()
+           +delete()
+           +repartition_fragments()
+           +replicate()
+           +check_integrity()
+           +add_fragment()
+           +delete_fragment()
+        }
+        class "LDM_Fragment" as lfragment {
+            +metadata: LDM_Metadata
+            +read()
+            +write()
+            +delete()
+            +check_integrity()
+        }
+
+        class "LDM_Replicant" as lreplicant {
+            +metadata: LDM_Metadata
+            +is_complete: Boolean
+        }
+
+
+        class "LDM_Container" as lcontainer {
+            +name: String
+            +root_name: String
+            +metadata: LDM_Metadata
+            +create()
+            +delete()
+            +add_member(path_name, var_name)
+            +remove_member(path_name, var_name)
+            +add_leaf(path_name, leaf_name)
+
+        }
+
+        class "LDM_Domain" as ldomain {
+            +BoundingBox
+            +Dimensions
+            +Coordinates
+        }
+
+        class "LDM_Reference" as reference
+
+        class "LDM_AccessInfo" as accessinfo
+
+        enum "LDM_Backend" as backend {
+           mero
+           posix
+           s3
+           wos
+        }
+
+        enum "LDM_DataType" as datatypes
+
+        class "LDM_Metadata" as lmetadata
+        class "LDM_Sci_Metadata" as smetadata {
+            +payload_type: LDM_Payload_Type
+            +payload: String
+            +plugin_name: String [0..1]
+        }
+        class "LDM_Tech_Metadata" as tmetadata {
+            +filling_method: LDM_Filling_Method
+            +domain: LDM_Domain
+            +inbound_references: LDM_Reference [0..N]
+            +access_control: LDM_AccessInfo
+            +storage_type: LDM_Backend
+            +data_type: LDM_DataType
+        }
+
+        enum "LDM_Payload_Type" as payload {
+            json
+            xml
+            xhtml
+            geojson
+            cfa
+        }
+
+        lcontainer "1..*" o--> "0..*" lvariable
+        lvariable "1" o--> "0..*" lreplicant
+        lreplicant "1" o--> "0..*" lfragment
+
+        lmetadata *--> smetadata
+        lmetadata *--> tmetadata
+
+        tmetadata -[Hidden]- ldomain
+        smetadata -[Hidden]- accessinfo
+        ldomain -[Hidden]- reference
+
+        payload -[Hidden]- datatypes
+        datatypes -[Hidden]- backend
+
+@enduml

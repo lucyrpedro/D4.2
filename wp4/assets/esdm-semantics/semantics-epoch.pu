@@ -1,0 +1,29 @@
+@startuml
+/' title __Epoch__ '/
+skinparam noteBackgroundColor beige
+skinparam noteBorderColor black
+skinparam class {
+    BackgroundColor AliceBlue
+    BorderColor Black
+    ArrowColor Black
+    AttributeIconSize 0
+}
+
+
+package Epoch {
+
+
+        class "ESDM_epoch" as esdm_epoch {
+           +context: epoch_context
+           +epoch_begin(context)
+           +epoch_commit(context)
+           +epoch_abort(context)
+
+           +epoch_read(context, buf, size)
+           +epoch_write(context, buf, size)
+        }
+
+
+}
+
+@enduml

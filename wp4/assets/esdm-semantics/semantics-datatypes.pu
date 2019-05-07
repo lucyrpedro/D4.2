@@ -1,0 +1,69 @@
+@startuml
+/' title __Datatype__ '/
+skinparam noteBackgroundColor beige
+skinparam noteBorderColor black
+skinparam class {
+    BackgroundColor AliceBlue
+    BorderColor Black
+    ArrowColor Black
+    AttributeIconSize 0
+}
+
+
+package Datatype {
+
+
+        class "ESDM_T_compound" as esdm_compound {
+           +name: String
+           +members: ESDM_Native_Datatype[]
+           +compound_create()
+        }
+
+        class "ESDM_T_array" as esdm_array {
+           +name: String
+           +datatype: ESDM_Datatype[]
+           +size: int
+           +VL: bool
+
+           +array_create(size)
+	   +VL_create(initial_size)
+        }
+
+        class "ESDM_T_Set" as esdm_set {
+           +name: String
+           +datatype: ESDM_Datatype
+
+	   +add(id)
+	   +get(id/index)
+           +remove(id)
+        }
+
+        class "ESDM_T_KEY_VALUE" as esdm_key_value {
+           +name: String
+           +keys: String[]
+
+	   +add(key, value)
+           +get(key)
+           +remove(key)
+        }
+
+        enum ESDM_Native_Datatype {
+		ESDM_T_I8   
+		ESDM_T_U8   
+		ESDM_T_I16   
+		ESDM_T_U16   
+		ESDM_T_I32   
+		ESDM_T_U32    
+		ESDM_T_I64   
+		ESDM_T_U64  
+		ESDM_T_F16  
+		ESDM_T_F32   
+		ESDM_T_F64 
+		ESDM_T_F128 
+		ESDM_T_TIMESTAMP
+		ESDM_T_COMPOUND
+        }
+
+}
+
+@enduml

@@ -1,0 +1,36 @@
+@startuml
+hide footbox
+
+Database "Storage Backend"
+Database "Metadata Backend"
+
+"HDF5 VOL" -> "ESD (Plugin)" : H5Topen
+activate "ESD (Plugin)"
+
+"ESD (Plugin)" -> "ESD" : esd_h5_type_open
+activate "ESD"
+
+"ESD" -> "ESD Layout" : esd_layout_init(obj)
+activate "ESD Layout"
+
+"ESD Layout" -> "Metadata Backend" : lookup
+"ESD Layout" -> "ESD Layout" : init(obj)
+"ESD Layout" --> "ESD" : return
+deactivate "ESD Layout"
+
+"ESD" -> "Storage Backend" : obj->read
+
+"ESD" -> "ESD Datatype" : esd_type_decode
+activate "ESD Datatype"
+
+"ESD Datatype" --> "ESD" : return
+deactivate "ESD Datatype"
+
+"ESD" --> "ESD (Plugin)" : return
+deactivate "ESD"
+
+"ESD (Plugin)" -> "ESD (Plugin)" : H5Tdecode
+"ESD (Plugin)" --> "HDF5 VOL" : return
+deactivate "ESD (Plugin)"
+
+@enduml
