@@ -1,6 +1,6 @@
 
-The layout component is responsible for finding a mapping to storage that takes into account information that are available through the conceptional and logical views to the data.
-In addition, this section addresses some aspects that explain how the mapping is driven by performance models and the site configuration.
+The layout component is responsible for finding a mapping to storage that takes into account information that is available through the conceptional and logical views to the data.
+In addition, this section addresses some aspects that explain how performance models and the site configuration drive the mapping.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -9,7 +9,7 @@ In addition, this section addresses some aspects that explain how the mapping is
 \begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{esdm-components/layout/logical.eps}
-	\caption{An application that is using ESDM interfaces through the ESDM API (which in many cases maybe only read/write calls). Eventually the scheduling component has to consult the layout component which is responsible for returning a list of Fragments which have to be read or written. To provide this list the performance model is used which in turn queries the available backends and the site configuration for an estimate.}
+	\caption{An application that is using ESDM interfaces through the ESDM API (which in many cases maybe only read/write calls). Eventually, the scheduling component has to consult the layout component which is responsible for returning a list of Fragments which have to be read or written. The performance model, in turn, queries the available backends and the site configuration for an estimate to provide this list.}
 	\label{fig:esdm layout logical view}
 \end{figure}
 
@@ -20,11 +20,11 @@ The layout components responsibilities in more detail include the following:
 	\item map (e.g., a domain) to fragments
 	\item where to save new/additional/replica fragments?
 	\item time estimates for reading a fragment (e.g., a callback per backend and configuration provided)
-	\item time estimates for writing a fragment, in particular find a domain mapping
+	\item time estimates for writing a fragment, in particular, find a domain mapping
 \end{itemize}
 
-\Cref{fig:esdm layout logical view} illustrates the embedding of the layout component into the larger ESDM architecture.
-To find a mapping an important factor is the performance of the individual backends, which requires to know which backends are available.
+\Cref{fig:esdm layout logical view} illustrates the embedding of the layout component into the broader ESDM architecture.
+To find a mapping, an essential factor is the performance of the individual backends, which requires to know which backends are available.
 \Cref{sec:layout/logical/init} describes the initialisation process that loads the site configuration.
 Storage backends feature wildly different performance characteristics, which is why the ESDM features an abstract performance model that queries the individual ESDM backends to provide performance estimates which may also depend on the data structure of the request.
 \Cref{sec: layout/logical/decision} describes the performance model and decision process in more detail.
@@ -60,8 +60,8 @@ The site configuration includes a list of available backends for which the ESDM 
 \subsubsection{Performance Model and Decision Process}
 \label{sec: layout/logical/decision}
 
-One approach to find the best backend/backends is to query every backend for a performance estimate and choose the most affordable.
-\Cref{fig:esdm layout choose backend} shows in a simplified example how the decision process for a data centre with three storage systems may look like.
+One approach to finding the best backend/backends is to query every backend for a performance estimate and choose the most affordable.
+\Cref{fig:esdm layout choose backend} shows a simplified example of how the decision process for a data centre with three storage systems may appear.
 The decision would gather estimates by calling the performance model (PM) of every backend.
 Performance metrics may include:
 
@@ -82,15 +82,15 @@ The decision process has to be configurable because different sites have differe
 	\label{fig:esdm layout choose backend}
 \end{figure}
 
-% Unadressed: When to release allocated memory?
+% Unaddressed: When to release allocated memory?
 
 
 \subsubsection{Layout Reconstruction}
 
-When applications are reading data the ESDM Scheduler consults the layout component for a domain reconstruction.
-A subdomain description is passed to the layout component as part of request.
+When applications are reading data, the ESDM Scheduler consults the layout component for a domain reconstruction.
+A subdomain description is passed to the layout component as part of the request.
 The layout component then requests metadata for the container/variable to be received.
-From the list of available fragments the layout component has now to choose a subset of fragments that can be read efficiently from the backends.
+From the list of available fragments, the layout component has now to choose a subset of fragments that can be read efficiently from the backends.
 To decide which fragments to choose the performance model is consulted.
 
 
@@ -112,7 +112,7 @@ How ESDM gathers/flushes these fragments concurrently is described in \Cref{comp
 \begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{esdm-components/layout/process.eps}
-	\caption{Multiple process are involved with most applications. For every node the performance decisions maybe different, but in many cases it also maybe desirable to find an estimate collectively. Ultimately the performance estimate needs to be relatively cheap to compute. }
+	\caption{Multiple processes are involved with most applications. For every node, the performance decisions may be different, but in many cases, it also may be desirable to find an estimate collectively. Ultimately the performance estimate needs to be relatively cheap to compute. }
 	\label{fig:esdm layout process view}
 \end{figure}
 

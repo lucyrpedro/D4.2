@@ -2,9 +2,9 @@
 
 I/O requests handled by the ESD middleware are received via the ESDM interfaces as they are described in \Cref{sec: viewpoints/logical/semantics}.
 In most cases, these requests must collect additional information / identify multiple fragments to fulfil a request.
-The ESDM scheduler is responsible to progress potentially operations, coordinate requests, and invoke the appropriate handlers.
+The ESDM scheduler is responsible for progressing potentially operations, coordinate requests, and invoking the appropriate handlers.
 In particular, the scheduler will consult the layout component to determine which fragments to create or use and which storage backends to use.
-For a discussion of the decision process for a mapping of a I/O request to backends refer to \Cref{component: layout} on the layout component.
+For a discussion of the decision process for a mapping of an I/O request to backends refer to \Cref{component: layout} on the layout component.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,8 +28,8 @@ The scheduling component has two core responsibilities:
 In \Cref{fig:esdm scheduler logical view}, the relation of the scheduling component (scheduler) to the rest of the ESDM architecture is illustrated.
 An application will issue a request which is queued to the scheduler for consideration.
 The scheduler will delegate the request to the layout component which will also consult a performance model to make a decision (refer to \Cref{component: layout} for details).
-The resulting operations to internal objects (fragments) may then require a number of requests to various ESDM backends.
-These subsequent operations are also coordinated by the Scheduler.
+The resulting operations to internal objects (fragments) may then require several requests to various ESDM backends.
+The Scheduler also coordinates these subsequent operations.
 
 
 
@@ -45,10 +45,10 @@ These subsequent operations are also coordinated by the Scheduler.
 \end{figure}
 
 The scheduling component is responsible for the bulk of concurrency within the ESDM.
-Requests arrive and have to be dispatched to appropriate handlers such as the layout component or a ESDM backend.
-This approach is necessary so the ESDM remains responsive as new requests arrive and because it considerably can speed up the reconstruction/flushing of requested views.
-\Cref{fig:esdm scheduler process view} provides a overview to active and waiting process as requests are being handled by the ESDM. Notice that Process 1 handles a asynchronous request which allows the application to continue computation, while Process 2 depicts the synchronous case.
-In both cases the ESDM will try to perform the domain reconstruction concurrently.
+Requests arrive and have to be dispatched to appropriate handlers such as the layout component or an ESDM backend.
+This approach is necessary, so the ESDM remains responsive as new requests arrive and because it considerably can speed up the reconstruction/flushing of requested views.
+\Cref{fig:esdm scheduler process view} provides an overview of the active and waiting process as the ESDM is handling requests. Notice that Process 1 handles an asynchronous request which allows the application to continue computation, while Process 2 depicts the synchronous case.
+In both cases, the ESDM will try to perform the domain reconstruction concurrently.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

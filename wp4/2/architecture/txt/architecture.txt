@@ -1,0 +1,245 @@
+\documentclass[a4paper,11pt]{esiwace-modified}
+
+%\input{esiwace_packages}
+
+\title{D4.2 New Storage Layout for Earth System Data}
+\author{Jakob Lüttgau
+	\and Julian Kunkel
+	\and Bryan Lawrence
+	\and Alessandro D'Anca
+	\and Paola Nassisi
+	%\and Jens Jensen
+	\and Giuseppe Congiu
+	\and Huang Hua
+	\and Sandro Fiore
+	\and Neil Massey
+}
+
+\date{\today} % Replace with final date
+
+\ESIWACEworkpackage{WP4 Exploitability}
+\ESIWACElead{DKRZ}
+\ESIWACEparticipants{Seagate, CMCC, STFC, UREAD}
+
+
+
+
+%\usepackage[inline]{showlabels}
+
+\usepackage{float}
+
+\graphicspath{
+    {../figures/}
+    {../../../template/images/}
+    {../images/}
+    {../assets/}
+    {../../assets/}
+}
+
+\usepackage{adjustbox}
+\usepackage{enumitem}
+
+\setlength{\parindent}{0pt}
+
+
+
+\def\myversion{0.2.5}
+\def\approvaldate{2017-06-31}
+%
+% %%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\begin{document}
+\title{ESD Middleware Architecture}
+\date{\today}
+
+\maketitle
+
+\tableofcontents
+
+\begin{abstract}
+Making the best use of HPC in Earth simulation requires storing and manipulating vast quantities of data.
+Existing storage environments face usability and performance challenges for both domain scientists and the data centres supporting the scientists.
+
+These challenges arise from data discovery/access patterns, and the need to support complex legacy interfaces. In the ESiWACE project, we develop a novel I/O middleware targeting, but not limited to, earth system data.
+This deliverable sheds light upon the technical design of the ESD middleware, and the user perspective and implications when using the middleware.
+Its architecture builds on well-established end-user interfaces but utilises scientific metadata to harness a data structure centric perspective.
+
+In contrast to existing solutions, the middleware maps data structures to available storage technology based on several parameters:
+1) A data centre specific configuration of available hardware with their characteristics;
+2) The intended usage pattern explicitly provided by the user and implicitly by the structure of the data.
+
+This allows exploiting performance characteristics of a heterogeneous storage environment more efficiently.
+
+This deliverable provides the background on data representations and description formats commonly used in earth system modelling.
+The document isolates the key requirements for an earth system middleware and collects numerous use-case outlining the benefit to existing and anticipated workflows and technologies.
+Finally, a detailed initial design for the architecture of the earth system middleware is proposed and documented.
+
+The document is not intended to describe all components completely but provides a high-level overview that is necessary to build a first prototype as it is planned in the next phase of the ESiWACE project.
+During this development, the design will be adjusted to match the prototype; the final version of the design document will be delivered with the end of the project.
+\end{abstract}
+
+\parskip 20pt
+
+\chapter*{Revision History}
+
+\begin{center}
+\begin{tabular} {| c | l | l | l | } \hline
+    Version & Date & Who & What  \\ \hline
+    0.2.5 & July 3rd, 2017 & Team & Architecture draft. \\
+    0.3 & December 18th, 2018 & Team & Correction of various typos and minor flaws. \\
+    \hline
+\end{tabular}
+\end{center}
+
+
+\chapter{Introduction}
+\begin{chapterIntro}
+This document provides the architecture for our new Earth System Data Middleware (\textbf{ESDM})\footnote{Depending on the context, we may use as full name ESD middleware.},
+aimed at deployment in both simulation and analysis workflows where the volume and rate of data leads to performance and data management issues with traditional approaches.
+This architecture is one of the deliverables from the Centre of Excellence in Weather and Climate in Europe (http://esiwace.eu).
+\end{chapterIntro}
+
+
+\section{General Objectives}
+
+In this section we outline the general challenges, and some specific challenges which this work needs to address.
+Detailed consequential requirements appear in \Cref{sec:requirements}.
+
+\subsection{Challenges and Goals}
+\label{sec:esd goals}
+\input{intro_challenges.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Architecture Philosophy and Methodology}
+\label{sec:about 4+1}
+\input{intro_methodology.tex}
+
+\section{Document Structure}
+
+Before delving into the formal software architecture from a software engineering perspective,
+we introduce some key aspects of background information about data layout and data formats which provide context for both actual architectural decisions and some directions in which the architecture might evolve.
+\Cref{sec:background} concludes with a description of key storage components which we consider for targeting in the architecture proper.
+
+We extract the general properties of requirements from the Logical View and present them in \Cref{sec:requirements}, where we also introduce elements
+of related work which a priori influence the architecture itself (e.g.to introduce why we have introduced specific third party dependencies).
+\Cref{chap:use cases} isolates use cases for the ESDM which, in turn, drive the architecture discussion.
+\Cref{chap:viewpoints} proceeds with the architecture properties, beginning with an overview, before addressing the various viewpoints.
+\Cref{chap:components and backends} addresses the scenarios and use cases, including the first implementation scenarios that will be necessary to meet ESIWACE requirements.
+
+The document concludes with a summary chapter (\Cref{chap:summary}) which relates the specific functional requirements to specific aspects of the architecture.
+
+
+
+ \chapter{Background}
+\label{sec:background}
+\input{background_formats.tex}
+
+\input{background_detailed.tex}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Requirements}
+\label{sec:requirements}
+\input{requirements.tex}
+
+%\section{Related Work and Dependencies}
+%In this section we discuss the influence of important third party architectures on the ESD requirements.
+%\label{sec:related}
+% In which we discuss relationships to key projects such as JR's HDF server activity, ophidia etc.
+%\input{requirements_related.tex}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Use-Cases}
+\label{chap:use cases}
+\input{use-cases}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Architecture: Viewpoints}
+\label{chap:viewpoints}
+\input{viewpoints.tex}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Architecture: Components and Backends}
+\label{chap:components and backends}
+\input{backend.tex}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Summary}
+\label{chap:summary}
+
+The primary goal of this deliverable is to provide an initial architecture design for the ESD middleware.
+
+It begins with some introductory material on the scientific context, and the dominant APIs and file formats (chapter \ref{sec:background}).
+The applications tend to use structured grids and common file formats are NetCDF, HDF5 and GRIB.
+Most applications are parallelized using MPI which sometimes also influences the data model of applications.
+Parallel file systems are the most common storage system at the moment but object storage is becoming more and more important.
+New technologies predominantly used in ``big data'' contexts may have benefits for scientific data storage and workflows.
+
+The architecture design exploits the 4+1 architecture method: 4 different architectural views accompanied by use cases as drivers.
+The scene for the design is set by a chapter on requirements (chapter \ref{chap:use cases}), which lists both functional and non-functional requirements on top of the simple need for CRUD (Create, Retrieve, Update, Delete) for both data and metadata.
+The architecture has to support heterogeneous architectures and should be compatible to existing technologies.
+In addition, the resulting software should be configurable, user-friendly, reliable and performant.
+
+In chapter \ref{chap:use cases}) use cases covering the most common tasks in existing climate and weather workflows are collected and
+the different stakeholders (e.g. scientists, project managers, institutions which provide infrastructure) are described.
+The core systems such as the supercomputers, storage systems, applications, and software libraries are briefly introduced and characterised by the main failure modes to be considered by the middleware.
+The body of the chapter comprises a list of high-level basic use cases which are analysed using a consistent approach to identify key characteristics.
+In each case a flow of events which includes the interaction with the Earth System Data Middleware is identified.
+The cases covered include conventional simulation runs, independent pre/post-processing jobs as well as more integrated scenarios that implement pipelines, workflows and in situ methods.
+
+A general architecture overview in chapter \ref{chap:viewpoints} is driven by the challenges and requirements collected earlier, and provides a high level view of the first three of the formal architectural views (logical, physical, process).
+The logical view covers the components, data model, expected operations and semantics.
+The physical view covers the relationship between the software components and the hardware components, while the process view describes the active components, their interaction, and how they drive the I/O.
+Key aspects of the conceptual data model are the description of multi-dimensional data sets, variables and their metadata.
+Alongside typical operations to access and manipulate data asynchronously, the architecture covers the necessary notifications needed to enable management communication between the middleware and the system.
+
+\Cref{chap:components and backends} refines the high level views introduced in chapter \ref{chap:viewpoints}, providing more detail.
+A scheduling component is responsible to accept and delegate incoming requests to the layout component as well as the different backends.
+The layout component finds suitable data fragmentation and bases this decision on a performance model which also reflects the different storage backends.
+The storage backends in turn are responsible to store fragments but also to provide a performance estimate that matches the storage system and its configuration.
+Multiple storage backends are discussed including POSIX-like systems as well as two solutions for object storage.
+
+The document is not intended to describe all components completely but provides a high-level overview that is necessary to build a first prototype; as such there is no Development View included here.
+The development view will come with the prototype, and it is expected that the architecture design will then iterate with actual development and deployment experience.
+
+
+
+
+
+%\section{Systems Deployments}
+%\action{BNL\&JK:List of scenarios}{BNL to discuss with JK an initial list of deployment scenarios}
+%\begin{Discussion}
+%	ESD Demonstrator. GridFTP direct to ESD interface. Which one?
+%	Where deployed. Where is the ESD storage. Cache. Object Store etc.
+%\end{Discussion}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\bibliographystyle{alpha}
+\bibliography{bibliography.bib}
+\label{sec:references}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{use-cases-appendix}
+
+
+\end{document}

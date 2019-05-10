@@ -9,8 +9,7 @@
 \contentsline {paragraph}{\nonumberline A triangular grid}{12}{section*.4}
 \contentsline {paragraph}{\nonumberline Hexagonal grid}{13}{section*.5}
 \contentsline {subsection}{\numberline {2.1.1}Serialisation of Grids}{13}{subsection.2.1.1}
-\contentsline {paragraph}{\nonumberline The Hilbert curve}{13}{section*.6}
-\contentsline {paragraph}{\nonumberline Considerations when serialising to storage systems}{14}{section*.10}
+\contentsline {paragraph}{\nonumberline Considerations when serialising to storage systems}{14}{section*.9}
 \contentsline {section}{\numberline {2.2}File formats}{17}{section.2.2}
 \contentsline {subsection}{\numberline {2.2.1}NetCDF4}{18}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}Typical NetCDF Data Mapping}{19}{subsection.2.2.2}
@@ -26,178 +25,178 @@
 \contentsline {section}{\numberline {2.5}Big Data Concepts}{35}{section.2.5}
 \contentsline {subsection}{\numberline {2.5.1}Ophidia Big Data Analytics Framework}{37}{subsection.2.5.1}
 \contentsline {subsection}{\numberline {2.5.2}MongoDB}{39}{subsection.2.5.2}
-\contentsline {paragraph}{\nonumberline Query documents}{40}{section*.14}
+\contentsline {paragraph}{\nonumberline Query documents}{40}{section*.13}
 \contentsline {chapter}{\numberline {3}Requirements}{41}{chapter.3}
 \contentsline {section}{\numberline {3.1}Functional Requirements}{41}{section.3.1}
 \contentsline {section}{\numberline {3.2}Non-Functional Requirements}{43}{section.3.2}
 \contentsline {chapter}{\numberline {4}Use-Cases}{45}{chapter.4}
 \contentsline {section}{\numberline {4.1}Climate and Weather Workloads}{45}{section.4.1}
-\contentsline {paragraph}{\nonumberline Numerical Weather Prediction}{45}{section*.15}
-\contentsline {paragraph}{\nonumberline Climate}{46}{section*.16}
+\contentsline {paragraph}{\nonumberline Numerical Weather Prediction}{45}{section*.14}
+\contentsline {paragraph}{\nonumberline Climate}{46}{section*.15}
 \contentsline {section}{\numberline {4.2}Roles and Human Actors}{47}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Credentials and Permissions of Actors for Data Access}{48}{subsection.4.2.1}
 \contentsline {section}{\numberline {4.3}Systems}{52}{section.4.3}
-\contentsline {paragraph}{\nonumberline System Description:}{52}{section*.22}
-\contentsline {paragraph}{\nonumberline Risks:}{52}{section*.23}
-\contentsline {paragraph}{\nonumberline Subsystems:}{52}{section*.24}
+\contentsline {paragraph}{\nonumberline System Description:}{52}{section*.21}
+\contentsline {paragraph}{\nonumberline Risks:}{52}{section*.22}
+\contentsline {paragraph}{\nonumberline Subsystems:}{52}{section*.23}
 \contentsline {subsection}{\numberline {4.3.1}System: Supercomputer}{52}{subsection.4.3.1}
-\contentsline {paragraph}{\nonumberline System Description:}{52}{section*.26}
-\contentsline {paragraph}{\nonumberline Risks:}{53}{section*.27}
-\contentsline {paragraph}{\nonumberline Subsystems:}{53}{section*.28}
+\contentsline {paragraph}{\nonumberline System Description:}{52}{section*.25}
+\contentsline {paragraph}{\nonumberline Risks:}{53}{section*.26}
+\contentsline {paragraph}{\nonumberline Subsystems:}{53}{section*.27}
 \contentsline {subsection}{\numberline {4.3.2}System: Storage System}{53}{subsection.4.3.2}
-\contentsline {paragraph}{\nonumberline System Description:}{53}{section*.30}
-\contentsline {paragraph}{\nonumberline Risks:}{54}{section*.31}
-\contentsline {paragraph}{\nonumberline Subsystems:}{54}{section*.32}
+\contentsline {paragraph}{\nonumberline System Description:}{53}{section*.29}
+\contentsline {paragraph}{\nonumberline Risks:}{54}{section*.30}
+\contentsline {paragraph}{\nonumberline Subsystems:}{54}{section*.31}
 \contentsline {subsection}{\numberline {4.3.3}System: Application}{54}{subsection.4.3.3}
-\contentsline {paragraph}{\nonumberline System Description:}{54}{section*.34}
-\contentsline {paragraph}{\nonumberline Risks:}{54}{section*.35}
-\contentsline {paragraph}{\nonumberline Subsystems:}{54}{section*.36}
+\contentsline {paragraph}{\nonumberline System Description:}{54}{section*.33}
+\contentsline {paragraph}{\nonumberline Risks:}{54}{section*.34}
+\contentsline {paragraph}{\nonumberline Subsystems:}{54}{section*.35}
 \contentsline {subsection}{\numberline {4.3.4}System: Software Library (Data Description)}{55}{subsection.4.3.4}
-\contentsline {paragraph}{\nonumberline System Description:}{55}{section*.37}
-\contentsline {paragraph}{\nonumberline Risks:}{55}{section*.38}
-\contentsline {paragraph}{\nonumberline Subsystems:}{55}{section*.39}
+\contentsline {paragraph}{\nonumberline System Description:}{55}{section*.36}
+\contentsline {paragraph}{\nonumberline Risks:}{55}{section*.37}
+\contentsline {paragraph}{\nonumberline Subsystems:}{55}{section*.38}
 \contentsline {subsection}{\numberline {4.3.5}System: ESDM}{55}{subsection.4.3.5}
-\contentsline {paragraph}{\nonumberline System Description:}{55}{section*.41}
-\contentsline {paragraph}{\nonumberline Subsystems:}{56}{section*.42}
+\contentsline {paragraph}{\nonumberline System Description:}{55}{section*.40}
+\contentsline {paragraph}{\nonumberline Subsystems:}{56}{section*.41}
 \contentsline {subsection}{\numberline {4.3.6}System: Job Scheduler}{56}{subsection.4.3.6}
-\contentsline {paragraph}{\nonumberline System Description:}{56}{section*.43}
-\contentsline {paragraph}{\nonumberline Risks:}{56}{section*.44}
-\contentsline {paragraph}{\nonumberline Subsystems:}{56}{section*.45}
+\contentsline {paragraph}{\nonumberline System Description:}{56}{section*.42}
+\contentsline {paragraph}{\nonumberline Risks:}{56}{section*.43}
+\contentsline {paragraph}{\nonumberline Subsystems:}{56}{section*.44}
 \contentsline {section}{\numberline {4.4}Use Cases}{56}{section.4.4}
-\contentsline {paragraph}{\nonumberline Use-Case Description:}{56}{section*.46}
-\contentsline {paragraph}{\nonumberline Priority:}{56}{section*.47}
-\contentsline {paragraph}{\nonumberline Actors/Systems:}{57}{section*.48}
-\contentsline {paragraph}{\nonumberline Data/Domain Description and Decomposition:}{57}{section*.49}
-\contentsline {paragraph}{\nonumberline Pre-Conditions:}{57}{section*.50}
-\contentsline {paragraph}{\nonumberline Post-Conditions:}{57}{section*.51}
-\contentsline {paragraph}{\nonumberline Related Use-Cases:}{57}{section*.52}
-\contentsline {paragraph}{\nonumberline Flow of Events:}{57}{section*.53}
-\contentsline {paragraph}{\nonumberline Exceptions:}{57}{section*.54}
+\contentsline {paragraph}{\nonumberline Use-Case Description:}{56}{section*.45}
+\contentsline {paragraph}{\nonumberline Priority:}{57}{section*.46}
+\contentsline {paragraph}{\nonumberline Actors/Systems:}{57}{section*.47}
+\contentsline {paragraph}{\nonumberline Data/Domain Description and Decomposition:}{57}{section*.48}
+\contentsline {paragraph}{\nonumberline Pre-Conditions:}{57}{section*.49}
+\contentsline {paragraph}{\nonumberline Post-Conditions:}{57}{section*.50}
+\contentsline {paragraph}{\nonumberline Related Use-Cases:}{57}{section*.51}
+\contentsline {paragraph}{\nonumberline Flow of Events:}{57}{section*.52}
+\contentsline {paragraph}{\nonumberline Exceptions:}{57}{section*.53}
 \contentsline {subsection}{\numberline {4.4.1}UC: Independent Write}{57}{subsection.4.4.1}
-\contentsline {paragraph}{\nonumberline Use-Case Description:}{57}{section*.55}
-\contentsline {paragraph}{\nonumberline Pre-Conditions:}{57}{section*.57}
-\contentsline {paragraph}{\nonumberline Post-Conditions:}{57}{section*.58}
-\contentsline {paragraph}{\nonumberline Flow of Events:}{58}{section*.59}
+\contentsline {paragraph}{\nonumberline Use-Case Description:}{57}{section*.54}
+\contentsline {paragraph}{\nonumberline Pre-Conditions:}{57}{section*.56}
+\contentsline {paragraph}{\nonumberline Post-Conditions:}{58}{section*.57}
+\contentsline {paragraph}{\nonumberline Flow of Events:}{58}{section*.58}
 \contentsline {subsection}{\numberline {4.4.2}UC: Independent Read}{59}{subsection.4.4.2}
-\contentsline {paragraph}{\nonumberline Use-Case Description:}{59}{section*.60}
-\contentsline {paragraph}{\nonumberline Pre-Conditions:}{59}{section*.62}
-\contentsline {paragraph}{\nonumberline Post-Conditions:}{59}{section*.63}
-\contentsline {paragraph}{\nonumberline Flow of Events:}{60}{section*.64}
+\contentsline {paragraph}{\nonumberline Use-Case Description:}{59}{section*.59}
+\contentsline {paragraph}{\nonumberline Pre-Conditions:}{59}{section*.61}
+\contentsline {paragraph}{\nonumberline Post-Conditions:}{60}{section*.62}
+\contentsline {paragraph}{\nonumberline Flow of Events:}{60}{section*.63}
 \contentsline {subsection}{\numberline {4.4.3}UC: Simulation}{60}{subsection.4.4.3}
-\contentsline {paragraph}{\nonumberline Use-Case Description:}{60}{section*.65}
-\contentsline {paragraph}{\nonumberline Priority:}{60}{section*.66}
-\contentsline {paragraph}{\nonumberline Actors:}{60}{section*.67}
-\contentsline {paragraph}{\nonumberline Data/Domain Description and Decomposition:}{61}{section*.68}
-\contentsline {paragraph}{\nonumberline Pre-Conditions:}{62}{section*.70}
-\contentsline {paragraph}{\nonumberline Post-Conditions:}{62}{section*.71}
-\contentsline {paragraph}{\nonumberline Related Use-Cases:}{62}{section*.72}
-\contentsline {paragraph}{\nonumberline Flow of Events:}{62}{section*.73}
-\contentsline {paragraph}{\nonumberline Exceptions:}{63}{section*.74}
-\contentsline {subsection}{\numberline {4.4.4}UC: Pre/Post Processing on a existing Data}{63}{subsection.4.4.4}
-\contentsline {paragraph}{\nonumberline Use-Case Description:}{65}{section*.76}
-\contentsline {paragraph}{\nonumberline Priority:}{65}{section*.77}
-\contentsline {paragraph}{\nonumberline Actors:}{65}{section*.78}
-\contentsline {paragraph}{\nonumberline Data/Domain Description and Decomposition:}{65}{section*.79}
-\contentsline {paragraph}{\nonumberline Pre-Conditions:}{65}{section*.81}
-\contentsline {paragraph}{\nonumberline Post-Conditions:}{65}{section*.82}
-\contentsline {paragraph}{\nonumberline Related Use-Cases:}{66}{section*.83}
-\contentsline {paragraph}{\nonumberline Flow of Events:}{66}{section*.84}
-\contentsline {paragraph}{\nonumberline Exceptions:}{67}{section*.86}
-\contentsline {subsection}{\numberline {4.4.5}UC: Concurrent Simulation and Post processing for Pipelines/Workflows}{67}{subsection.4.4.5}
-\contentsline {paragraph}{\nonumberline Use-Case Description:}{68}{section*.87}
-\contentsline {paragraph}{\nonumberline Priority:}{68}{section*.88}
-\contentsline {paragraph}{\nonumberline Actors:}{68}{section*.89}
-\contentsline {paragraph}{\nonumberline Data/Domain Description and Decomposition:}{68}{section*.90}
-\contentsline {paragraph}{\nonumberline Pre-Conditions:}{68}{section*.92}
-\contentsline {paragraph}{\nonumberline Post-Conditions:}{69}{section*.93}
-\contentsline {paragraph}{\nonumberline Related Use-Cases:}{69}{section*.94}
-\contentsline {paragraph}{\nonumberline Flow of Events:}{69}{section*.95}
-\contentsline {paragraph}{\nonumberline Exceptions:}{70}{section*.97}
-\contentsline {subsection}{\numberline {4.4.6}UC: Simulation + In situ post processing}{70}{subsection.4.4.6}
-\contentsline {paragraph}{\nonumberline Use-Case Description:}{72}{section*.98}
-\contentsline {paragraph}{\nonumberline Priority:}{72}{section*.99}
-\contentsline {paragraph}{\nonumberline Actors:}{72}{section*.100}
-\contentsline {paragraph}{\nonumberline Data/Domain Description and Decomposition:}{72}{section*.101}
-\contentsline {paragraph}{\nonumberline Pre-Conditions:}{73}{section*.103}
-\contentsline {paragraph}{\nonumberline Post-Conditions:}{73}{section*.104}
-\contentsline {paragraph}{\nonumberline Related Use-Cases:}{73}{section*.105}
-\contentsline {paragraph}{\nonumberline Flow of Events:}{73}{section*.106}
-\contentsline {paragraph}{\nonumberline Exceptions:}{74}{section*.108}
-\contentsline {subsection}{\numberline {4.4.7}UC: Simulation + In situ + Interactive Visualisation}{74}{subsection.4.4.7}
-\contentsline {paragraph}{\nonumberline Use-Case Description:}{76}{section*.109}
-\contentsline {paragraph}{\nonumberline Priority:}{76}{section*.110}
-\contentsline {paragraph}{\nonumberline Actors:}{76}{section*.111}
-\contentsline {paragraph}{\nonumberline Data/Domain Description and Decomposition:}{76}{section*.112}
-\contentsline {paragraph}{\nonumberline Pre-Conditions:}{77}{section*.114}
-\contentsline {paragraph}{\nonumberline Post-Conditions:}{77}{section*.115}
-\contentsline {paragraph}{\nonumberline Related Use-Cases:}{77}{section*.116}
-\contentsline {paragraph}{\nonumberline Flow of Events:}{77}{section*.117}
-\contentsline {paragraph}{\nonumberline Exceptions:}{78}{section*.119}
+\contentsline {paragraph}{\nonumberline Use-Case Description:}{60}{section*.64}
+\contentsline {paragraph}{\nonumberline Priority:}{60}{section*.65}
+\contentsline {paragraph}{\nonumberline Actors:}{60}{section*.66}
+\contentsline {paragraph}{\nonumberline Data/Domain Description and Decomposition:}{61}{section*.67}
+\contentsline {paragraph}{\nonumberline Pre-Conditions:}{61}{section*.69}
+\contentsline {paragraph}{\nonumberline Post-Conditions:}{62}{section*.70}
+\contentsline {paragraph}{\nonumberline Related Use-Cases:}{62}{section*.71}
+\contentsline {paragraph}{\nonumberline Flow of Events:}{62}{section*.72}
+\contentsline {paragraph}{\nonumberline Exceptions:}{63}{section*.73}
+\contentsline {subsection}{\numberline {4.4.4}UC: Pre/Post Processing on a existing Data}{65}{subsection.4.4.4}
+\contentsline {paragraph}{\nonumberline Use-Case Description:}{65}{section*.75}
+\contentsline {paragraph}{\nonumberline Priority:}{65}{section*.76}
+\contentsline {paragraph}{\nonumberline Actors:}{65}{section*.77}
+\contentsline {paragraph}{\nonumberline Data/Domain Description and Decomposition:}{65}{section*.78}
+\contentsline {paragraph}{\nonumberline Pre-Conditions:}{65}{section*.80}
+\contentsline {paragraph}{\nonumberline Post-Conditions:}{66}{section*.81}
+\contentsline {paragraph}{\nonumberline Related Use-Cases:}{66}{section*.82}
+\contentsline {paragraph}{\nonumberline Flow of Events:}{66}{section*.83}
+\contentsline {paragraph}{\nonumberline Exceptions:}{67}{section*.85}
+\contentsline {subsection}{\numberline {4.4.5}UC: Concurrent Simulation and Post-Processing for Pipelines/Workflows}{68}{subsection.4.4.5}
+\contentsline {paragraph}{\nonumberline Use-Case Description:}{68}{section*.86}
+\contentsline {paragraph}{\nonumberline Priority:}{68}{section*.87}
+\contentsline {paragraph}{\nonumberline Actors:}{68}{section*.88}
+\contentsline {paragraph}{\nonumberline Data/Domain Description and Decomposition:}{68}{section*.89}
+\contentsline {paragraph}{\nonumberline Pre-Conditions:}{68}{section*.91}
+\contentsline {paragraph}{\nonumberline Post-Conditions:}{69}{section*.92}
+\contentsline {paragraph}{\nonumberline Related Use-Cases:}{69}{section*.93}
+\contentsline {paragraph}{\nonumberline Flow of Events:}{70}{section*.94}
+\contentsline {paragraph}{\nonumberline Exceptions:}{70}{section*.96}
+\contentsline {subsection}{\numberline {4.4.6}UC: Simulation + In situ post processing}{72}{subsection.4.4.6}
+\contentsline {paragraph}{\nonumberline Use-Case Description:}{72}{section*.97}
+\contentsline {paragraph}{\nonumberline Priority:}{72}{section*.98}
+\contentsline {paragraph}{\nonumberline Actors:}{72}{section*.99}
+\contentsline {paragraph}{\nonumberline Data/Domain Description and Decomposition:}{72}{section*.100}
+\contentsline {paragraph}{\nonumberline Pre-Conditions:}{72}{section*.102}
+\contentsline {paragraph}{\nonumberline Post-Conditions:}{73}{section*.103}
+\contentsline {paragraph}{\nonumberline Related Use-Cases:}{73}{section*.104}
+\contentsline {paragraph}{\nonumberline Flow of Events:}{73}{section*.105}
+\contentsline {paragraph}{\nonumberline Exceptions:}{74}{section*.107}
+\contentsline {subsection}{\numberline {4.4.7}UC: Simulation + In situ + Interactive Visualisation}{76}{subsection.4.4.7}
+\contentsline {paragraph}{\nonumberline Use-Case Description:}{76}{section*.108}
+\contentsline {paragraph}{\nonumberline Priority:}{76}{section*.109}
+\contentsline {paragraph}{\nonumberline Actors:}{76}{section*.110}
+\contentsline {paragraph}{\nonumberline Data/Domain Description and Decomposition:}{76}{section*.111}
+\contentsline {paragraph}{\nonumberline Pre-Conditions:}{77}{section*.113}
+\contentsline {paragraph}{\nonumberline Post-Conditions:}{77}{section*.114}
+\contentsline {paragraph}{\nonumberline Related Use-Cases:}{77}{section*.115}
+\contentsline {paragraph}{\nonumberline Flow of Events:}{77}{section*.116}
+\contentsline {paragraph}{\nonumberline Exceptions:}{78}{section*.118}
 \contentsline {subsection}{\numberline {4.4.8}UC: Simulation + Big Data Analysis + In situ analysis/visualisation}{78}{subsection.4.4.8}
-\contentsline {paragraph}{\nonumberline Use-Case Description:}{78}{section*.120}
-\contentsline {paragraph}{\nonumberline Priority:}{80}{section*.121}
-\contentsline {paragraph}{\nonumberline Actors:}{80}{section*.122}
-\contentsline {paragraph}{\nonumberline Data/Domain Description and Decomposition:}{80}{section*.123}
-\contentsline {paragraph}{\nonumberline Pre-Conditions:}{80}{section*.124}
-\contentsline {paragraph}{\nonumberline Post-Conditions:}{81}{section*.125}
-\contentsline {paragraph}{\nonumberline Flow of Events:}{81}{section*.126}
-\contentsline {paragraph}{\nonumberline Related Use-Cases:}{82}{section*.128}
-\contentsline {paragraph}{\nonumberline Exceptions:}{82}{section*.129}
+\contentsline {paragraph}{\nonumberline Use-Case Description:}{80}{section*.119}
+\contentsline {paragraph}{\nonumberline Priority:}{80}{section*.120}
+\contentsline {paragraph}{\nonumberline Actors:}{80}{section*.121}
+\contentsline {paragraph}{\nonumberline Data/Domain Description and Decomposition:}{80}{section*.122}
+\contentsline {paragraph}{\nonumberline Pre-Conditions:}{80}{section*.123}
+\contentsline {paragraph}{\nonumberline Post-Conditions:}{81}{section*.124}
+\contentsline {paragraph}{\nonumberline Flow of Events:}{81}{section*.125}
+\contentsline {paragraph}{\nonumberline Related Use-Cases:}{82}{section*.127}
+\contentsline {paragraph}{\nonumberline Exceptions:}{82}{section*.128}
 \contentsline {chapter}{\numberline {5}Architecture: Viewpoints}{84}{chapter.5}
 \contentsline {section}{\numberline {5.1}Logical View: Component Overview}{84}{section.5.1}
-\contentsline {paragraph}{\nonumberline Problem Summary}{84}{section*.130}
-\contentsline {paragraph}{\nonumberline The ESD Middleware}{84}{section*.131}
-\contentsline {paragraph}{\nonumberline Applications}{87}{section*.134}
-\contentsline {paragraph}{\nonumberline Job scheduler}{87}{section*.135}
-\contentsline {paragraph}{\nonumberline Middleware libraries}{87}{section*.136}
-\contentsline {paragraph}{\nonumberline ESD Interface}{87}{section*.137}
-\contentsline {paragraph}{\nonumberline Data Types}{87}{section*.138}
-\contentsline {paragraph}{\nonumberline Layout}{87}{section*.139}
-\contentsline {paragraph}{\nonumberline Performance model}{87}{section*.140}
-\contentsline {paragraph}{\nonumberline Scheduler}{87}{section*.141}
-\contentsline {paragraph}{\nonumberline Metadata backend}{87}{section*.142}
-\contentsline {paragraph}{\nonumberline Storage backend}{87}{section*.143}
-\contentsline {paragraph}{\nonumberline Tools and services}{88}{section*.144}
+\contentsline {paragraph}{\nonumberline Problem Summary}{84}{section*.129}
+\contentsline {paragraph}{\nonumberline The ESD Middleware}{84}{section*.130}
+\contentsline {paragraph}{\nonumberline Applications}{87}{section*.133}
+\contentsline {paragraph}{\nonumberline Job scheduler}{87}{section*.134}
+\contentsline {paragraph}{\nonumberline Middleware libraries}{87}{section*.135}
+\contentsline {paragraph}{\nonumberline ESD Interface}{87}{section*.136}
+\contentsline {paragraph}{\nonumberline Data Types}{87}{section*.137}
+\contentsline {paragraph}{\nonumberline Layout}{87}{section*.138}
+\contentsline {paragraph}{\nonumberline Performance model}{87}{section*.139}
+\contentsline {paragraph}{\nonumberline Scheduler}{87}{section*.140}
+\contentsline {paragraph}{\nonumberline Metadata backend}{87}{section*.141}
+\contentsline {paragraph}{\nonumberline Storage backend}{87}{section*.142}
+\contentsline {paragraph}{\nonumberline Tools and services}{88}{section*.143}
 \contentsline {section}{\numberline {5.2}Logical View: Data Model}{88}{section.5.2}
 \contentsline {subsection}{\numberline {5.2.1}Conceptual Data Model}{88}{subsection.5.2.1}
-\contentsline {paragraph}{\nonumberline Motivation from climate}{88}{section*.145}
-\contentsline {paragraph}{\nonumberline Variable:}{89}{section*.148}
-\contentsline {paragraph}{\nonumberline Metadata:}{89}{section*.149}
-\contentsline {paragraph}{\nonumberline Dimension:}{90}{section*.150}
-\contentsline {paragraph}{\nonumberline Coordinate:}{90}{section*.151}
-\contentsline {paragraph}{\nonumberline Cell:}{90}{section*.152}
-\contentsline {paragraph}{\nonumberline Data set:}{90}{section*.153}
-\contentsline {paragraph}{\nonumberline Datatype:}{90}{section*.154}
-\contentsline {paragraph}{\nonumberline Operators:}{90}{section*.155}
+\contentsline {paragraph}{\nonumberline Motivation from climate}{88}{section*.144}
+\contentsline {paragraph}{\nonumberline Variable:}{89}{section*.147}
+\contentsline {paragraph}{\nonumberline Metadata:}{89}{section*.148}
+\contentsline {paragraph}{\nonumberline Dimension:}{90}{section*.149}
+\contentsline {paragraph}{\nonumberline Coordinate:}{90}{section*.150}
+\contentsline {paragraph}{\nonumberline Cell:}{90}{section*.151}
+\contentsline {paragraph}{\nonumberline Data set:}{90}{section*.152}
+\contentsline {paragraph}{\nonumberline Datatype:}{90}{section*.153}
+\contentsline {paragraph}{\nonumberline Operators:}{90}{section*.154}
 \contentsline {subsection}{\numberline {5.2.2}Logical Data Model}{91}{subsection.5.2.2}
-\contentsline {paragraph}{\nonumberline Variable:}{91}{section*.156}
-\contentsline {paragraph}{\nonumberline Fragment:}{92}{section*.157}
-\contentsline {paragraph}{\nonumberline Container:}{92}{section*.158}
-\contentsline {paragraph}{\nonumberline Metadata:}{93}{section*.159}
-\contentsline {paragraph}{\nonumberline Reference}{93}{section*.160}
-\contentsline {paragraph}{\nonumberline Namespace}{94}{section*.162}
+\contentsline {paragraph}{\nonumberline Variable:}{91}{section*.155}
+\contentsline {paragraph}{\nonumberline Fragment:}{92}{section*.156}
+\contentsline {paragraph}{\nonumberline Container:}{92}{section*.157}
+\contentsline {paragraph}{\nonumberline Metadata:}{93}{section*.158}
+\contentsline {paragraph}{\nonumberline Reference}{93}{section*.159}
+\contentsline {paragraph}{\nonumberline Namespace}{94}{section*.161}
 \contentsline {subsection}{\numberline {5.2.3}Relationships between the Conceptual and Logical Data Model}{95}{subsection.5.2.3}
 \contentsline {subsection}{\numberline {5.2.4}Data types}{96}{subsection.5.2.4}
 \contentsline {section}{\numberline {5.3}Operations and Semantics}{99}{section.5.3}
-\contentsline {paragraph}{\nonumberline Accessing data}{99}{section*.167}
-\contentsline {paragraph}{\nonumberline Sealed Variables/Containers}{100}{section*.168}
-\contentsline {paragraph}{\nonumberline Accessing existing data structures:}{100}{section*.169}
-\contentsline {paragraph}{\nonumberline Creation of data structures:}{100}{section*.170}
-\contentsline {paragraph}{\nonumberline Exclusive access and concurrency control:}{100}{section*.171}
-\contentsline {paragraph}{\nonumberline Low level interfaces:}{100}{section*.172}
+\contentsline {paragraph}{\nonumberline Accessing data}{99}{section*.166}
+\contentsline {paragraph}{\nonumberline Sealed Variables/Containers}{100}{section*.167}
+\contentsline {paragraph}{\nonumberline Accessing existing data structures:}{100}{section*.168}
+\contentsline {paragraph}{\nonumberline Creation of data structures:}{100}{section*.169}
+\contentsline {paragraph}{\nonumberline Exclusive access and concurrency control:}{100}{section*.170}
+\contentsline {paragraph}{\nonumberline Low-level interfaces:}{100}{section*.171}
 \contentsline {subsection}{\numberline {5.3.1}Epoch Semantics}{101}{subsection.5.3.1}
 \contentsline {subsection}{\numberline {5.3.2}Notifications}{102}{subsection.5.3.2}
-\contentsline {paragraph}{\nonumberline Subscribe/Unsubscribe:}{102}{section*.174}
-\contentsline {paragraph}{\nonumberline Events:}{102}{section*.175}
-\contentsline {paragraph}{\nonumberline User Events:}{102}{section*.176}
-\contentsline {paragraph}{\nonumberline Event Log:}{102}{section*.177}
+\contentsline {paragraph}{\nonumberline Subscribe/Unsubscribe:}{102}{section*.173}
+\contentsline {paragraph}{\nonumberline Events:}{102}{section*.174}
+\contentsline {paragraph}{\nonumberline User Events:}{102}{section*.175}
+\contentsline {paragraph}{\nonumberline Event Log:}{102}{section*.176}
 \contentsline {section}{\numberline {5.4}Physical view}{103}{section.5.4}
-\contentsline {paragraph}{\nonumberline Applications:}{103}{section*.179}
-\contentsline {paragraph}{\nonumberline Daemons:}{103}{section*.180}
-\contentsline {paragraph}{\nonumberline Storage System:}{103}{section*.181}
-\contentsline {paragraph}{\nonumberline Site Configuration:}{103}{section*.182}
+\contentsline {paragraph}{\nonumberline Applications:}{103}{section*.178}
+\contentsline {paragraph}{\nonumberline Daemons:}{103}{section*.179}
+\contentsline {paragraph}{\nonumberline Storage System:}{103}{section*.180}
+\contentsline {paragraph}{\nonumberline Site Configuration:}{103}{section*.181}
 \contentsline {section}{\numberline {5.5}Process view}{103}{section.5.5}
-\contentsline {paragraph}{\nonumberline ESDM daemon}{104}{section*.184}
+\contentsline {paragraph}{\nonumberline ESDM daemon}{104}{section*.183}
 \contentsline {section}{\numberline {5.6}Requirements-Matrix}{104}{section.5.6}
 \contentsline {chapter}{\numberline {6}Architecture: Components and Backends}{107}{chapter.6}
 \contentsline {section}{\numberline {6.1}Scheduling Component}{107}{section.6.1}
@@ -206,83 +205,83 @@
 \contentsline {subsection}{\numberline {6.1.3}Physical View}{109}{subsection.6.1.3}
 \contentsline {section}{\numberline {6.2}Layout Component}{110}{section.6.2}
 \contentsline {subsection}{\numberline {6.2.1}Logical View}{110}{subsection.6.2.1}
-\contentsline {subsubsection}{\nonumberline Initialisation of the Layout/Performance Model}{111}{section*.189}
-\contentsline {subsubsection}{\nonumberline Performance Model and Decision Process}{111}{section*.191}
-\contentsline {subsubsection}{\nonumberline Layout Reconstruction}{112}{section*.193}
+\contentsline {subsubsection}{\nonumberline Initialisation of the Layout/Performance Model}{111}{section*.188}
+\contentsline {subsubsection}{\nonumberline Performance Model and Decision Process}{111}{section*.190}
+\contentsline {subsubsection}{\nonumberline Layout Reconstruction}{112}{section*.192}
 \contentsline {subsection}{\numberline {6.2.2}Process View}{112}{subsection.6.2.2}
 \contentsline {subsection}{\numberline {6.2.3}Physical View}{113}{subsection.6.2.3}
 \contentsline {section}{\numberline {6.3}HDF5+MPI plugin}{115}{section.6.3}
 \contentsline {subsection}{\numberline {6.3.1}Logical View}{115}{subsection.6.3.1}
-\contentsline {subsubsection}{\nonumberline Dealing with file names}{115}{section*.197}
-\contentsline {subsubsection}{\nonumberline Open}{116}{section*.198}
-\contentsline {subsubsection}{\nonumberline Concurrency semantics}{116}{section*.199}
-\contentsline {subsubsection}{\nonumberline Close}{116}{section*.200}
+\contentsline {subsubsection}{\nonumberline Dealing with file names}{115}{section*.196}
+\contentsline {subsubsection}{\nonumberline Open}{116}{section*.197}
+\contentsline {subsubsection}{\nonumberline Concurrency semantics}{116}{section*.198}
+\contentsline {subsubsection}{\nonumberline Close}{116}{section*.199}
 \contentsline {subsection}{\numberline {6.3.2}Physical View}{116}{subsection.6.3.2}
 \contentsline {subsection}{\numberline {6.3.3}Process View}{117}{subsection.6.3.3}
 \contentsline {section}{\numberline {6.4}Fuse Legacy + Metadata Mapped Views}{118}{section.6.4}
 \contentsline {subsection}{\numberline {6.4.1}Logical View}{118}{subsection.6.4.1}
-\contentsline {paragraph}{\nonumberline Access Semantics:}{119}{section*.204}
+\contentsline {paragraph}{\nonumberline Access Semantics:}{119}{section*.203}
 \contentsline {subsection}{\numberline {6.4.2}Development View}{119}{subsection.6.4.2}
-\contentsline {subsubsection}{\nonumberline Use HDF5 to create file on the fly}{119}{section*.205}
+\contentsline {subsubsection}{\nonumberline Use HDF5 to create a file on the fly}{119}{section*.204}
 \contentsline {subsection}{\numberline {6.4.3}Process View}{119}{subsection.6.4.3}
 \contentsline {subsection}{\numberline {6.4.4}Physical View}{121}{subsection.6.4.4}
 \contentsline {section}{\numberline {6.5}Backend POSIX/Lustre (Using ESDM)}{123}{section.6.5}
 \contentsline {subsection}{\numberline {6.5.1}Logical View}{123}{subsection.6.5.1}
-\contentsline {paragraph}{\nonumberline Writing data}{124}{section*.210}
-\contentsline {paragraph}{\nonumberline Reading data}{124}{section*.212}
-\contentsline {paragraph}{\nonumberline Lookup:}{126}{section*.214}
+\contentsline {paragraph}{\nonumberline Writing data}{124}{section*.209}
+\contentsline {paragraph}{\nonumberline Reading data}{124}{section*.211}
+\contentsline {paragraph}{\nonumberline Lookup:}{126}{section*.213}
 \contentsline {subsection}{\numberline {6.5.2}Process View}{126}{subsection.6.5.2}
-\contentsline {paragraph}{\nonumberline Scheduler component}{127}{section*.217}
-\contentsline {paragraph}{\nonumberline ESDM Compactor component}{127}{section*.218}
-\contentsline {paragraph}{\nonumberline (Competing Load):}{127}{section*.219}
-\contentsline {paragraph}{\nonumberline (Service Loads):}{127}{section*.220}
+\contentsline {paragraph}{\nonumberline Scheduler component}{127}{section*.216}
+\contentsline {paragraph}{\nonumberline ESDM Compactor component}{127}{section*.217}
+\contentsline {paragraph}{\nonumberline (Competing Load):}{127}{section*.218}
+\contentsline {paragraph}{\nonumberline (Service Loads):}{127}{section*.219}
 \contentsline {subsection}{\numberline {6.5.3}Physical View}{127}{subsection.6.5.3}
 \contentsline {section}{\numberline {6.6}Mongo DB Metadata backend}{128}{section.6.6}
 \contentsline {subsection}{\numberline {6.6.1}Logical View}{128}{subsection.6.6.1}
-\contentsline {subsubsection}{\nonumberline Metadata}{128}{section*.222}
+\contentsline {subsubsection}{\nonumberline Metadata}{128}{section*.221}
 \contentsline {subsection}{\numberline {6.6.2}Mapping of metadata}{130}{subsection.6.6.2}
 \contentsline {subsection}{\numberline {6.6.3}Example}{131}{subsection.6.6.3}
-\contentsline {subsubsection}{\nonumberline Container}{132}{section*.225}
-\contentsline {subsubsection}{\nonumberline Variable}{132}{section*.226}
-\contentsline {subsubsection}{\nonumberline Shards}{134}{section*.227}
+\contentsline {subsubsection}{\nonumberline Container}{132}{section*.224}
+\contentsline {subsubsection}{\nonumberline Variable}{132}{section*.225}
+\contentsline {subsubsection}{\nonumberline Shards}{134}{section*.226}
 \contentsline {subsection}{\numberline {6.6.4}Physical View}{135}{subsection.6.6.4}
 \contentsline {subsection}{\numberline {6.6.5}Process View}{135}{subsection.6.6.5}
 \contentsline {section}{\numberline {6.7}Mero Backend}{136}{section.6.7}
 \contentsline {subsection}{\numberline {6.7.1}Logical View}{136}{subsection.6.7.1}
-\contentsline {paragraph}{\nonumberline Writing data}{139}{section*.229}
-\contentsline {paragraph}{\nonumberline Reading data}{139}{section*.231}
-\contentsline {paragraph}{\nonumberline Lookup:}{141}{section*.233}
+\contentsline {paragraph}{\nonumberline Writing data}{138}{section*.228}
+\contentsline {paragraph}{\nonumberline Reading data}{139}{section*.230}
+\contentsline {paragraph}{\nonumberline Lookup:}{139}{section*.232}
 \contentsline {subsection}{\numberline {6.7.2}Process View}{142}{subsection.6.7.2}
-\contentsline {paragraph}{\nonumberline Progress component:}{143}{section*.235}
-\contentsline {paragraph}{\nonumberline Clovis Instance component:}{143}{section*.236}
-\contentsline {paragraph}{\nonumberline Service Management component:}{143}{section*.237}
+\contentsline {paragraph}{\nonumberline Progress component:}{143}{section*.234}
+\contentsline {paragraph}{\nonumberline Clovis Instance component:}{143}{section*.235}
+\contentsline {paragraph}{\nonumberline Service Management component:}{143}{section*.236}
 \contentsline {subsection}{\numberline {6.7.3}Development View}{143}{subsection.6.7.3}
 \contentsline {subsection}{\numberline {6.7.4}Physical View}{144}{subsection.6.7.4}
 \contentsline {section}{\numberline {6.8}WOS Backend}{145}{section.6.8}
 \contentsline {subsection}{\numberline {6.8.1}Logical View}{145}{subsection.6.8.1}
-\contentsline {paragraph}{\nonumberline Writing data:}{146}{section*.241}
-\contentsline {paragraph}{\nonumberline Reading data:}{146}{section*.243}
-\contentsline {paragraph}{\nonumberline Lookup:}{149}{section*.245}
+\contentsline {paragraph}{\nonumberline Writing data:}{146}{section*.240}
+\contentsline {paragraph}{\nonumberline Reading data:}{146}{section*.242}
+\contentsline {paragraph}{\nonumberline Lookup:}{149}{section*.244}
 \contentsline {subsection}{\numberline {6.8.2}Process View}{149}{subsection.6.8.2}
 \contentsline {subsection}{\numberline {6.8.3}Development View}{149}{subsection.6.8.3}
 \contentsline {subsection}{\numberline {6.8.4}Physical View}{150}{subsection.6.8.4}
 \contentsline {chapter}{\numberline {7}Summary}{152}{chapter.7}
 \contentsline {chapter}{\numberline {A}Templates}{155}{appendix.A}
 \contentsline {subsection}{\numberline {A.0.1}System: Template}{155}{subsection.A.0.1}
-\contentsline {paragraph}{\nonumberline System Description:}{155}{section*.250}
-\contentsline {paragraph}{\nonumberline Risks:}{155}{section*.251}
-\contentsline {paragraph}{\nonumberline Subsystems:}{155}{section*.252}
+\contentsline {paragraph}{\nonumberline System Description:}{155}{section*.249}
+\contentsline {paragraph}{\nonumberline Risks:}{155}{section*.250}
+\contentsline {paragraph}{\nonumberline Subsystems:}{155}{section*.251}
 \contentsline {section}{\numberline {A.1}Use Cases}{155}{section.A.1}
 \contentsline {subsection}{\numberline {A.1.1}UC: Template}{155}{subsection.A.1.1}
-\contentsline {paragraph}{\nonumberline Actors:}{156}{section*.253}
-\contentsline {paragraph}{\nonumberline Use-Case Description:}{156}{section*.254}
-\contentsline {paragraph}{\nonumberline Priority:}{156}{section*.255}
-\contentsline {paragraph}{\nonumberline Data/Domain Description:}{156}{section*.256}
-\contentsline {paragraph}{\nonumberline Domain Decomposition:}{156}{section*.257}
-\contentsline {paragraph}{\nonumberline Pre-Conditions:}{156}{section*.259}
-\contentsline {paragraph}{\nonumberline Post-Conditions:}{156}{section*.260}
-\contentsline {paragraph}{\nonumberline Used Use-Cases:}{156}{section*.261}
-\contentsline {paragraph}{\nonumberline Flow of Events:}{157}{section*.262}
-\contentsline {paragraph}{\nonumberline Exceptions:}{157}{section*.264}
-\contentsline {paragraph}{\nonumberline Assumptions:}{157}{section*.267}
-\contentsline {paragraph}{\nonumberline Notes/Issues:}{157}{section*.268}
+\contentsline {paragraph}{\nonumberline Actors:}{156}{section*.252}
+\contentsline {paragraph}{\nonumberline Use-Case Description:}{156}{section*.253}
+\contentsline {paragraph}{\nonumberline Priority:}{156}{section*.254}
+\contentsline {paragraph}{\nonumberline Data/Domain Description:}{156}{section*.255}
+\contentsline {paragraph}{\nonumberline Domain Decomposition:}{156}{section*.256}
+\contentsline {paragraph}{\nonumberline Pre-Conditions:}{156}{section*.258}
+\contentsline {paragraph}{\nonumberline Post-Conditions:}{156}{section*.259}
+\contentsline {paragraph}{\nonumberline Used Use-Cases:}{156}{section*.260}
+\contentsline {paragraph}{\nonumberline Flow of Events:}{157}{section*.261}
+\contentsline {paragraph}{\nonumberline Exceptions:}{157}{section*.263}
+\contentsline {paragraph}{\nonumberline Assumptions:}{157}{section*.266}
+\contentsline {paragraph}{\nonumberline Notes/Issues:}{157}{section*.267}

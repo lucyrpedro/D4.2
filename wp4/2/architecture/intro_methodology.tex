@@ -1,16 +1,14 @@
 A middleware approach, providing new functionality which insulates applications from storage systems provides the only practical solution to the problems outlined in \Cref{sec:esd goals}.
-To that end we have designed the ``Earth System Data'' middleware.
+To that end, we have designed the ``Earth System Data'' middleware.
 This new middleware needs to be inserted into existing workflows, yet it must exploit a range of existing and potential storage architectures.
-It will be seen that it also needs to work within and across institutional firewalls and boundaries.
+It will be seen that it also needs to work within and across institutional firewalls and boundaries. The design philosophy needs to respect aspects of the weak coupling concepts of a micro-services design, of the stronger coupling notions of distributed systems design, and of tight-coupling assumptions associated with building appliances (such as those sold which provide transparent gateways between parallel file systems and object stores) to meet these goals.
 
-To meet these goals, the design philosophy needs to respect aspects of the weak coupling concepts of a micro services design, of the stronger coupling notions of distributed systems design, and of  tight-coupling notions associated with building appliances (such as those sold which provide transparent gateways between parallel file systems and object stores).
-
-The design philosophy also needs to reflect the reality that while we have a good sense of the general requirements, specific requirements are likely to become clearer as we actually build and implement the ESD.
-It is also being built in a changing environment of other standards and tools - for example, the advent of the Climate and Forecast conventions V2.0 is likely to occur during this project, and that could have significant impact on data layouts, which might impact the ESD middleware design. Similarly, the new HDF server library being built by the HDF Group is likely to be an important component of the ESD middleware thinking, as are the changing capabilities of both the standard object APIs such as S3 and Swift, and the proprietary APIs of vendors (including, but not limited to that of our partner, Seagate).
+The design philosophy also needs to reflect the reality that while we have a good sense of the general requirements, specific requirements are likely to become more apparent as we build and implement the ESD.
+It is also being built in a changing environment of other standards and tools - for example, the advent of the Climate and Forecast conventions V2.0 is likely to occur during this project, and that could have a significant impact on data layouts, which might impact the ESD middleware design. Similarly, the new HDF server library being built by the HDF Group is likely to be an vital component of the ESD middleware thinking, as are the changing capabilities of both the standard object APIs such as S3 and Swift, and the proprietary APIs of vendors (including, but not limited to that of our partner, Seagate).
 
 All of these trends mean that the design philosophy, and the design itself, need to be flexible and responsive to evolving understanding and external influences.
-One direct consequence of this is that we might expect different components of the ESD middleware to be themselves evolving at different rates:
-given the complexity of the problem, it is unlikely that a coherent overall architecture can be mandated and controlled \textit{and all components deployed simultaneously at all sites and in all clients}. To that end, our underlying philosophy for all components will conform to Postel's Law:
+One direct consequence of this is that we might expect different components of the ESD middleware to be themselves evolving at different rates.
+Given the complexity of the problem, it is unlikely that a coherent overall architecture can be mandated and controlled \textit{and all components deployed simultaneously at all sites and in all clients}. To that end, our underlying philosophy for all components will conform to Postel's Law:
 \begin{quote}
 \textit{Be conservative in what you send, be liberal in what you accept.}
 \end{quote}
@@ -27,15 +25,13 @@ following chapters):
     \begin{enumerate}
         \item \textit{describes} the functionality needed, and
         \item \textit{defines} the data models underlying any information artefacts needed to implement that functionality, and
-        \item \textit{shows} the logical components of which the ESD is composed of.
+        \item \textit{shows} the logical components that compound the ESD.
     \end{enumerate}
     For ESD middleware, the relevant data models will include those necessary to import and export data, to describe backend components, and to configure the layout of ESD data on those backend components.
-    \item The \textbf{Physical View} which \textit{describes} how the software components and libraries within the ESD middleware can
-    be deployed on the hardware that the ESD middleware supports (so of
-    necessity it defines what hardware is needed, and what it would mean for hardware to be ESD compliant).
+    \item The \textbf{Physical View} which \textit{describes} how the software components and libraries within the ESD middleware can be deployed on the hardware that the ESD middleware supports (so of necessity it defines what hardware is needed, and what it would mean for hardware to be ESD compliant).
     \item The \textbf{Process View} which
     \begin{enumerate}
-    \item \textit{defines} active processes and threads that drive and control the software, and how they interact.  This describes services to deploy and their communication.
+    \item \textit{defines} active processes and threads that drive and control the software, and how they interact.  They describe services to deploy and their communication.
     How these services are managed from both the administration and user perspectives is part of the logical view.
         %\item \textit{describes} how the system will perform and scale.
     \end{enumerate}
@@ -43,6 +39,5 @@ following chapters):
 \end{enumerate}
 Supplemented by a number of
 \begin{enumerate} [resume]
-    \item \textbf{Scenarios} (or Use Cases) which provide an integrated view of how the ESD middleware can be deployed and used. Here, our use case views will
-    describe the primary use-cases for ESiWACE.
+    \item \textbf{Scenarios} (or Use Cases) which provide an integrated view of how the ESD middleware can be deployed and used. Here, our use case views will describe the primary use-cases for ESiWACE.
 \end{enumerate}

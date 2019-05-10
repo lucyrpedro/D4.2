@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.4.10)  7 MAY 2019 18:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.4.10)  9 MAY 2019 22:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2170,17 +2170,17 @@ chitecture.toc
 [2
 
 ]
-Overfull \hbox (1.095pt too wide) detected at line 202
+Overfull \hbox (1.095pt too wide) detected at line 201
  []\OT1/cmss/bx/n/10.95 107
  []
 
 [3]
-Overfull \hbox (1.095pt too wide) detected at line 269
+Overfull \hbox (1.095pt too wide) detected at line 268
  []\OT1/cmss/bx/n/10.95 152
  []
 
 
-Overfull \hbox (1.095pt too wide) detected at line 270
+Overfull \hbox (1.095pt too wide) detected at line 269
  []\OT1/cmss/bx/n/10.95 155
  []
 
@@ -2226,7 +2226,7 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 18.
  [7
 
-] [8]) (./intro_methodology.tex [9] [10]) [11]
+] [8]) (./intro_methodology.tex [9]) [10] [11]
 chapter 2.
 (./background_formats.tex
 <../figures/hgrid.jpg, id=666, 591.96439pt x 256.5991pt>
@@ -2236,87 +2236,109 @@ Package pdftex.def Info: ../figures/hgrid.jpg  used on input line 31.
 (pdftex.def)             Requested size: 308.7111pt x 133.81992pt.
  [12
 
-] [13 <../figures/hgrid.jpg>]
-<../figures/grid-hex-empty.png, id=700, 803.0pt x 803.0pt>
+]
+
+Class scrreprt Warning: deprecated old font command `\bf' used.
+(scrreprt)              You should note, that since 1994 LaTeX2e provides a
+(scrreprt)              new font selection scheme called NFSS2 with several
+(scrreprt)              new, combinable font commands. New KOMA-Script classes
+(scrreprt)              defined the old font commands like `\bf' only for
+(scrreprt)              compatibility with LaTeX 2.09 document styles of
+(scrreprt)              Script 2.0. These commands are deprecated and
+(scrreprt)              undocumented at least since 2003. Since 2013,
+(scrreprt)              KOMA-Script classes warned about soon removement of
+(scrreprt)              these deprecated commands. Now, after two decades of
+(scrreprt)              LaTeX2e, NFSS2, and KOMA-Script these commands will
+(scrreprt)              not work any longer. If loading a package results in
+(scrreprt)              this message you should contact the author of that
+(scrreprt)              package and ask him to replace the depracted font
+(scrreprt)              command `\bf', e.g., by `\normalfont \bfseries '.
+(scrreprt)              Otherwise you should reconfigure or replace the
+(scrreprt)              package. If you have used the old font command
+(scrreprt)              `\bf' yourself you should replace it, e.g., by
+(scrreprt)              `\normalfont \bfseries ' on input line 64.
+
+[13 <../figures/hgrid.jpg>]
+<../figures/grid-hex-empty.png, id=699, 803.0pt x 803.0pt>
 File: ../figures/grid-hex-empty.png Graphic file (type png)
 <use ../figures/grid-hex-empty.png>
-Package pdftex.def Info: ../figures/grid-hex-empty.png  used on input line 85.
+Package pdftex.def Info: ../figures/grid-hex-empty.png  used on input line 84.
 (pdftex.def)             Requested size: 176.40442pt x 176.40323pt.
-<../figures/grid-hex-center.png, id=701, 803.0pt x 803.0pt>
+<../figures/grid-hex-center.png, id=700, 803.0pt x 803.0pt>
 File: ../figures/grid-hex-center.png Graphic file (type png)
 <use ../figures/grid-hex-center.png>
-Package pdftex.def Info: ../figures/grid-hex-center.png  used on input line 91.
+Package pdftex.def Info: ../figures/grid-hex-center.png  used on input line 90.
 
 (pdftex.def)             Requested size: 176.40442pt x 176.40323pt.
-<../figures/grid-hex-center_derived.png, id=702, 803.0pt x 803.0pt>
+<../figures/grid-hex-center_derived.png, id=701, 803.0pt x 803.0pt>
 File: ../figures/grid-hex-center_derived.png Graphic file (type png)
 <use ../figures/grid-hex-center_derived.png>
 Package pdftex.def Info: ../figures/grid-hex-center_derived.png  used on input 
-line 97.
+line 96.
 (pdftex.def)             Requested size: 176.40442pt x 176.40323pt.
-<../figures/grid-hex-edges.png, id=703, 803.0pt x 803.0pt>
+<../figures/grid-hex-edges.png, id=702, 803.0pt x 803.0pt>
 File: ../figures/grid-hex-edges.png Graphic file (type png)
 <use ../figures/grid-hex-edges.png>
-Package pdftex.def Info: ../figures/grid-hex-edges.png  used on input line 103.
+Package pdftex.def Info: ../figures/grid-hex-edges.png  used on input line 102.
 
 (pdftex.def)             Requested size: 176.40442pt x 176.40323pt.
-<../figures/grid-hex-edges_derived.png, id=704, 803.0pt x 803.0pt>
+<../figures/grid-hex-edges_derived.png, id=703, 803.0pt x 803.0pt>
 File: ../figures/grid-hex-edges_derived.png Graphic file (type png)
 <use ../figures/grid-hex-edges_derived.png>
 Package pdftex.def Info: ../figures/grid-hex-edges_derived.png  used on input l
-ine 109.
+ine 108.
 (pdftex.def)             Requested size: 176.40442pt x 176.40323pt.
 
-Underfull \hbox (badness 1014) in paragraph at lines 110--110
+Underfull \hbox (badness 1014) in paragraph at lines 109--109
 [][][]|\OT1/cmr/m/n/10 Hexag-o-nal grid with data on the
  []
 
-<../figures/grid-hex-vertex.png, id=705, 803.0pt x 803.0pt>
+<../figures/grid-hex-vertex.png, id=704, 803.0pt x 803.0pt>
 File: ../figures/grid-hex-vertex.png Graphic file (type png)
 <use ../figures/grid-hex-vertex.png>
-Package pdftex.def Info: ../figures/grid-hex-vertex.png  used on input line 115
+Package pdftex.def Info: ../figures/grid-hex-vertex.png  used on input line 114
 .
 (pdftex.def)             Requested size: 176.40442pt x 176.40323pt.
-<../figures/grid-triangleempty.png, id=706, 803.0pt x 803.0pt>
+<../figures/grid-triangleempty.png, id=705, 803.0pt x 803.0pt>
 File: ../figures/grid-triangleempty.png Graphic file (type png)
 <use ../figures/grid-triangleempty.png>
 Package pdftex.def Info: ../figures/grid-triangleempty.png  used on input line 
-127.
+126.
 (pdftex.def)             Requested size: 176.40442pt x 176.40323pt.
-<../figures/grid-trianglecenter.png, id=707, 803.0pt x 803.0pt>
+<../figures/grid-trianglecenter.png, id=706, 803.0pt x 803.0pt>
 File: ../figures/grid-trianglecenter.png Graphic file (type png)
 <use ../figures/grid-trianglecenter.png>
 Package pdftex.def Info: ../figures/grid-trianglecenter.png  used on input line
- 133.
+ 132.
 (pdftex.def)             Requested size: 176.40442pt x 176.40323pt.
-<../figures/grid-trianglecenter_derived.png, id=708, 803.0pt x 803.0pt>
+<../figures/grid-trianglecenter_derived.png, id=707, 803.0pt x 803.0pt>
 File: ../figures/grid-trianglecenter_derived.png Graphic file (type png)
 <use ../figures/grid-trianglecenter_derived.png>
 Package pdftex.def Info: ../figures/grid-trianglecenter_derived.png  used on in
-put line 139.
+put line 138.
 (pdftex.def)             Requested size: 176.40442pt x 176.40323pt.
-<../figures/grid-triangleedges.png, id=709, 803.0pt x 803.0pt>
+<../figures/grid-triangleedges.png, id=708, 803.0pt x 803.0pt>
 File: ../figures/grid-triangleedges.png Graphic file (type png)
 <use ../figures/grid-triangleedges.png>
 Package pdftex.def Info: ../figures/grid-triangleedges.png  used on input line 
-145.
+144.
 (pdftex.def)             Requested size: 176.40442pt x 176.40323pt.
-<../figures/grid-triangleedges_derived.png, id=710, 803.0pt x 803.0pt>
+<../figures/grid-triangleedges_derived.png, id=709, 803.0pt x 803.0pt>
 File: ../figures/grid-triangleedges_derived.png Graphic file (type png)
 <use ../figures/grid-triangleedges_derived.png>
 Package pdftex.def Info: ../figures/grid-triangleedges_derived.png  used on inp
-ut line 151.
+ut line 150.
 (pdftex.def)             Requested size: 176.40442pt x 176.40323pt.
-<../figures/grid-trianglevertex.png, id=711, 803.0pt x 803.0pt>
+<../figures/grid-trianglevertex.png, id=710, 803.0pt x 803.0pt>
 File: ../figures/grid-trianglevertex.png Graphic file (type png)
 <use ../figures/grid-trianglevertex.png>
 Package pdftex.def Info: ../figures/grid-trianglevertex.png  used on input line
- 157.
+ 156.
 (pdftex.def)             Requested size: 176.40442pt x 176.40323pt.
-<../figures/pattern.png, id=712, 602.25pt x 393.72093pt>
+<../figures/pattern.png, id=711, 602.25pt x 393.72093pt>
 File: ../figures/pattern.png Graphic file (type png)
 <use ../figures/pattern.png>
-Package pdftex.def Info: ../figures/pattern.png  used on input line 174.
+Package pdftex.def Info: ../figures/pattern.png  used on input line 173.
 (pdftex.def)             Requested size: 441.01779pt x 288.32706pt.
 [14] [15 <../figures/grid-hex-empty.png (PNG copy)> <../figures/grid-hex-center
 .png (PNG copy)> <../figures/grid-hex-center_derived.png (PNG copy)> <../figure
@@ -2326,18 +2348,18 @@ empty.png (PNG copy)> <../figures/grid-trianglecenter.png (PNG copy)> <../figur
 es/grid-trianglecenter_derived.png (PNG copy)> <../figures/grid-triangleedges.p
 ng (PNG copy)> <../figures/grid-triangleedges_derived.png (PNG copy)> <../figur
 es/grid-trianglevertex.png (PNG copy)>]
-Overfull \hbox (24.43474pt too wide) in paragraph at lines 236--248
+Overfull \hbox (24.43474pt too wide) in paragraph at lines 233--245
  [][] 
  []
 
 [17 <../figures/pattern.png>] [18]
-LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 315
+LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 312
 .
  (/usr/share/texmf/tex/latex/lm/ot1lmtt.fd
 File: ot1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 321.
+nput line 318.
 
 [19]) (./background_detailed.tex [20] [21]
 Underfull \vbox (badness 10000) detected at line 40
@@ -2354,141 +2376,141 @@ Underfull \vbox (badness 10000) detected at line 183
  []
 
 [25]
-Underfull \vbox (badness 10000) detected at line 230
+Underfull \vbox (badness 10000) detected at line 224
  []
 
 [26
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+lmtt on input line 286
+LaTeX Font Info:    Try loading font information for OMS+lmtt on input line 280
 .
-LaTeX Font Info:    No file OMSlmtt.fd. on input line 286.
+LaTeX Font Info:    No file OMSlmtt.fd. on input line 280.
 
 
 LaTeX Font Warning: Font shape `OMS/lmtt/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbraceleft' on input line 286.
+(Font)              for symbol `textbraceleft' on input line 280.
 
 
-Overfull \hbox (5.0223pt too wide) in paragraph at lines 286--286
+Overfull \hbox (5.0223pt too wide) in paragraph at lines 280--280
  []|\OT1/lmtt/m/n/10 nc[]inq[]\OMS/lmtt/m/n/10 f\OT1/lmtt/m/n/10 compound,name,
 ...\OMS/lmtt/m/n/10 g| 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 300
+Underfull \vbox (badness 10000) detected at line 294
  []
 
 [27
 
 ] [28] [29] [30]
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 395.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 389.
 
  (/usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/it' in size <10.95> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 395.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 389.
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 400.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 394.
 
-Underfull \vbox (badness 10000) detected at line 404
+Underfull \vbox (badness 10000) detected at line 398
  []
 
 [31] [32]
-Underfull \hbox (badness 10000) in paragraph at lines 428--429
+Underfull \hbox (badness 10000) in paragraph at lines 422--423
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--431
+Underfull \hbox (badness 10000) in paragraph at lines 424--425
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 432--433
+Underfull \hbox (badness 10000) in paragraph at lines 426--427
 
  []
 
-<../../assets/figures/Ophidia_storage_model.pdf, id=927, 761.84625pt x 475.7775
+<../../assets/figures/Ophidia_storage_model.pdf, id=926, 761.84625pt x 475.7775
 pt>
 File: ../../assets/figures/Ophidia_storage_model.pdf Graphic file (type pdf)
 <use ../../assets/figures/Ophidia_storage_model.pdf>
 Package pdftex.def Info: ../../assets/figures/Ophidia_storage_model.pdf  used o
-n input line 439.
+n input line 433.
 (pdftex.def)             Requested size: 441.01779pt x 275.41391pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 444--445
+Underfull \hbox (badness 10000) in paragraph at lines 438--439
 
  []
 
 [33]
-Underfull \hbox (badness 10000) in paragraph at lines 446--447
+Underfull \hbox (badness 10000) in paragraph at lines 440--441
 
  []
 
 [34 <../../assets/figures/Ophidia_storage_model.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 455--456
+Underfull \hbox (badness 10000) in paragraph at lines 449--450
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 457--458
+Underfull \hbox (badness 10000) in paragraph at lines 451--452
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 470--471
+Underfull \hbox (badness 10000) in paragraph at lines 464--465
 
  []
 
 [35]
-Underfull \hbox (badness 10000) in paragraph at lines 491--495
+Underfull \hbox (badness 10000) in paragraph at lines 485--489
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 496--500
+Underfull \hbox (badness 10000) in paragraph at lines 490--494
 
  []
 
 [36]
-Underfull \hbox (badness 10000) in paragraph at lines 515--516
+Underfull \hbox (badness 10000) in paragraph at lines 508--509
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 528--531
+Underfull \hbox (badness 10000) in paragraph at lines 521--524
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 532--533
+Underfull \hbox (badness 10000) in paragraph at lines 525--526
 
  []
 
 [37]
-Underfull \hbox (badness 10000) in paragraph at lines 534--535
+Underfull \hbox (badness 10000) in paragraph at lines 527--528
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 546--547
+Underfull \hbox (badness 10000) in paragraph at lines 539--540
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 548--550
+Underfull \hbox (badness 10000) in paragraph at lines 541--543
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 544--546
 
  []
 
 [38]
-Underfull \hbox (badness 10000) in paragraph at lines 551--553
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 554--555
+Underfull \hbox (badness 10000) in paragraph at lines 547--548
 
  []
 
@@ -2526,7 +2548,7 @@ pdfTeX warning: pdflatex (file ../../assets/use-cases/uml/generic/esiwace_useca
 ses-eps-converted-to.pdf): PDF inclusion: found PDF version <1.7>, but at most 
 version <1.5> allowed
 <../../assets/use-cases/uml/generic/esiwace_usecases-eps-converted-to.pdf, id=1
-347, 1103.12125pt x 485.815pt>
+346, 1103.12125pt x 485.815pt>
 File: ../../assets/use-cases/uml/generic/esiwace_usecases-eps-converted-to.pdf 
 Graphic file (type pdf)
 <use ../../assets/use-cases/uml/generic/esiwace_usecases-eps-converted-to.pdf>
@@ -2534,7 +2556,7 @@ Package pdftex.def Info: ../../assets/use-cases/uml/generic/esiwace_usecases-ep
 s-converted-to.pdf  used on input line 86.
 (pdftex.def)             Requested size: 330.76334pt x 145.6715pt.
 [47 <../../assets/use-cases/uml/generic/esiwace_usecases-eps-converted-to.pdf>]
-<../../assets/use-cases/uml/generic/use-case-overview-manual.pdf, id=1358, 1417
+<../../assets/use-cases/uml/generic/use-case-overview-manual.pdf, id=1357, 1417
 .7655pt x 815.91373pt>
 File: ../../assets/use-cases/uml/generic/use-case-overview-manual.pdf Graphic f
 ile (type pdf)
@@ -2544,7 +2566,7 @@ anual.pdf  used on input line 134.
 (pdftex.def)             Requested size: 441.01779pt x 253.80212pt.
 [48 <../../assets/use-cases/uml/generic/use-case-overview-manual.pdf>] [49]
 [50] [51]
-<../../assets/use-cases/systems/hpc_clean.pdf, id=1381, 1081.4138pt x 484.50906
+<../../assets/use-cases/systems/hpc_clean.pdf, id=1380, 1081.4138pt x 484.50906
 pt>
 File: ../../assets/use-cases/systems/hpc_clean.pdf Graphic file (type pdf)
 <use ../../assets/use-cases/systems/hpc_clean.pdf>
@@ -2554,7 +2576,7 @@ input line 237.
  [52
 
  <../../assets/use-cases/systems/hpc_clean.pdf>]
-<../../assets/use-cases/systems/storage_clean.pdf, id=1403, 627.38327pt x 779.2
+<../../assets/use-cases/systems/storage_clean.pdf, id=1402, 627.38327pt x 779.2
 0511pt>
 File: ../../assets/use-cases/systems/storage_clean.pdf Graphic file (type pdf)
 <use ../../assets/use-cases/systems/storage_clean.pdf>
@@ -2562,7 +2584,7 @@ Package pdftex.def Info: ../../assets/use-cases/systems/storage_clean.pdf  used
  on input line 275.
 (pdftex.def)             Requested size: 145.53667pt x 180.74718pt.
  [53 <../../assets/use-cases/systems/storage_clean.pdf>]
-<../../assets/use-cases/systems/application.pdf, id=1421, 483.69685pt x 257.078
+<../../assets/use-cases/systems/application.pdf, id=1420, 483.69685pt x 257.078
 55pt>
 File: ../../assets/use-cases/systems/application.pdf Graphic file (type pdf)
 <use ../../assets/use-cases/systems/application.pdf>
@@ -2570,7 +2592,7 @@ Package pdftex.def Info: ../../assets/use-cases/systems/application.pdf  used o
 n input line 309.
 (pdftex.def)             Requested size: 220.5089pt x 117.19843pt.
  [54 <../../assets/use-cases/systems/application.pdf>]
-<../../assets/3rd/workflow.pdf, id=1443, 845.1575pt x 597.23125pt>
+<../../assets/3rd/workflow.pdf, id=1442, 845.1575pt x 597.23125pt>
 File: ../../assets/3rd/workflow.pdf Graphic file (type pdf)
 <use ../../assets/3rd/workflow.pdf>
 Package pdftex.def Info: ../../assets/3rd/workflow.pdf  used on input line 366.
@@ -2590,7 +2612,7 @@ eps-converted-to.pdf>
 eps>
 (epstopdf)             \includegraphics on input line 461.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/use-cases/uml/write/sequence-eps-converted-to.pdf, id=1543, 559.0
+<../../assets/use-cases/uml/write/sequence-eps-converted-to.pdf, id=1541, 559.0
 8875pt x 428.60126pt>
 File: ../../assets/use-cases/uml/write/sequence-eps-converted-to.pdf Graphic fi
 le (type pdf)
@@ -2612,7 +2634,7 @@ ps-converted-to.pdf>
 s>
 (epstopdf)             \includegraphics on input line 510.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/use-cases/uml/read/sequence-eps-converted-to.pdf, id=1573, 685.56
+<../../assets/use-cases/uml/read/sequence-eps-converted-to.pdf, id=1571, 685.56
 125pt x 516.93124pt>
 File: ../../assets/use-cases/uml/read/sequence-eps-converted-to.pdf Graphic fil
 e (type pdf)
@@ -2621,14 +2643,14 @@ Package pdftex.def Info: ../../assets/use-cases/uml/read/sequence-eps-converted
 -to.pdf  used on input line 510.
 (pdftex.def)             Requested size: 330.76334pt x 249.40987pt.
  [59 <../../assets/use-cases/uml/read/sequence-eps-converted-to.pdf>] [60]
-<../../assets/use-cases/uml/simulation/domain.pdf, id=1600, 623.11537pt x 276.9
+<../../assets/use-cases/uml/simulation/domain.pdf, id=1599, 623.11537pt x 276.9
 953pt>
 File: ../../assets/use-cases/uml/simulation/domain.pdf Graphic file (type pdf)
 <use ../../assets/use-cases/uml/simulation/domain.pdf>
 Package pdftex.def Info: ../../assets/use-cases/uml/simulation/domain.pdf  used
  on input line 603.
 (pdftex.def)             Requested size: 220.5089pt x 98.02336pt.
- [61 <../../assets/use-cases/uml/simulation/domain.pdf>] [62]
+ [61] [62 <../../assets/use-cases/uml/simulation/domain.pdf>]
 Package epstopdf Info: Source file: <../../assets/use-cases/uml/simulation/sequ
 ence.eps>
 (epstopdf)                    date: 2019-05-07 13:19:35
@@ -2642,7 +2664,7 @@ ence-eps-converted-to.pdf>
 /sequence.eps>
 (epstopdf)             \includegraphics on input line 673.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/use-cases/uml/simulation/sequence-eps-converted-to.pdf, id=1632, 
+<../../assets/use-cases/uml/simulation/sequence-eps-converted-to.pdf, id=1630, 
 740.7675pt x 600.2425pt>
 File: ../../assets/use-cases/uml/simulation/sequence-eps-converted-to.pdf Graph
 ic file (type pdf)
@@ -2652,7 +2674,7 @@ verted-to.pdf  used on input line 673.
 (pdftex.def)             Requested size: 441.01779pt x 357.3548pt.
  [63] [64 <../../assets/use-cases/uml/simulation/sequence-eps-converted-to.pdf>
 ]
-<../../assets/use-cases/uml/prepost-processing/domain.pdf, id=1661, 1026.81757p
+<../../assets/use-cases/uml/prepost-processing/domain.pdf, id=1660, 1026.81757p
 t x 631.73889pt>
 File: ../../assets/use-cases/uml/prepost-processing/domain.pdf Graphic file (ty
 pe pdf)
@@ -2675,7 +2697,7 @@ epost-processing/sequence.eps>
 (epstopdf)             \includegraphics on input line 771.
 Package epstopdf Info: Output file is already uptodate.
 <../../assets/use-cases/uml/prepost-processing/sequence-eps-converted-to.pdf, i
-d=1703, 889.3225pt x 659.46375pt>
+d=1699, 889.3225pt x 659.46375pt>
 File: ../../assets/use-cases/uml/prepost-processing/sequence-eps-converted-to.p
 df Graphic file (type pdf)
 <use ../../assets/use-cases/uml/prepost-processing/sequence-eps-converted-to.pd
@@ -2685,7 +2707,7 @@ Package pdftex.def Info: ../../assets/use-cases/uml/prepost-processing/sequence
 (pdftex.def)             Requested size: 441.01779pt x 327.02422pt.
  [67 <../../assets/use-cases/uml/prepost-processing/sequence-eps-converted-to.p
 df>]
-<../../assets/use-cases/uml/pipeline/domain.pdf, id=1726, 1237.15091pt x 453.83
+<../../assets/use-cases/uml/pipeline/domain.pdf, id=1725, 1237.15091pt x 453.83
 986pt>
 File: ../../assets/use-cases/uml/pipeline/domain.pdf Graphic file (type pdf)
 <use ../../assets/use-cases/uml/pipeline/domain.pdf>
@@ -2706,7 +2728,7 @@ ce-eps-converted-to.pdf>
 uence.eps>
 (epstopdf)             \includegraphics on input line 909.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/use-cases/uml/pipeline/sequence-eps-converted-to.pdf, id=1760, 10
+<../../assets/use-cases/uml/pipeline/sequence-eps-converted-to.pdf, id=1758, 10
 96.095pt x 1017.8025pt>
 File: ../../assets/use-cases/uml/pipeline/sequence-eps-converted-to.pdf Graphic
  file (type pdf)
@@ -2715,7 +2737,7 @@ Package pdftex.def Info: ../../assets/use-cases/uml/pipeline/sequence-eps-conve
 rted-to.pdf  used on input line 909.
 (pdftex.def)             Requested size: 441.01779pt x 409.52101pt.
  [70] [71 <../../assets/use-cases/uml/pipeline/sequence-eps-converted-to.pdf>]
-<../../assets/use-cases/uml/simulation+insitu+postproc/domain.pdf, id=1792, 623
+<../../assets/use-cases/uml/simulation+insitu+postproc/domain.pdf, id=1791, 623
 .11537pt x 276.9953pt>
 File: ../../assets/use-cases/uml/simulation+insitu+postproc/domain.pdf Graphic 
 file (type pdf)
@@ -2723,8 +2745,7 @@ file (type pdf)
 Package pdftex.def Info: ../../assets/use-cases/uml/simulation+insitu+postproc/
 domain.pdf  used on input line 967.
 (pdftex.def)             Requested size: 220.5089pt x 98.02336pt.
- [72 <../../assets/use-cases/uml/simulation+insitu+postproc/domain.pdf>]
-[73]
+ [72] [73 <../../assets/use-cases/uml/simulation+insitu+postproc/domain.pdf>]
 Package epstopdf Info: Source file: <../../assets/use-cases/uml/simulation+insi
 tu+postproc/sequence.eps>
 (epstopdf)                    date: 2019-05-07 13:19:35
@@ -2739,7 +2760,7 @@ s/uml/simulation+insitu+postproc/sequence.eps>
 (epstopdf)             \includegraphics on input line 1029.
 Package epstopdf Info: Output file is already uptodate.
 <../../assets/use-cases/uml/simulation+insitu+postproc/sequence-eps-converted-t
-o.pdf, id=1832, 930.47626pt x 846.16125pt>
+o.pdf, id=1826, 930.47626pt x 846.16125pt>
 File: ../../assets/use-cases/uml/simulation+insitu+postproc/sequence-eps-conver
 ted-to.pdf Graphic file (type pdf)
 <use ../../assets/use-cases/uml/simulation+insitu+postproc/sequence-eps-convert
@@ -2747,9 +2768,9 @@ ed-to.pdf>
 Package pdftex.def Info: ../../assets/use-cases/uml/simulation+insitu+postproc/
 sequence-eps-converted-to.pdf  used on input line 1029.
 (pdftex.def)             Requested size: 441.01779pt x 401.0528pt.
- [74] [75 <../../assets/use-cases/uml/simulation+insitu+postproc/sequence-eps-c
-onverted-to.pdf>]
-<../../assets/use-cases/uml/simulation+insitu+camara/domain.pdf, id=1865, 906.5
+[74] [75 <../../assets/use-cases/uml/simulation+insitu+postproc/sequence-eps-co
+nverted-to.pdf>]
+<../../assets/use-cases/uml/simulation+insitu+camara/domain.pdf, id=1863, 906.5
 2226pt x 276.9953pt>
 File: ../../assets/use-cases/uml/simulation+insitu+camara/domain.pdf Graphic fi
 le (type pdf)
@@ -2757,7 +2778,7 @@ le (type pdf)
 Package pdftex.def Info: ../../assets/use-cases/uml/simulation+insitu+camara/do
 main.pdf  used on input line 1090.
 (pdftex.def)             Requested size: 220.5089pt x 67.37627pt.
- [76 <../../assets/use-cases/uml/simulation+insitu+camara/domain.pdf>] [77]
+ [76] [77 <../../assets/use-cases/uml/simulation+insitu+camara/domain.pdf>]
 Package epstopdf Info: Source file: <../../assets/use-cases/uml/simulation+insi
 tu+camara/sequence.eps>
 (epstopdf)                    date: 2019-05-07 13:19:35
@@ -2772,7 +2793,7 @@ uml/simulation+insitu+camara/sequence.eps>
 (epstopdf)             \includegraphics on input line 1145.
 Package epstopdf Info: Output file is already uptodate.
 <../../assets/use-cases/uml/simulation+insitu+camara/sequence-eps-converted-to.
-pdf, id=1918, 846.16125pt x 888.31876pt>
+pdf, id=1914, 846.16125pt x 888.31876pt>
 File: ../../assets/use-cases/uml/simulation+insitu+camara/sequence-eps-converte
 d-to.pdf Graphic file (type pdf)
 <use ../../assets/use-cases/uml/simulation+insitu+camara/sequence-eps-converted
@@ -2796,7 +2817,7 @@ tu+bigdata/sequence-eps-converted-to.pdf>
 (epstopdf)             \includegraphics on input line 1260.
 Package epstopdf Info: Output file is already uptodate.
 <../../assets/use-cases/uml/simulation+insitu+bigdata/sequence-eps-converted-to
-.pdf, id=1983, 849.1725pt x 875.27pt>
+.pdf, id=1979, 849.1725pt x 875.27pt>
 File: ../../assets/use-cases/uml/simulation+insitu+bigdata/sequence-eps-convert
 ed-to.pdf Graphic file (type pdf)
 <use ../../assets/use-cases/uml/simulation+insitu+bigdata/sequence-eps-converte
@@ -2810,14 +2831,14 @@ chapter 5.
 (./viewpoints.tex [84
 
 ]
-<../../assets/figures/layers-esdm.pdf, id=2021, 362.49564pt x 240.45732pt>
+<../../assets/figures/layers-esdm.pdf, id=2020, 362.49564pt x 240.45732pt>
 File: ../../assets/figures/layers-esdm.pdf Graphic file (type pdf)
 <use ../../assets/figures/layers-esdm.pdf>
 Package pdftex.def Info: ../../assets/figures/layers-esdm.pdf  used on input li
 ne 55.
 (pdftex.def)             Requested size: 220.5089pt x 146.27513pt.
 <../figures/architecture-backend_with-scheduler/architecture-backend-src.pdf, i
-d=2022, 846.16125pt x 635.37375pt>
+d=2021, 846.16125pt x 635.37375pt>
 File: ../figures/architecture-backend_with-scheduler/architecture-backend-src.p
 df Graphic file (type pdf)
 <use ../figures/architecture-backend_with-scheduler/architecture-backend-src.pd
@@ -2828,16 +2849,16 @@ cture-backend-src.pdf  used on input line 62.
  [85 <../../assets/figures/layers-esdm.pdf>] [86 <../figures/architecture-backe
 nd_with-scheduler/architecture-backend-src.pdf>] [87]
 [88] [89] [90] [91] [92]
-Overfull \hbox (7.20248pt too wide) in paragraph at lines 303--305
+Overfull \hbox (7.20248pt too wide) in paragraph at lines 301--302
 []\OT1/cmr/m/n/10.95 Queries al-low to search for ar-bi-trary meta-data, e.g., 
 for ob-jects that have (\OT1/lmtt/m/n/10.95 experiment=X,
  []
 
 [93]
-<../figures/data-model.pdf, id=2139, 597.50786pt x 845.04686pt>
+<../figures/data-model.pdf, id=2138, 597.50786pt x 845.04686pt>
 File: ../figures/data-model.pdf Graphic file (type pdf)
 <use ../figures/data-model.pdf>
-Package pdftex.def Info: ../figures/data-model.pdf  used on input line 325.
+Package pdftex.def Info: ../figures/data-model.pdf  used on input line 322.
 (pdftex.def)             Requested size: 220.5089pt x 311.86299pt.
  [94 <../figures/data-model.pdf>]
 Package epstopdf Info: Source file: <../../assets/inf-model/cdm_ldm.eps>
@@ -2849,20 +2870,20 @@ ed-to.pdf>
 (epstopdf)                    size: 156616 bytes
 (epstopdf)             Command: <repstopdf --outfile=../../assets/inf-model/cdm
 _ldm-eps-converted-to.pdf ../../assets/inf-model/cdm_ldm.eps>
-(epstopdf)             \includegraphics on input line 356.
+(epstopdf)             \includegraphics on input line 353.
 Package epstopdf Info: Output file is already uptodate.
 
 
 pdfTeX warning: pdflatex (file ../../assets/inf-model/cdm_ldm-eps-converted-to.
 pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
 
-<../../assets/inf-model/cdm_ldm-eps-converted-to.pdf, id=2160, 1274.7625pt x 10
+<../../assets/inf-model/cdm_ldm-eps-converted-to.pdf, id=2159, 1274.7625pt x 10
 07.765pt>
 File: ../../assets/inf-model/cdm_ldm-eps-converted-to.pdf Graphic file (type pd
 f)
 <use ../../assets/inf-model/cdm_ldm-eps-converted-to.pdf>
 Package pdftex.def Info: ../../assets/inf-model/cdm_ldm-eps-converted-to.pdf  u
-sed on input line 356.
+sed on input line 353.
 (pdftex.def)             Requested size: 441.01779pt x 348.64807pt.
 Package epstopdf Info: Source file: <../../assets/inf-model/cdm_cdm.eps>
 (epstopdf)                    date: 2019-05-07 13:19:20
@@ -2873,20 +2894,20 @@ ed-to.pdf>
 (epstopdf)                    size: 23720 bytes
 (epstopdf)             Command: <repstopdf --outfile=../../assets/inf-model/cdm
 _cdm-eps-converted-to.pdf ../../assets/inf-model/cdm_cdm.eps>
-(epstopdf)             \includegraphics on input line 370.
+(epstopdf)             \includegraphics on input line 367.
 Package epstopdf Info: Output file is already uptodate.
 
 
 pdfTeX warning: pdflatex (file ../../assets/inf-model/cdm_cdm-eps-converted-to.
 pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
 
-<../../assets/inf-model/cdm_cdm-eps-converted-to.pdf, id=2164, 398.48875pt x 25
+<../../assets/inf-model/cdm_cdm-eps-converted-to.pdf, id=2163, 398.48875pt x 25
 2.945pt>
 File: ../../assets/inf-model/cdm_cdm-eps-converted-to.pdf Graphic file (type pd
 f)
 <use ../../assets/inf-model/cdm_cdm-eps-converted-to.pdf>
 Package pdftex.def Info: ../../assets/inf-model/cdm_cdm-eps-converted-to.pdf  u
-sed on input line 370.
+sed on input line 367.
 (pdftex.def)             Requested size: 239.0951pt x 151.76816pt.
 [95 <../../assets/inf-model/cdm_ldm-eps-converted-to.pdf>] [96 <../../assets/in
 f-model/cdm_cdm-eps-converted-to.pdf>]
@@ -2901,15 +2922,15 @@ types-eps-converted-to.pdf>
 (epstopdf)             Command: <repstopdf --outfile=../../assets/esdm-semantic
 s/semantics-datatypes-eps-converted-to.pdf ../../assets/esdm-semantics/semantic
 s-datatypes.eps>
-(epstopdf)             \includegraphics on input line 453.
+(epstopdf)             \includegraphics on input line 447.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-semantics/semantics-datatypes-eps-converted-to.pdf, id=2181,
+<../../assets/esdm-semantics/semantics-datatypes-eps-converted-to.pdf, id=2180,
  692.5875pt x 492.84125pt>
 File: ../../assets/esdm-semantics/semantics-datatypes-eps-converted-to.pdf Grap
 hic file (type pdf)
 <use ../../assets/esdm-semantics/semantics-datatypes-eps-converted-to.pdf>
 Package pdftex.def Info: ../../assets/esdm-semantics/semantics-datatypes-eps-co
-nverted-to.pdf  used on input line 453.
+nverted-to.pdf  used on input line 447.
 (pdftex.def)             Requested size: 396.91331pt x 282.449pt.
  [97] [98 <../../assets/esdm-semantics/semantics-datatypes-eps-converted-to.pdf
 >]
@@ -2923,15 +2944,15 @@ converted-to.pdf>
 (epstopdf)                    size: 132360 bytes
 (epstopdf)             Command: <repstopdf --outfile=../../assets/esdm-semantic
 s/semantics-eps-converted-to.pdf ../../assets/esdm-semantics/semantics.eps>
-(epstopdf)             \includegraphics on input line 474.
+(epstopdf)             \includegraphics on input line 468.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-semantics/semantics-eps-converted-to.pdf, id=2194, 1110.1475
+<../../assets/esdm-semantics/semantics-eps-converted-to.pdf, id=2193, 1110.1475
 pt x 428.60126pt>
 File: ../../assets/esdm-semantics/semantics-eps-converted-to.pdf Graphic file (
 type pdf)
 <use ../../assets/esdm-semantics/semantics-eps-converted-to.pdf>
 Package pdftex.def Info: ../../assets/esdm-semantics/semantics-eps-converted-to
-.pdf  used on input line 474.
+.pdf  used on input line 468.
 (pdftex.def)             Requested size: 441.01779pt x 170.26682pt.
  [99
 
@@ -2947,23 +2968,23 @@ h-eps-converted-to.pdf>
 (epstopdf)             Command: <repstopdf --outfile=../../assets/esdm-semantic
 s/semantics-epoch-eps-converted-to.pdf ../../assets/esdm-semantics/semantics-ep
 och.eps>
-(epstopdf)             \includegraphics on input line 579.
+(epstopdf)             \includegraphics on input line 570.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-semantics/semantics-epoch-eps-converted-to.pdf, id=2218, 252
+<../../assets/esdm-semantics/semantics-epoch-eps-converted-to.pdf, id=2217, 252
 .945pt x 204.765pt>
 File: ../../assets/esdm-semantics/semantics-epoch-eps-converted-to.pdf Graphic 
 file (type pdf)
 <use ../../assets/esdm-semantics/semantics-epoch-eps-converted-to.pdf>
 Package pdftex.def Info: ../../assets/esdm-semantics/semantics-epoch-eps-conver
-ted-to.pdf  used on input line 579.
+ted-to.pdf  used on input line 570.
 (pdftex.def)             Requested size: 167.58891pt x 135.67021pt.
-<../../assets/esdm-semantics/epoch-reconstruction.pdf, id=2219, 732.68224pt x 2
+<../../assets/esdm-semantics/epoch-reconstruction.pdf, id=2218, 732.68224pt x 2
 84.52756pt>
 File: ../../assets/esdm-semantics/epoch-reconstruction.pdf Graphic file (type p
 df)
 <use ../../assets/esdm-semantics/epoch-reconstruction.pdf>
 Package pdftex.def Info: ../../assets/esdm-semantics/epoch-reconstruction.pdf  
-used on input line 580.
+used on input line 571.
 (pdftex.def)             Requested size: 264.61336pt x 102.7598pt.
  [101 <../../assets/esdm-semantics/semantics-epoch-eps-converted-to.pdf> <../..
 /assets/esdm-semantics/epoch-reconstruction.pdf>]
@@ -2978,15 +2999,15 @@ fication-eps-converted-to.pdf>
 (epstopdf)             Command: <repstopdf --outfile=../../assets/esdm-semantic
 s/semantics-notification-eps-converted-to.pdf ../../assets/esdm-semantics/seman
 tics-notification.eps>
-(epstopdf)             \includegraphics on input line 619.
+(epstopdf)             \includegraphics on input line 608.
 Package epstopdf Info: Output file is already uptodate.
 <../../assets/esdm-semantics/semantics-notification-eps-converted-to.pdf, id=22
-37, 591.20876pt x 229.85875pt>
+36, 591.20876pt x 229.85875pt>
 File: ../../assets/esdm-semantics/semantics-notification-eps-converted-to.pdf G
 raphic file (type pdf)
 <use ../../assets/esdm-semantics/semantics-notification-eps-converted-to.pdf>
 Package pdftex.def Info: ../../assets/esdm-semantics/semantics-notification-eps
--converted-to.pdf  used on input line 619.
+-converted-to.pdf  used on input line 608.
 (pdftex.def)             Requested size: 352.81557pt x 137.17624pt.
  [102 <../../assets/esdm-semantics/semantics-notification-eps-converted-to.pdf>
 ]
@@ -2999,14 +3020,14 @@ o.pdf>
 (epstopdf)                    size: 51902 bytes
 (epstopdf)             Command: <repstopdf --outfile=../../assets/esdm/physical
 -eps-converted-to.pdf ../../assets/esdm/physical.eps>
-(epstopdf)             \includegraphics on input line 659.
+(epstopdf)             \includegraphics on input line 648.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm/physical-eps-converted-to.pdf, id=2250, 1013.7875pt x 501.87
+<../../assets/esdm/physical-eps-converted-to.pdf, id=2249, 1013.7875pt x 501.87
 5pt>
 File: ../../assets/esdm/physical-eps-converted-to.pdf Graphic file (type pdf)
 <use ../../assets/esdm/physical-eps-converted-to.pdf>
 Package pdftex.def Info: ../../assets/esdm/physical-eps-converted-to.pdf  used 
-on input line 659.
+on input line 648.
 (pdftex.def)             Requested size: 441.01779pt x 218.32152pt.
  [103] [104 <../../assets/esdm/physical-eps-converted-to.pdf>] [105])
 [106]
@@ -3025,7 +3046,7 @@ ts/scheduler/logical-eps-converted-to.pdf ../../assets/esdm-components/schedule
 r/logical.eps>
 (epstopdf)             \includegraphics on input line 15.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-components/scheduler/logical-eps-converted-to.pdf, id=2308, 
+<../../assets/esdm-components/scheduler/logical-eps-converted-to.pdf, id=2307, 
 774.895pt x 471.7625pt>
 File: ../../assets/esdm-components/scheduler/logical-eps-converted-to.pdf Graph
 ic file (type pdf)
@@ -3049,7 +3070,7 @@ ts/scheduler/process-eps-converted-to.pdf ../../assets/esdm-components/schedule
 r/process.eps>
 (epstopdf)             \includegraphics on input line 42.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-components/scheduler/process-eps-converted-to.pdf, id=2315, 
+<../../assets/esdm-components/scheduler/process-eps-converted-to.pdf, id=2314, 
 1034.86626pt x 330.23375pt>
 File: ../../assets/esdm-components/scheduler/process-eps-converted-to.pdf Graph
 ic file (type pdf)
@@ -3070,7 +3091,7 @@ ts/scheduler/physical-eps-converted-to.pdf ../../assets/esdm-components/schedul
 er/physical.eps>
 (epstopdf)             \includegraphics on input line 59.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-components/scheduler/physical-eps-converted-to.pdf, id=2317,
+<../../assets/esdm-components/scheduler/physical-eps-converted-to.pdf, id=2316,
  724.7075pt x 127.47626pt>
 File: ../../assets/esdm-components/scheduler/physical-eps-converted-to.pdf Grap
 hic file (type pdf)
@@ -3095,7 +3116,7 @@ ts/layout/logical-eps-converted-to.pdf ../../assets/esdm-components/layout/logi
 cal.eps>
 (epstopdf)             \includegraphics on input line 11.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-components/layout/logical-eps-converted-to.pdf, id=2339, 105
+<../../assets/esdm-components/layout/logical-eps-converted-to.pdf, id=2338, 105
 4.94125pt x 406.51875pt>
 File: ../../assets/esdm-components/layout/logical-eps-converted-to.pdf Graphic 
 file (type pdf)
@@ -3120,7 +3141,7 @@ t/sequence_init.eps>
 (epstopdf)             \includegraphics on input line 53.
 Package epstopdf Info: Output file is already uptodate.
 <../../assets/esdm-components/layout/sequence_init-eps-converted-to.pdf, id=235
-1, 774.895pt x 396.48125pt>
+0, 774.895pt x 396.48125pt>
 File: ../../assets/esdm-components/layout/sequence_init-eps-converted-to.pdf Gr
 aphic file (type pdf)
 <use ../../assets/esdm-components/layout/sequence_init-eps-converted-to.pdf>
@@ -3128,7 +3149,7 @@ Package pdftex.def Info: ../../assets/esdm-components/layout/sequence_init-eps-
 converted-to.pdf  used on input line 53.
 (pdftex.def)             Requested size: 441.01779pt x 225.65181pt.
  [111]
-<../../assets/esdm-components/layout/performance-model.pdf, id=2367, 597.50786p
+<../../assets/esdm-components/layout/performance-model.pdf, id=2366, 597.50786p
 t x 503.86713pt>
 File: ../../assets/esdm-components/layout/performance-model.pdf Graphic file (t
 ype pdf)
@@ -3150,7 +3171,7 @@ ts/layout/process-eps-converted-to.pdf ../../assets/esdm-components/layout/proc
 ess.eps>
 (epstopdf)             \includegraphics on input line 114.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-components/layout/process-eps-converted-to.pdf, id=2378, 110
+<../../assets/esdm-components/layout/process-eps-converted-to.pdf, id=2377, 110
 3.12125pt x 329.23pt>
 File: ../../assets/esdm-components/layout/process-eps-converted-to.pdf Graphic 
 file (type pdf)
@@ -3171,7 +3192,7 @@ ts/layout/physical-eps-converted-to.pdf ../../assets/esdm-components/layout/phy
 sical.eps>
 (epstopdf)             \includegraphics on input line 128.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-components/layout/physical-eps-converted-to.pdf, id=2379, 94
+<../../assets/esdm-components/layout/physical-eps-converted-to.pdf, id=2378, 94
 3.525pt x 261.97874pt>
 File: ../../assets/esdm-components/layout/physical-eps-converted-to.pdf Graphic
  file (type pdf)
@@ -3193,7 +3214,7 @@ verted-to.pdf>
 /logical-eps-converted-to.pdf ../../assets/esdm-hdf5+mpi/logical.eps>
 (epstopdf)             \includegraphics on input line 9.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-hdf5+mpi/logical-eps-converted-to.pdf, id=2402, 1022.82124pt
+<../../assets/esdm-hdf5+mpi/logical-eps-converted-to.pdf, id=2401, 1022.82124pt
  x 421.575pt>
 File: ../../assets/esdm-hdf5+mpi/logical-eps-converted-to.pdf Graphic file (typ
 e pdf)
@@ -3213,15 +3234,15 @@ nverted-to.pdf>
 (epstopdf)                    size: 38613 bytes
 (epstopdf)             Command: <repstopdf --outfile=../../assets/esdm-hdf5+mpi
 /physical-eps-converted-to.pdf ../../assets/esdm-hdf5+mpi/physical.eps>
-(epstopdf)             \includegraphics on input line 58.
+(epstopdf)             \includegraphics on input line 57.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-hdf5+mpi/physical-eps-converted-to.pdf, id=2414, 1126.2075pt
+<../../assets/esdm-hdf5+mpi/physical-eps-converted-to.pdf, id=2413, 1126.2075pt
  x 260.975pt>
 File: ../../assets/esdm-hdf5+mpi/physical-eps-converted-to.pdf Graphic file (ty
 pe pdf)
 <use ../../assets/esdm-hdf5+mpi/physical-eps-converted-to.pdf>
 Package pdftex.def Info: ../../assets/esdm-hdf5+mpi/physical-eps-converted-to.p
-df  used on input line 58.
+df  used on input line 57.
 (pdftex.def)             Requested size: 441.01779pt x 102.19797pt.
  [116 <../../assets/esdm-hdf5+mpi/physical-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <../../assets/esdm-hdf5+mpi/process.eps>
@@ -3233,15 +3254,15 @@ verted-to.pdf>
 (epstopdf)                    size: 50796 bytes
 (epstopdf)             Command: <repstopdf --outfile=../../assets/esdm-hdf5+mpi
 /process-eps-converted-to.pdf ../../assets/esdm-hdf5+mpi/process.eps>
-(epstopdf)             \includegraphics on input line 71.
+(epstopdf)             \includegraphics on input line 70.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-hdf5+mpi/process-eps-converted-to.pdf, id=2426, 840.13875pt 
+<../../assets/esdm-hdf5+mpi/process-eps-converted-to.pdf, id=2425, 840.13875pt 
 x 731.73375pt>
 File: ../../assets/esdm-hdf5+mpi/process-eps-converted-to.pdf Graphic file (typ
 e pdf)
 <use ../../assets/esdm-hdf5+mpi/process-eps-converted-to.pdf>
 Package pdftex.def Info: ../../assets/esdm-hdf5+mpi/process-eps-converted-to.pd
-f  used on input line 71.
+f  used on input line 70.
 (pdftex.def)             Requested size: 441.01779pt x 384.11015pt.
 ) [117 <../../assets/esdm-hdf5+mpi/process-eps-converted-to.pdf>] (./frontend-f
 use.tex
@@ -3256,7 +3277,7 @@ ed-to.pdf>
 ical-eps-converted-to.pdf ../../assets/esdm-fuse/logical.eps>
 (epstopdf)             \includegraphics on input line 10.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-fuse/logical-eps-converted-to.pdf, id=2435, 487.8225pt x 604
+<../../assets/esdm-fuse/logical-eps-converted-to.pdf, id=2434, 487.8225pt x 604
 .2575pt>
 File: ../../assets/esdm-fuse/logical-eps-converted-to.pdf Graphic file (type pd
 f)
@@ -3278,7 +3299,7 @@ ted-to.pdf>
 uence-eps-converted-to.pdf ../../assets/esdm-fuse/sequence.eps>
 (epstopdf)             \includegraphics on input line 77.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-fuse/sequence-eps-converted-to.pdf, id=2446, 857.2025pt x 70
+<../../assets/esdm-fuse/sequence-eps-converted-to.pdf, id=2445, 857.2025pt x 70
 5.63625pt>
 File: ../../assets/esdm-fuse/sequence-eps-converted-to.pdf Graphic file (type p
 df)
@@ -3297,7 +3318,7 @@ ed-to.pdf>
 cess-eps-converted-to.pdf ../../assets/esdm-fuse/process.eps>
 (epstopdf)             \includegraphics on input line 90.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-fuse/process-eps-converted-to.pdf, id=2447, 750.805pt x 429.
+<../../assets/esdm-fuse/process-eps-converted-to.pdf, id=2446, 750.805pt x 429.
 605pt>
 File: ../../assets/esdm-fuse/process-eps-converted-to.pdf Graphic file (type pd
 f)
@@ -3317,7 +3338,7 @@ ted-to.pdf>
 sical-eps-converted-to.pdf ../../assets/esdm-fuse/physical.eps>
 (epstopdf)             \includegraphics on input line 112.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-fuse/physical-eps-converted-to.pdf, id=2465, 906.38625pt x 4
+<../../assets/esdm-fuse/physical-eps-converted-to.pdf, id=2464, 906.38625pt x 4
 84.81125pt>
 File: ../../assets/esdm-fuse/physical-eps-converted-to.pdf Graphic file (type p
 df)
@@ -3340,7 +3361,7 @@ ps-converted-to.pdf>
 s>
 (epstopdf)             \includegraphics on input line 12.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/POSIX/logical-eps-converted-to.pdf, id=2481, 692.58
+<../../assets/esdm-backends/POSIX/logical-eps-converted-to.pdf, id=2480, 692.58
 75pt x 490.83376pt>
 File: ../../assets/esdm-backends/POSIX/logical-eps-converted-to.pdf Graphic fil
 e (type pdf)
@@ -3364,7 +3385,7 @@ write-eps-converted-to.pdf>
 uence_write.eps>
 (epstopdf)             \includegraphics on input line 48.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/POSIX/sequence_write-eps-converted-to.pdf, id=2494,
+<../../assets/esdm-backends/POSIX/sequence_write-eps-converted-to.pdf, id=2493,
  932.48375pt x 731.73375pt>
 File: ../../assets/esdm-backends/POSIX/sequence_write-eps-converted-to.pdf Grap
 hic file (type pdf)
@@ -3385,7 +3406,7 @@ read-eps-converted-to.pdf>
 ence_read.eps>
 (epstopdf)             \includegraphics on input line 75.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/POSIX/sequence_read-eps-converted-to.pdf, id=2497, 
+<../../assets/esdm-backends/POSIX/sequence_read-eps-converted-to.pdf, id=2496, 
 833.1125pt x 576.1525pt>
 File: ../../assets/esdm-backends/POSIX/sequence_read-eps-converted-to.pdf Graph
 ic file (type pdf)
@@ -3408,7 +3429,7 @@ eps-converted-to.pdf>
 eps>
 (epstopdf)             \includegraphics on input line 94.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/POSIX/fragment-eps-converted-to.pdf, id=2518, 332.2
+<../../assets/esdm-backends/POSIX/fragment-eps-converted-to.pdf, id=2517, 332.2
 4126pt x 86.3225pt>
 File: ../../assets/esdm-backends/POSIX/fragment-eps-converted-to.pdf Graphic fi
 le (type pdf)
@@ -3429,7 +3450,7 @@ ps-converted-to.pdf>
 s>
 (epstopdf)             \includegraphics on input line 109.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/POSIX/process-eps-converted-to.pdf, id=2519, 916.42
+<../../assets/esdm-backends/POSIX/process-eps-converted-to.pdf, id=2518, 916.42
 375pt x 331.2375pt>
 File: ../../assets/esdm-backends/POSIX/process-eps-converted-to.pdf Graphic fil
 e (type pdf)
@@ -3450,15 +3471,15 @@ eps-converted-to.pdf>
 (epstopdf)             Command: <repstopdf --outfile=../../assets/esdm-backends
 /POSIX/physical-eps-converted-to.pdf ../../assets/esdm-backends/POSIX/physical.
 eps>
-(epstopdf)             \includegraphics on input line 150.
+(epstopdf)             \includegraphics on input line 149.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/POSIX/physical-eps-converted-to.pdf, id=2534, 585.1
+<../../assets/esdm-backends/POSIX/physical-eps-converted-to.pdf, id=2533, 585.1
 8625pt x 349.305pt>
 File: ../../assets/esdm-backends/POSIX/physical-eps-converted-to.pdf Graphic fi
 le (type pdf)
 <use ../../assets/esdm-backends/POSIX/physical-eps-converted-to.pdf>
 Package pdftex.def Info: ../../assets/esdm-backends/POSIX/physical-eps-converte
-d-to.pdf  used on input line 150.
+d-to.pdf  used on input line 149.
 (pdftex.def)             Requested size: 441.01779pt x 263.25728pt.
 ) (./backend-metadata-mongo.tex
 [127 <../../assets/esdm-backends/POSIX/process-eps-converted-to.pdf>] [128 <../
@@ -3478,35 +3499,36 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--10
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 11--26
+Underfull \hbox (badness 10000) in paragraph at lines 25--26
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 27--37
+Underfull \hbox (badness 10000) in paragraph at lines 27--35
 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 47
+Underfull \vbox (badness 10000) detected at line 42
  []
 
 [136
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 49--51
+Underfull \hbox (badness 10000) in paragraph at lines 44--46
 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 62
+Underfull \vbox (badness 10000) detected at line 56
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 66--73
+Underfull \hbox (badness 10000) in paragraph at lines 60--67
 
  []
 
+[137]
 Package epstopdf Info: Source file: <../../assets/esdm-backends/mero/logical.ep
 s>
 (epstopdf)                    date: 2019-05-07 13:19:20
@@ -3518,17 +3540,17 @@ s-converted-to.pdf>
 (epstopdf)             Command: <repstopdf --outfile=../../assets/esdm-backends
 /mero/logical-eps-converted-to.pdf ../../assets/esdm-backends/mero/logical.eps>
 
-(epstopdf)             \includegraphics on input line 86.
+(epstopdf)             \includegraphics on input line 78.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/mero/logical-eps-converted-to.pdf, id=2746, 692.587
+<../../assets/esdm-backends/mero/logical-eps-converted-to.pdf, id=2750, 692.587
 5pt x 490.83376pt>
 File: ../../assets/esdm-backends/mero/logical-eps-converted-to.pdf Graphic file
  (type pdf)
 <use ../../assets/esdm-backends/mero/logical-eps-converted-to.pdf>
 Package pdftex.def Info: ../../assets/esdm-backends/mero/logical-eps-converted-
-to.pdf  used on input line 86.
+to.pdf  used on input line 78.
 (pdftex.def)             Requested size: 441.01779pt x 312.55223pt.
-[137] [138 <../../assets/esdm-backends/mero/logical-eps-converted-to.pdf>]
+ [138 <../../assets/esdm-backends/mero/logical-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <../../assets/esdm-backends/mero/sequence_w
 rite.eps>
 (epstopdf)                    date: 2019-05-07 13:19:20
@@ -3540,19 +3562,16 @@ rite-eps-converted-to.pdf>
 (epstopdf)             Command: <repstopdf --outfile=../../assets/esdm-backends
 /mero/sequence_write-eps-converted-to.pdf ../../assets/esdm-backends/mero/seque
 nce_write.eps>
-(epstopdf)             \includegraphics on input line 122.
+(epstopdf)             \includegraphics on input line 114.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/mero/sequence_write-eps-converted-to.pdf, id=2760, 
+<../../assets/esdm-backends/mero/sequence_write-eps-converted-to.pdf, id=2761, 
 882.29625pt x 905.3825pt>
 File: ../../assets/esdm-backends/mero/sequence_write-eps-converted-to.pdf Graph
 ic file (type pdf)
 <use ../../assets/esdm-backends/mero/sequence_write-eps-converted-to.pdf>
 Package pdftex.def Info: ../../assets/esdm-backends/mero/sequence_write-eps-con
-verted-to.pdf  used on input line 122.
+verted-to.pdf  used on input line 114.
 (pdftex.def)             Requested size: 441.01779pt x 452.55199pt.
-
-[139] [140 <../../assets/esdm-backends/mero/sequence_write-eps-converted-to.pdf
->]
 Package epstopdf Info: Source file: <../../assets/esdm-backends/mero/sequence_r
 ead.eps>
 (epstopdf)                    date: 2019-05-07 13:19:20
@@ -3564,26 +3583,27 @@ ead-eps-converted-to.pdf>
 (epstopdf)             Command: <repstopdf --outfile=../../assets/esdm-backends
 /mero/sequence_read-eps-converted-to.pdf ../../assets/esdm-backends/mero/sequen
 ce_read.eps>
-(epstopdf)             \includegraphics on input line 149.
+(epstopdf)             \includegraphics on input line 141.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/mero/sequence_read-eps-converted-to.pdf, id=2778, 8
+<../../assets/esdm-backends/mero/sequence_read-eps-converted-to.pdf, id=2764, 8
 73.2625pt x 658.46pt>
 File: ../../assets/esdm-backends/mero/sequence_read-eps-converted-to.pdf Graphi
 c file (type pdf)
 <use ../../assets/esdm-backends/mero/sequence_read-eps-converted-to.pdf>
 Package pdftex.def Info: ../../assets/esdm-backends/mero/sequence_read-eps-conv
-erted-to.pdf  used on input line 149.
+erted-to.pdf  used on input line 141.
 (pdftex.def)             Requested size: 441.01779pt x 332.53474pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 161--165
+Underfull \hbox (badness 10000) in paragraph at lines 153--155
 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 182
+Underfull \vbox (badness 10000) detected at line 165
  []
 
-[141 <../../assets/esdm-backends/mero/sequence_read-eps-converted-to.pdf>]
+[139] [140 <../../assets/esdm-backends/mero/sequence_write-eps-converted-to.pdf
+>] [141 <../../assets/esdm-backends/mero/sequence_read-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <../../assets/esdm-backends/mero/process.ep
 s>
 (epstopdf)                    date: 2019-05-07 13:19:20
@@ -3595,15 +3615,15 @@ s-converted-to.pdf>
 (epstopdf)             Command: <repstopdf --outfile=../../assets/esdm-backends
 /mero/process-eps-converted-to.pdf ../../assets/esdm-backends/mero/process.eps>
 
-(epstopdf)             \includegraphics on input line 197.
+(epstopdf)             \includegraphics on input line 180.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/mero/process-eps-converted-to.pdf, id=2788, 1577.89
+<../../assets/esdm-backends/mero/process-eps-converted-to.pdf, id=2787, 1577.89
 5pt x 462.72874pt>
 File: ../../assets/esdm-backends/mero/process-eps-converted-to.pdf Graphic file
  (type pdf)
 <use ../../assets/esdm-backends/mero/process-eps-converted-to.pdf>
 Package pdftex.def Info: ../../assets/esdm-backends/mero/process-eps-converted-
-to.pdf  used on input line 197.
+to.pdf  used on input line 180.
 (pdftex.def)             Requested size: 441.01779pt x 129.33015pt.
 
 [142 <../../assets/esdm-backends/mero/process-eps-converted-to.pdf>]
@@ -3618,15 +3638,15 @@ t-eps-converted-to.pdf>
 (epstopdf)             Command: <repstopdf --outfile=../../assets/esdm-backends
 /mero/development-eps-converted-to.pdf ../../assets/esdm-backends/mero/developm
 ent.eps>
-(epstopdf)             \includegraphics on input line 238.
+(epstopdf)             \includegraphics on input line 221.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/mero/development-eps-converted-to.pdf, id=2797, 209
+<../../assets/esdm-backends/mero/development-eps-converted-to.pdf, id=2796, 209
 .78375pt x 454.69875pt>
 File: ../../assets/esdm-backends/mero/development-eps-converted-to.pdf Graphic 
 file (type pdf)
 <use ../../assets/esdm-backends/mero/development-eps-converted-to.pdf>
 Package pdftex.def Info: ../../assets/esdm-backends/mero/development-eps-conver
-ted-to.pdf  used on input line 238.
+ted-to.pdf  used on input line 221.
 (pdftex.def)             Requested size: 110.25444pt x 238.97018pt.
  [143 <../../assets/esdm-backends/mero/development-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <../../assets/esdm-backends/mero/physical.e
@@ -3640,15 +3660,15 @@ ps-converted-to.pdf>
 (epstopdf)             Command: <repstopdf --outfile=../../assets/esdm-backends
 /mero/physical-eps-converted-to.pdf ../../assets/esdm-backends/mero/physical.ep
 s>
-(epstopdf)             \includegraphics on input line 264.
+(epstopdf)             \includegraphics on input line 246.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/mero/physical-eps-converted-to.pdf, id=2809, 581.17
+<../../assets/esdm-backends/mero/physical-eps-converted-to.pdf, id=2808, 581.17
 125pt x 349.305pt>
 File: ../../assets/esdm-backends/mero/physical-eps-converted-to.pdf Graphic fil
 e (type pdf)
 <use ../../assets/esdm-backends/mero/physical-eps-converted-to.pdf>
 Package pdftex.def Info: ../../assets/esdm-backends/mero/physical-eps-converted
--to.pdf  used on input line 264.
+-to.pdf  used on input line 246.
 (pdftex.def)             Requested size: 441.01779pt x 265.06947pt.
 ) [144 <../../assets/esdm-backends/mero/physical-eps-converted-to.pdf>] (./back
 end-wos.tex
@@ -3664,7 +3684,7 @@ Package epstopdf Info: Source file: <../../assets/esdm-backends/WOS/logical.eps
 /WOS/logical-eps-converted-to.pdf ../../assets/esdm-backends/WOS/logical.eps>
 (epstopdf)             \includegraphics on input line 14.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/WOS/logical-eps-converted-to.pdf, id=2819, 728.7225
+<../../assets/esdm-backends/WOS/logical-eps-converted-to.pdf, id=2818, 728.7225
 pt x 490.83376pt>
 File: ../../assets/esdm-backends/WOS/logical-eps-converted-to.pdf Graphic file 
 (type pdf)
@@ -3689,7 +3709,7 @@ ite-eps-converted-to.pdf>
 e_write.eps>
 (epstopdf)             \includegraphics on input line 35.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/WOS/sequence_write-eps-converted-to.pdf, id=2830, 8
+<../../assets/esdm-backends/WOS/sequence_write-eps-converted-to.pdf, id=2829, 8
 70.25125pt x 761.84625pt>
 File: ../../assets/esdm-backends/WOS/sequence_write-eps-converted-to.pdf Graphi
 c file (type pdf)
@@ -3710,7 +3730,7 @@ ad-eps-converted-to.pdf>
 _read.eps>
 (epstopdf)             \includegraphics on input line 58.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/WOS/sequence_read-eps-converted-to.pdf, id=2833, 77
+<../../assets/esdm-backends/WOS/sequence_read-eps-converted-to.pdf, id=2832, 77
 7.90625pt x 590.205pt>
 File: ../../assets/esdm-backends/WOS/sequence_read-eps-converted-to.pdf Graphic
  file (type pdf)
@@ -3737,7 +3757,7 @@ Package epstopdf Info: Source file: <../../assets/esdm-backends/WOS/process.eps
 /WOS/process-eps-converted-to.pdf ../../assets/esdm-backends/WOS/process.eps>
 (epstopdf)             \includegraphics on input line 81.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/WOS/process-eps-converted-to.pdf, id=2856, 663.4787
+<../../assets/esdm-backends/WOS/process-eps-converted-to.pdf, id=2855, 663.4787
 4pt x 357.335pt>
 File: ../../assets/esdm-backends/WOS/process-eps-converted-to.pdf Graphic file 
 (type pdf)
@@ -3759,7 +3779,7 @@ s-converted-to.pdf>
 
 (epstopdf)             \includegraphics on input line 106.
 Package epstopdf Info: Output file is already uptodate.
-<../../assets/esdm-backends/WOS/physical-eps-converted-to.pdf, id=2864, 687.568
+<../../assets/esdm-backends/WOS/physical-eps-converted-to.pdf, id=2863, 687.568
 76pt x 452.69125pt>
 File: ../../assets/esdm-backends/WOS/physical-eps-converted-to.pdf Graphic file
  (type pdf)
@@ -3791,7 +3811,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 245.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 245.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 245.
 Package rerunfilecheck Info: File `architecture.out' has not changed.
-(rerunfilecheck)             Checksum: 60570B98B187EFC390BA2382022050FC;7072.
+(rerunfilecheck)             Checksum: ACF99303B3EB689340B498AEB819FF68;7072.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -3799,9 +3819,9 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 245.
  ) 
 Here is how much of TeX's memory you used:
- 60813 strings out of 492982
- 1370131 string characters out of 6134896
- 1989130 words of memory out of 5000000
+ 60812 strings out of 492982
+ 1370119 string characters out of 6134896
+ 1989109 words of memory out of 5000000
  62196 multiletter control sequences out of 15000+600000
  542733 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -3823,10 +3843,10 @@ ts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmti8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.
 pfb></usr/share/texmf/fonts/type1/public/lm/lmtt9.pfb></usr/share/texmf/fonts/t
 ype1/public/tex-gyre/qcrr.pfb>
-Output written on architecture.pdf (157 pages, 4112846 bytes).
+Output written on architecture.pdf (157 pages, 4112473 bytes).
 PDF statistics:
- 3201 PDF objects out of 3580 (max. 8388607)
- 2685 compressed objects within 27 object streams
- 1002 named destinations out of 1200 (max. 500000)
+ 3200 PDF objects out of 3580 (max. 8388607)
+ 2684 compressed objects within 27 object streams
+ 1001 named destinations out of 1200 (max. 500000)
  1381 words of extra memory for PDF output out of 10000 (max. 10000000)
 

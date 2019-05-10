@@ -3,8 +3,8 @@ A prototypical metadata backend will be realised using MongoDB.
 Advantages of using MongoDB are that it scales horizontally with the number of servers, provides fault-tolerance and that the document model supports arbitrary schemas.
 
 
-Each type of object in the data model (container, variable, fragment) becomes a collection with indices on certain fields.
-Multikey indices allows indexing array fields such as the references.
+Each type of object in the data model (container, variable, fragment) becomes a collection with indices on specific fields.
+Multikey indices allow indexing array fields such as the references.
 
 
 
@@ -13,18 +13,18 @@ Multikey indices allows indexing array fields such as the references.
 
 \subsubsection{Metadata}
 
-There are two methods to include metadata, large metadata is includes as a reference to another variable containing the data, small metadata is embedded into the JSON of the MongoDB document.
+There are two methods to include metadata: large metadata is included as a reference to another variable containing the data, and small metadata is embedded into the JSON of the MongoDB document.
 
 Besides scientific metadata, the dynamic mapping of data to storage backends requires further metadata that must be managed.
-To distinguish technical metadata from scientific metadata, an internal namespace is created.
+An internal namespace is created to distinguish technical metadata from scientific metadata.
 Relevant technical metadata is shown in \Cref{tbl:additionalTechnicalMetadata} for shards, variables and containers, respectively.
 
 Metadata can be optional (O) or mandatory (M), and either is created automatically or must be set manually via the APIs.
-Automatic fields cannot be changed by the user.
-Some of the data can be automatically inferred, if not set manually, but manual setting may allow further optimisations.
+The user can not change automatic fields.
+Some of the data can be automatically inferred, if not set manually, but the manual setting may allow further optimisations.
 
-Some of the metadata is used on several places, for example, information about the data lineage might be used to create several output variables.
-In our initial implementation, the metadata is stored redundantly because it
+Some of the metadata is used in several places. For example, information about the data lineage might be used to create several output variables.
+In our initial implementation, the metadata is stored redundantly because of it
 1) simplifies search; 2) enables us to restore data on corrupted storage systems by reading the metadata; 3) reduces contention and potentially false sharing of metadata.
 An implementation might decide to reduce this by utilising normalised schemas.
 
@@ -135,16 +135,16 @@ variables:
 \end{tcbcode}
 
 To simplify search and identify data clearly, data services such as the WDCC and CERA, that offer data to the community, request scientists to provide additional metadata.
-Normally, such data is provided when the results of an experiment is ingested into such a database.
+Typically, such data is provided when the results of an experiment are ingested into such a database.
 Example metadata is listed in \Cref{tbl:additionalMetadata}.
-In existing databases, the listed metadata is split into several fields, e.g. an address and email for persons, for simplicity only a rough overview is given.
-Instead of encoding the history as a simple text field, it could
+In existing databases, the listed metadata is split into several fields, e.g. an address and email for persons. For simplicity, only a rough overview is given.
+Instead of encoding the history as a simple text field, one could
 indicate detailed steps including the arguments for the commands and versions and transformations to reproduce the data.
-This should include for each step, where and the time when it is performed, and the versions of software used.
+This information should be included for each step, addressing where and the time when it is performed and the versions of software used.
 
-It is easily imaginable that most of this information could be useful already when the data is created as it simplifies the search and data management on the online storage.
+It is easily imaginable that most of this information could be useful already when the data is created as it simplifies the search and data management on online storage.
 Some of the data fields become only available after the initial data creation, e.g., the DOI.
-Potentially the data must be updated / curated after the data is created.
+Potentially the data must be updated/curated after the data is created.
 
 \begin{table}
 \begin{tabular}{ll}
@@ -176,29 +176,29 @@ The application uses the following information to drive the simulation:
 	\item Longitude/Latitude: 1D data field with the coordinates [float]
 	\item Temperature: Initial 2D field defined on (lon, lat)
 \end{itemize}
-A real model would use further parameters to estimate the temperature but these are sufficient to demonstrate the concepts.
-This information is either given as parameter to the simulation or read from an input (container).
+A real model would use further parameters to estimate the temperature, but these are sufficient to demonstrate the concepts.
+This information is either given as a parameter to the simulation or read from an input (container).
 A mixture of both settings is possible.
 
 
 The application produces the following output:
 \begin{itemize}
 	\item Longitude/Latitude: 1D data field with the coordinates [float]
-	\item Model time: the current datatime for the simulation
+	\item Model time: the current datetime for the simulation
 	\item Temperature: 2D field defined on (lon, lat, time) [float], containing the precise temperature on the coordinates defined by lon and lat for the given timestep
 	\item AvgTemp: 1D field defined on (time) [float]; contains the mean temperature for the given time
 \end{itemize}
 
 \subsubsection{Container}
 
-Upon application startup, we create a new virtual container that provide links to the already existing input.
-In \Cref{lst:mongoContainer}, the metadata for the container is shown, after the application is started.
+Upon application startup, we create a new virtual container that provides links to the already existing input.
+In \Cref{lst:mongoContainer}, the metadata for the container is shown after the application is started.
 We assume it has used the APIs to provide the information (input, output, scientific metadata).
-In this example, we explicitly define the objects used as input; it is possible to also define
+In this example, we explicitly define the objects used as input; it is possible also to define
 the input as an already existing container.
-It is also possible to define the input a priori if the object IDs are known / looked up prior application run.
+It is also possible to define the input a priori if the object IDs are known/looked up prior application run.
 The intended output variables could be given with their rough sizes.
-This would allow the scheduler to pre-stage the input and ensure that there is enough storage space available for the output.
+This information would allow the scheduler to pre-stage the input and ensure that there is enough storage space available for the output.
 The environment information is inferred to the info object but can be changed from the user.
 
 \begin{tcbcode}[label={lst:mongoContainer}]{JSON document describing the container}
@@ -244,14 +244,13 @@ The environment information is inferred to the info object but can be changed fr
 The metadata for a single variable is build based on the information available in the container (such as permissions) and additional data provided by the user.
 Indeed, part of the metadata is replicated between container and variable as this preserves information about the creation of the variable that will typically not change during the lifetime of the variable.
 
-An example for the temperature variable is shown in \Cref{lst:mongotemperature}.
+An example of the temperature variable is shown in \Cref{lst:mongotemperature}.
 When describing the domain that is covered by the variable, there are three alternatives:
-1) a reference to an existing variable is embedded and the minimum / maximum value is provided.
-This allows reusing descriptive information as data has to be stored only once. Min and max describe the multidimensional index of the subdomain in the variable that is actually referenced;
-2) data becomes embedded into the file. This option is used when the size of the variable is small.
-An advantage of option 2) is that searches for data with a certain property do not require to lookup information in additional metadata.
+1) a reference to an existing variable is embedded and the minimum/maximum value is provided. This option allows reusing descriptive information as data has to be stored only once. Min and max describe the multidimensional index of the subdomain in the variable that is referenced;
+2) data becomes embedded in the file. This option is used when the size of the variable is small.
+An advantage of option 2) is that searches for data with a particular property do not require to lookup information in additional metadata.
 
-Similarly, information about the data lineage (history) can originally be inferred from the objects linked in the directory mapping.
+Similarly, information about the data lineage (history) can initially be inferred from the objects linked in the directory mapping.
 In that case, the metadata of the referenced object must be copied, if the original object is removed.
 
 3) A plugin for the interpretation and mapping of the coordinate system is used.
@@ -317,7 +316,7 @@ The plugin name must be stored and the respective parameters to identify the coo
 
 The variable is split into multiple shards; metadata for one of them is shown in \Cref{lst:mongotemperatureshard}.
 Since we assume domain decomposition in the application, the longitude and latitude variables are now only partially stored in a shard.
-In the example, we assume two processes create one shard each and the surface of the earth is partitioned into four non-overlapping rectangles.
+In the example, we assume two processes create one shard each, and the surface of the earth is partitioned into four non-overlapping rectangles.
 
 \begin{tcbcode}[label={lst:mongotemperatureshard}]{JSON document for a shard of the temperature variable}
 \begin{lstlisting}

@@ -12,7 +12,7 @@ Filesystem in Userspace (FUSE) provides a relatively simple means to export a vi
 	\label{fig:esdm fuse logical view}
 \end{figure}
 
-Compatibility to legacy applications is the main motivation to provide a ESDM FUSE  file system.
+Compatibility to legacy applications is the primary motivation to provide an ESDM FUSE  file system.
 Allowing different views to the same data based on the available metadata information is another motivation.
 Examples for  metadata mappings to a hierarchical namespace could be as follows:
 
@@ -23,18 +23,18 @@ Examples for  metadata mappings to a hierarchical namespace could be as follows:
 
 The structure of the hierarchy could be up to the users.
 The limit at this point would be the quality of available metadata as it is in already existing metadata catalogues.
-\Cref{fig:esdm fuse logical view} illustrates how the ESDM FUSE file system would be used by a scientist.
-In an ideal setting, the ESDM has some time to analyse e.g. a submitted job script to figure out which HDF5 will be requested.
-The ESDM would then use the HDF5 creator to generate the HDF5 files before the job is started/beginning to read from the file.
+\Cref{fig:esdm fuse logical view} illustrates how a scientist would use the ESDM FUSE file system.
+In an ideal setting, the ESDM has some time to analyse, e.g. a submitted job script to figure out which HDF5 will be requested.
+The ESDM would then use the HDF5 creator to generate the HDF5 file before the job is started/beginning to read from the file.
 After the ESDM HDF5 creator has created the file, the ESDM FUSE would read and write from this file.
-If a generated it not used for a while, it may be removed again to make room for more recent requests.
+If a generated it not used for a while, it might be removed again to make room for more recent requests.
 
 
 \paragraph{Access Semantics:}
-HDF5 files usually allow to be modified to add metadata or update variables and data sets.
-The ESDM legacy interface likely will be read only.
+HDF5 files usually allow being modified to add metadata or update variables and data sets.
+The ESDM legacy interface likely will be read-only.
 A possible update of the original ESDM data structures to reflect changes made to the HDF5 view is not planned, to avoid potential consistency conflicts.
-The structure of the HDF5 and the directory structure of available files depends on a ESDM FUSE configuration.
+The structure of the HDF5 and the directory structure of available files depends on an ESDM FUSE configuration.
 
 
 
@@ -51,25 +51,25 @@ The structure of the HDF5 and the directory structure of available files depends
 %\end{figure}
 
 
-Some applications may not be compatible to HDF5 with virtual object layer (VOL).
-For such application it is necessary to export data stored within ESDM as actual HDF5 files.
-A FUSE interface allows to automate the export without requiring to generate the actual HDF5 files unless they are requested.
+Some applications may not be compatible with HDF5 with virtual object layer (VOL).
+For such an application, it is necessary to export data stored within ESDM as actual HDF5 files.
+A FUSE interface allows automating the export without requiring to generate the actual HDF5 files unless they are requested.
 Two approaches for exposing HDF5 files are:
 
 \begin{itemize}
-	\item Recreate sections of HDF5/NetCDF files, as they are being read, on the fly. Potentially very complicated, especially for read and write. This is not very desirable from a performance perspective. Refer to \url{https://support.hdfgroup.org/HDF5/doc/H5.format.html} for file format details.
+	\item Recreate sections of HDF5/NetCDF files, as they are being read, on the fly. Potentially very complicated, especially for read and write, which is not very desirable from a performance perspective. Refer to \url{https://support.hdfgroup.org/HDF5/doc/H5.format.html} for file format details.
 	\item Write a brand new HDF5 file based on the requested data/query.
 \end{itemize}
 
-While it maybe in possible to fulfil requests to virtual HDF5 files without generating the actual file, the architecture of HDF5 with different file format drivers leads and HDF5 internal caching makes such an approach unfeasible.
+While it may be impossible to fulfil requests to virtual HDF5 files without generating the actual file, the architecture of HDF5 with different file format drivers leads and HDF5 internal caching makes such an approach unfeasible.
 
 
-\subsubsection{Use HDF5 to create file on the fly}
+\subsubsection{Use HDF5 to create a file on the fly}
 
-The ESDM FUSE interface for HDF5 files should act as a cache layer for HDF5 exports generated on demand, while allowing
+The ESDM FUSE interface for HDF5 files should act as a cache layer for HDF5 exports generated on demand while allowing
 to browser available data sets and variables from a file system.
 \Cref{fig:fuse hdf5 sequence} illustrates this process in a UML sequence diagram.
-A legacy application makes a request to the FUSE file system, which is handled by the ESDM middleware that will use HDF5 to create a HDF5 file.
+A legacy application makes a request to the FUSE file system, which is handled by the ESDM middleware that will use HDF5 to create an HDF5 file.
 
 
 \begin{figure}
@@ -88,15 +88,15 @@ A legacy application makes a request to the FUSE file system, which is handled b
 \begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{esdm-fuse/process.eps}
-	\caption{Process view to a FUSE legacy backend for ESDM. An application browsers a FUSE file systems which is generated based on the available metadata. As the application opens a file, the ESDM creates a HDF5 file which can be then read just a usual HDF5 file.}
+	\caption{Process view to a FUSE legacy backend for ESDM. Application browsers a FUSE file systems which are generated based on the available metadata. As the application opens a file, the ESDM creates an HDF5 file which can be then read just a usual HDF5 file.}
 	\label{fig:esdm fuse process view}
 \end{figure}
 
-Following the reasoning in \Cref{sec: fuse/development} HDF5 files would need be generated and stored before file access requests can be handled.
-\Cref{fig:esdm fuse process view} separates the process of accessing a available file and the actual generation of the file.
+Following the reasoning in \Cref{sec: fuse/development} HDF5 files would need to be generated and stored before file access requests can be handled.
+\Cref{fig:esdm fuse process view} separates the process of accessing an available file and the actual generation of the file.
 If the application is already running and the requests HDF5 file is not already present, the reconstruction can be performed on the node of the application.
 If the application is not yet running, the scheduler could start a reconstruction before the application is started.
-In both cases a component that generates the HDF5 file is required which is represented by the ESDM HDF5 Creator.
+In both cases, a component that generates the HDF5 file is required which is represented by the ESDM HDF5 Creator.
 
 
 
@@ -114,8 +114,8 @@ In both cases a component that generates the HDF5 file is required which is repr
 	\label{fig:esdm fuse physical view}
 \end{figure}
 
-The provision of a FUSE legacy interface allows for a number different deployment models.
+The provision of a FUSE legacy interface allows for several different deployment models.
 \Cref{fig:esdm fuse physical view} illustrates where the ESDM FUSE related component would be active within the data centre.
 To require only little modifications and exploit independent data access FUSE is assumed to be available on the compute nodes.
 The scheduler may be modified to start the ESDM HDF5 Creators before spawning a job.
-The actual ESDM data as well as temporary HDF5 files would be stored and distributed across multiple storage systems.
+The actual ESDM data, as well as temporary HDF5 files, would be stored and distributed across multiple storage systems.

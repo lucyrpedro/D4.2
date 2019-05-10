@@ -1,19 +1,19 @@
 
 \begin{chapterIntro}
-	This section discusses most relevant components and backends in technical detail.
+	This section discusses the most relevant components and backends in technical detail.
 	For every component listed, the 4+1 view is described (refer to \Cref{sec:about 4+1}).
-	The components and backends are ordered according to their position within the I/O stack from top (application) to bottom (backend).
+	The components and backends are ordered according to their position within the I/O stack from the top (application) to bottom (backend).
 
 	\Cref{component: scheduler} discusses the scheduling component that breaks down incoming read and write requests into subsequent requests to create or receive multiple fragments.
 	The scheduler relies on a layout component to create a set of domain filling subrequests which is discussed in \Cref{component: layout}.
-	In most cases, an application will not interface directly with the ESDM middleware but through a common frontend.
-	\Cref{frontend: hdf5 + mpi} introduces a HDF5 frontend and also discusses how message passing via MPI is realised outside of the ESDM.
-	\Cref{frontend: fuse} addresses legacy interfaces using FUSE to expose data sets via a configurable virtual file systems.
+	In most cases, an application will not interface directly with the ESDM middleware but through a standard frontend.
+	\Cref{frontend: hdf5 + mpi} introduces an HDF5 frontend and also discusses how message passing via MPI is realised outside of the ESDM.
+	\Cref{frontend: fuse} addresses legacy interfaces using FUSE to expose data sets via configurable virtual file systems.
 
 	It follows the discussion of multiple backends.
-	In particular \Cref{backend: posix} discusses a POSIX backend to allow for interactions with parallel file systems.
+	In particular, \Cref{backend: posix} discusses a POSIX backend to allow for interactions with parallel file systems.
 	Object storage backends for Mero (see \Cref{backend: mero}) and WOS (see \Cref{backend: wos}) are discussed,
-	Besides data backends, also pure metadata backends are possible allowing to use a existing software stacks that are typically also residing on some kind of storage backend themselves.
+	Besides data backends, also pure metadata backends are possible allowing to use of existing software stacks that are typically also residing on some storage backend themselves.
 	\Cref{backend: mongo} describes MongoDB bases metadata backend.
 \end{chapterIntro}
 
